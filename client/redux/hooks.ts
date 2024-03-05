@@ -5,5 +5,5 @@ import { RootState } from "./store";
 
 type DispatchFun = () => ThunkDispatch<RootState, any, AnyAction>;
 
-export const useAppDispath: DispatchFun = useDispatch;
+export const useAppDispatch: DispatchFun = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

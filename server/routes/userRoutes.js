@@ -17,7 +17,7 @@ userRoute.post('/reg', async (req, res) => {
       res.sendStatus(403);
     } else {
       const hash = await bcrypt.hash(password, 10);
-      const newUser = await User.create({ name, email, password: hash });
+      const newUser = await User.create({ name, email, password: hash, role_id: 1, propType: true, persDataAgr: true });
       req.session.name = newUser.name;
       req.session.email = newUser.email;
       req.session.userId = newUser.id;

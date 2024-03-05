@@ -9,7 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import { InputsAuthType } from "../../types";
 import React from "react";
-import { useAppDispath, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchAuth } from "../../redux/User/userThunkAction";
 import { clearMsg, setMsg } from "../../redux/User/userSlice";
 
@@ -20,7 +20,7 @@ export default function AuthForm(): JSX.Element {
   const initialState = {email: '', password: ''}
   const [statusAuth, setStatusAuth] = useState(true);
   const [inputs, setInputs] = useState<InputsAuthType>(initialState);
-  const dispatch = useAppDispath();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const msg = useAppSelector((store) => store.userSlice.msg);

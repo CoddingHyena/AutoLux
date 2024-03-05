@@ -25,7 +25,7 @@ const sessionConfig = {
 };
 const corsConfig = {
   credentials: true,
-  origin: ['http://localhost:3100'],
+  origin: ['http://localhost:5173'],
   optionsSuccesStatus: 200,
 };
 
