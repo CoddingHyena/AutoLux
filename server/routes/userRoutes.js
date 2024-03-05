@@ -10,14 +10,18 @@ userRoute.get('/checkSession', async (req, res) => {
 
 userRoute.post('/reg', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const {
+      name, email, password, persDataAgrBool,
+    } = req.body;
     console.log(req.body);
     const user = await User.findOne({ where: { email } });
     if (user) {
       res.sendStatus(403);
     } else {
       const hash = await bcrypt.hash(password, 10);
-      const newUser = await User.create({ name, email, password: hash, role_id: 1, propType: true, persDataAgr: true });
+      const newUser = await User.create({
+        name, email, password: hash, role_id: 1, propType: true, persDataAgr: persDataAgrBool,
+      });
       req.session.name = newUser.name;
       req.session.email = newUser.email;
       req.session.userId = newUser.id;
