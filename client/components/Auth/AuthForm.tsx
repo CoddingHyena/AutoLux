@@ -20,19 +20,27 @@ export default function AuthForm(): JSX.Element {
   const initialState = {email: '', password: ''}
   const [statusAuth, setStatusAuth] = useState(true);
   const [inputs, setInputs] = useState<InputsAuthType>(initialState);
+  const [statPersonData, setStaPersonData] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const msg = useAppSelector((store) => store.userSlice.msg);
 
+  const changeStatus = async (): Promise<void> => {
+      const newStatus = !statPersonData;
+      setStaPersonData(newStatus);
+  };
+
 
   const handlerChangeInputs = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputs((prev) => ({...prev, [event.target.name]: event.target.value}));
   }
-//  function timeOut(err: string): void  {
-//     setError(err) 
-    
-//   }
+
+
+const inputsWithStatPersonData = {
+  ...inputs,
+  persDataAgrBool: statPersonData,
+};
 
   const handlerAuth = async (): Promise<void> => {
     console.log('inputs AUTH',inputs);
@@ -40,12 +48,14 @@ export default function AuthForm(): JSX.Element {
         dispatch(setMsg('Вы не ввели данные?!'));
       } else {
         let authWord = statusAuth ? 'log' : 'reg';
-        void dispatch(fetchAuth({authWord: authWord, inputs: inputs}, ))
+        void dispatch(fetchAuth({authWord: authWord, inputs: inputsWithStatPersonData } ))
       }
       setTimeout(() => {
         dispatch(clearMsg())
       }, 1500)
   } 
+  console.log('inputsREGFORM',inputsWithStatPersonData)
+
   const user = useAppSelector((store) => store.userSlice.user)
   console.log(user, 'userRegForm')
   useEffect(() => {
@@ -109,6 +119,19 @@ export default function AuthForm(): JSX.Element {
         maxWidth: '100%',
       }}
     />
+    
+    {!statusAuth &&
+    <>   
+     <div>Согласие на рассылку</div>
+      <input
+        type="checkbox"
+        name='persDataAgr'
+        checked={statPersonData}
+        onChange={changeStatus}
+      /> 
+    </>
+       }
+       
      <Button variant="contained" color="success" onClick={() => void handlerAuth()}>
      {statusAuth ? 'Login' : 'Register'}
      </Button>

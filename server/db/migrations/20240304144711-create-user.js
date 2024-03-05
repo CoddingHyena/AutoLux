@@ -31,7 +31,6 @@ module.exports = {
       },
       persDataAgr: {
         type: Sequelize.BOOLEAN,
-        defaultValue: true,
       },
       createdAt: {
         allowNull: false,
