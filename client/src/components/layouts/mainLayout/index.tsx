@@ -2,8 +2,8 @@ import { Outlet, useLocation } from 'react-router-dom';
 import withScrollTopFabButton from '../../../utils/hocs/withScrollTopFabButton';
 import WidthPageTransition from '../../../utils/hocs/widthPageTransition';
 
-import { useSelector } from '../../../store';
-import { selectThemeConfig } from '../../../store/theme/selectors';
+import { useSelector } from '../../../redux';
+import { selectThemeConfig } from '../../../redux/theme/selectors';
 // MUI
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';

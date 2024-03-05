@@ -1,5 +1,5 @@
 import { create } from "@mui/material/styles/createTransitions";
-import { User } from "../../types";
+import { User } from "../../../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAuth, fetchCheckUser, fetchLogout } from "./userThunkAction";
 import { AcUnitTwoTone } from "@mui/icons-material";

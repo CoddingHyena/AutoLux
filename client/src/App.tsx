@@ -1,3 +1,11 @@
+import { useEffect } from 'react';
+// import './App.css'
+// import { Route, Routes } from 'react-router-dom';
+// import Auth from '../components/Auth/Auth';
+import { fetchCheckUser } from '../redux/User/userThunkAction';
+import { useAppDispatch } from '../redux/hooks';
+
+
 import '@/assets/css/style.css';
 import '@fontsource/rubik/300.css';
 import '@fontsource/rubik/400.css';
@@ -8,54 +16,73 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import StoreProvider from './store';
+// import StoreProvider from './store';
+import store from './redux';
+import { Provider } from 'react-redux'
 
 import { Provider as SnackbarProvider } from './components/snackbar';
 
 import MUITheme from './utils/theme';
 import Router from './utils/routes';
 import CustomizationLayout from './components/layouts/customization';
-
 function App() {
+
+
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   void dispatch(fetchCheckUser())
+  // }, []);
+
+
 	return (
-		<StoreProvider>
+		<Provider store={store}>
 			<MUITheme>
 				<SnackbarProvider>
 					<CustomizationLayout />
 					<Router />
 				</SnackbarProvider>
 			</MUITheme>
-		</StoreProvider>
+    </Provider>
 	);
 }
 
 export default App;
 
-<!-- import { useEffect } from 'react';
-import './App.css'
-import { Route, Routes } from 'react-router-dom';
-import Auth from '../components/Auth/Auth';
-import { fetchCheckUser } from '../redux/User/userThunkAction';
-import { useAppDispatch } from '../redux/hooks';
 
 
 
-function App() {
+// import store from '../redux/store.ts'
+// import { BrowserRouter } from 'react-router-dom'
 
-  const dispatch = useAppDispatch();
+// ReactDOM.createRoot(document.getElementById('root')!).render(
+//   <Provider store={store}>
+//   <BrowserRouter>
+//     <App />
+//  </BrowserRouter>
+//  </Provider>
+// )
 
-  useEffect(() => {
-    void dispatch(fetchCheckUser())
-  }, []);
 
-  return (
-    <>
-    <Auth/>
-  {/* <Routes>
-    <Route path='auth' element={<Auth/>}/> 
-  </Routes> */}
-    </>
-  )
-}
 
-export default App; -->
+
+// import StoreProvider from './store';
+
+// import { Provider as SnackbarProvider } from './components/snackbar';
+
+// import MUITheme from './utils/theme';
+// import Router from './utils/routes';
+// import CustomizationLayout from './components/layouts/customization';
+
+// function App() {
+// 	return (
+// 		<StoreProvider>
+// 			<MUITheme>
+// 				<SnackbarProvider>
+// 					<CustomizationLayout />
+// 					<Router />
+// 				</SnackbarProvider>
+// 			</MUITheme>
+// 		</StoreProvider>
+// 	);
+// }

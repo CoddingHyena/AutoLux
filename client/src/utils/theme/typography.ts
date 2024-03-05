@@ -1,5 +1,5 @@
-import { selectThemeConfig } from '../../store/theme/selectors';
-import { useSelector } from '../../store';
+import { selectThemeConfig } from '../../redux/theme/selectors';
+import { useSelector } from '../../redux';
 
 import getPalette from './palette';
 
