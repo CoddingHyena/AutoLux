@@ -1,12 +1,25 @@
 const userRoute = require('express').Router();
 const bcrypt = require('bcrypt');
 
-const { User } = require('../db/models');
+const { User, Role } = require('../db/models');
 
 userRoute.get('/checkSession', async (req, res) => {
   const { userId, name, email } = req.session;
   res.json({ id: userId, name, email });
 });
+
+function getRoleName(role) {
+  if (role.accessUser) {
+    return 'accessUser';
+  } if (role.accessAdmin) {
+    return 'accessAdmin';
+  } if (role.accessManager) {
+    return 'accessManager';
+  } if (role.accessBoss) {
+    return 'accessBoss';
+  }
+  return 'Unknown Role';
+}
 
 userRoute.post('/reg', async (req, res) => {
   try {
@@ -34,7 +47,22 @@ userRoute.post('/reg', async (req, res) => {
 
       req.session.save(() => {
         console.log('Зарегистрировался!');
-        res.status(201).json({ id: newUser.id, name: newUser.name, email: newUser.email });
+      });
+      const userWithRole = await User.findOne({
+        where: { email },
+        include: [{
+          model: Role,
+          where: { id: newUser.role_id },
+        }],
+      });
+
+      const roleName = getRoleName(userWithRole.Role);
+
+      res.status(201).json({
+        id: userWithRole.id,
+        name: userWithRole.name,
+        email: userWithRole.email,
+        role: roleName,
       });
     }
   } catch (error) {
@@ -42,6 +70,8 @@ userRoute.post('/reg', async (req, res) => {
     res.status(500).json({ err: 'ОШИБКА ПРИ РЕГИСТРАЦИИ' });
   }
 });
+
+
 
 userRoute.post('/log', async (req, res) => {
   try {
@@ -56,8 +86,23 @@ userRoute.post('/log', async (req, res) => {
         req.session.email = reqUser.email;
         req.session.userId = reqUser.id;
         req.session.save(() => {
-          console.log(reqUser.id, reqUser.name, reqUser.email);
-          res.status(200).json({ id: reqUser.id, name: reqUser.name, email: reqUser.email });
+          console.log(reqUser.id, reqUser.name, reqUser.email, 'Зашел!');
+        });
+        const userWithRole = await User.findOne({
+          where: { email },
+          include: [{
+            model: Role,
+            where: { id: reqUser.role_id },
+          }],
+        });
+  
+        const roleName = getRoleName(userWithRole.Role);
+  
+        res.status(201).json({
+          id: userWithRole.id,
+          name: userWithRole.name,
+          email: userWithRole.email,
+          role: roleName,
         });
       } else {
         res.sendStatus(402);
