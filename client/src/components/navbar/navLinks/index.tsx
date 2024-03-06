@@ -7,57 +7,46 @@ import { useAppSelector } from '../../../redux/hooks';
 
 function NavLinks({ navItems }) {
   const user = useAppSelector((store) => store.userSlice.user);
-  const { role } = user;
-  console.log(role);
+  const userRole = user.role;
+  console.log(userRole);
   const navMenuItems = navItems.map((item) => {
-    const { title, type, Icon, id, menuMinWidth, menuChildren, href, role = 'all' } = item;
+    const { title, type, Icon, id, menuMinWidth, menuChildren, href, role } = item;
 
-    switch (role) {
-      case 'all':
-        return (
-          <>
-            <div className="debugel">Кейс все</div>
-            <NavLink key={id} href={href} Icon={Icon} title={title} />
-          </>
-        );
-      case 'accessAdmin':
-        return (
-          <>
-            <div className="debugel">Кейс админ</div>
-            <NavLink key={id} href={href} Icon={Icon} title={title} />
-          </>
-        );
-      case 'accessBoss':
-        return (
-          <>
-            <div className="debugel">Кейс босс</div>
-            <NavLink key={id} href={href} Icon={Icon} title={title} />
-          </>
-        );
-      case 'accessManager':
-        return (
-          <>
-            <div className="debugel">Кейс манагер</div>
-            <NavLink key={id} href={href} Icon={Icon} title={title} />
-          </>
-        );
-      case 'none':
-        return (
-          <>
-            <div className="debugel">Кейс неавторизованные</div>
-            <NavLink key={id} href={href} Icon={Icon} title={title} />
-          </>
-        );
-
-      default:
-        return (
-          <>
-            <div className="debugel">Кейс дефолт</div>
-            <Typography variant="h6" color="error" align="center">
-              Menu Items Error
-            </Typography>
-          </>
-        );
+    if (userRole === 'none' && role === 'none') {
+      return (
+        <>
+          <div className="debugel">Кейс none</div>
+          <NavLink key={id} href={href} Icon={Icon} title={title} />
+        </>
+      );
+    } else if (userRole === 'accessUser' && role === 'accessUser') {
+      return (
+        <>
+          <div className="debugel">Кейс accessUser</div>
+          <NavLink key={id} href={href} Icon={Icon} title={title} />
+        </>
+      );
+    } else if (userRole === 'accessAdmin' && role === 'accessAdmin') {
+      return (
+        <>
+          <div className="debugel">Кейс accessAdmin</div>
+          <NavLink key={id} href={href} Icon={Icon} title={title} />
+        </>
+      );
+    } else if (userRole === 'accessBoss' && role === 'accessBoss') {
+      return (
+        <>
+          <div className="debugel">Кейс accessAdmin</div>
+          <NavLink key={id} href={href} Icon={Icon} title={title} />
+        </>
+      );
+    } else if (userRole === 'accessManager' && role === 'accessManager') {
+      return (
+        <>
+          <div className="debugel">Кейс accessAdmin</div>
+          <NavLink key={id} href={href} Icon={Icon} title={title} />
+        </>
+      );
     }
   });
   return (
