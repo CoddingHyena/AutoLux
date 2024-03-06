@@ -37,6 +37,7 @@ const NAV_LINKS_CONFIG = [
 		title: 'Админ',
 		Icon: WebOutlinedIcon,
 		href: '/admin',
+		role: 'accessAdmin'
 	},
 	{
 		id: uuid(),
@@ -44,6 +45,7 @@ const NAV_LINKS_CONFIG = [
 		title: 'Менеджер',
 		Icon: WebOutlinedIcon,
 		href: '/manager',
+		role: 'accessManager'
 	},
 	{
 		id: uuid(),
@@ -51,31 +53,40 @@ const NAV_LINKS_CONFIG = [
 		title: 'Босс',
 		Icon: WebOutlinedIcon,
 		href: '/boss',
+		role: 'accessBoss'
 	},
 
-	{
-		id: uuid(),
-		type: 'group',
-		title: 'Профиль',
-		Icon: BarChartOutlinedIcon,
-		menuChildren: [
-			{
-				title: 'Профиль (Страница Юзера)',
-				href: '/profile',
-			},
-			{
-				title: 'Вход/Регистрация',
-				href: '/auth',
-			},
+	// {
+	// 	id: uuid(),
+	// 	type: 'group',
+	// 	title: 'Профиль',
+	// 	Icon: BarChartOutlinedIcon,
+	// 	menuChildren: [
+	// 		{
+	// 			title: 'Профиль (Страница Юзера)',
+	// 			href: '/profile',
+	// 		},
+	// 		{
+	// 			title: 'Вход/Регистрация',
+	// 			href: '/auth',
+	// 		},
 
-		],
-	},
+	// 	],
+	// },
 	{
 		id: uuid(),
 		type: 'item',
 		title: 'Контакты',
 		Icon: WebOutlinedIcon,
 		href: '/contacts',
+	},
+	{
+		id: uuid(),
+		type: 'item',
+		title: 'Вход/Регистрация',
+		Icon: WebOutlinedIcon,
+		href: '/auth',
+		role: 'none'
 	},
 ];
 

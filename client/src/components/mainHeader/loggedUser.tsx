@@ -147,79 +147,35 @@ function UserMenu({ handleClose }) {
 					my: 1,
 				}}
 			/>
-			<MenuItem onClick={handleClose} to="/pages/notifications" component={RouterLink}>
+		
+		
+		<MenuItem onClick={handleClose} to="/profile" component={RouterLink}>
 				<ListItemIcon>
-					<NotificationsNoneOutlinedIcon fontSize="small" />
+					<Person2OutlinedIcon fontSize="small" />
 				</ListItemIcon>
-				Notifications <ListBadge color="info.main" count={18} />
+				Профиль
 			</MenuItem>
-			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
-				<ListItemIcon>
-					<DraftsOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Messages
-				<ListBadge color="success.main" count={5} />
-			</MenuItem>
+
 			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
 				<ListItemIcon>
 					<TaskOutlinedIcon fontSize="small" />
 				</ListItemIcon>
-				Tasks <ListBadge color="error.main" count={23} />
+				Мои документы <ListBadge color="error.main" count={23} />
 			</MenuItem>
 			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
 				<ListItemIcon>
 					<CommentOutlinedIcon fontSize="small" />
 				</ListItemIcon>
-				Comments <ListBadge color="warning.main" count={11} />
-			</MenuItem>
-			<Divider
-				sx={{
-					borderColor: 'primary.light',
-					my: 1,
-				}}
-			/>
-			<MenuItem onClick={handleClose} to="/profile" component={RouterLink}>
-				<ListItemIcon>
-					<Person2OutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Profile
+				Мои обращения <ListBadge color="warning.main" count={11} />
 			</MenuItem>
 
-			<MenuItem onClick={handleClose} to="/pages/settings" component={RouterLink}>
-				<ListItemIcon>
-					<SettingsOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Account Settings
-			</MenuItem>
-			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
-				<ListItemIcon>
-					<PaymentOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Payments
-			</MenuItem>
-			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
-				<ListItemIcon>
-					<SummarizeOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Projects
-			</MenuItem>
-			<Divider
-				sx={{
-					borderColor: 'primary.light',
-					my: 1,
-				}}
-			/>
-			<MenuItem onClick={handleClose} component={RouterLink} to="/">
-				<ListItemIcon>
-					<LockPersonOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Lock Account
-			</MenuItem>
+
+			
 			<MenuItem onClick={handleClose} component={RouterLink} to="/">
 				<ListItemIcon>
 					<ExitToAppIcon fontSize="small" />
 				</ListItemIcon>
-				Logout
+				Выйти
 			</MenuItem>
 		</MenuList>
 	);
