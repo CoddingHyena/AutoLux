@@ -28,12 +28,11 @@ import CustomizationLayout from './components/layouts/customization';
 function App() {
 
 
-  // const dispatch = useAppDispatch();
+//   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   void dispatch(fetchCheckUser())
-  // }, []);
-
+//   useEffect(() => {
+//     void dispatch(fetchCheckUser())
+//   }, []);
 
 	return (
 		<Provider store={store}>

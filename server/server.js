@@ -9,7 +9,8 @@ const FileStore = require('session-file-store')(session);
 
 const userRoute = require('./routes/userRoutes');
 const lkRoute = require('./routes/lkRoutes');
-const feedBackRoutes = require('./routes/feedBackRoutes');
+const feedBackRoute = require('./routes/feedBackRoutes');
+const adminRoute = require('./routes/adminRoutes');
 
 const app = express();
 const { PORT, SECRET_KEY_SESSION } = process.env;
@@ -40,7 +41,8 @@ app.use(session(sessionConfig));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/users', userRoute);
-app.use('/api/lk', lkRoute)
-app.use('/api/feedBack', feedBackRoutes)
+app.use('/api/lk', lkRoute);
+app.use('/api/feedBack', feedBackRoute);
+app.use('/api/admin', adminRoute)
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
