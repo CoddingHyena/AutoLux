@@ -1,3 +1,5 @@
+import AuthForm from "./AuthForm";
+
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
@@ -6,20 +8,20 @@ import Card from '@mui/material/Card';
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
 
-export default function mainPage() {
+export default function Auth(): JSX.Element {
 	return (
 		<>
-			<PageHeader title="Главная">
+			<PageHeader title="Руководитель - Показатели предприятия">
 				<Breadcrumbs
 					aria-label="breadcrumb"
 					sx={{
 						textTransform: 'uppercase',
 					}}
 				>
-					{/* <Link underline="hover" href="#!">
+					<Link underline="hover" href="/">
 						Главная
-					</Link> */}
-					<Typography color="text.tertiary">Главная</Typography>
+					</Link>
+					<Typography color="text.tertiary">Показатели предприятия</Typography>
 				</Breadcrumbs>
 			</PageHeader>
 			<Card
@@ -28,11 +30,13 @@ export default function mainPage() {
 					minHeight: '60vh',
 				}}
 			>
-				<CardHeader title="Заголовок секции на главной">
+				<CardHeader title="Заголовок секции босса" subtitle="Подзаголовок секции">
 					Доп заголовок
 				</CardHeader>
-                Контент главной
+                контент
 			</Card>
+      <AuthForm />
+
 		</>
 	);
 }

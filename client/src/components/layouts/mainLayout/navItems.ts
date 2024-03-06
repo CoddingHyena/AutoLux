@@ -64,12 +64,8 @@ const NAV_LINKS_CONFIG = [
 				href: '/profile',
 			},
 			{
-				title: 'Авторизация',
-				href: '/login',
-			},
-			{
-				title: 'Регистрация',
-				href: '/register',
+				title: 'Вход/Регистрация',
+				href: '/auth',
 			},
 
 		],

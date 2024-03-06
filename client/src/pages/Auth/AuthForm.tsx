@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import './AuthForm.css'
 import CheckIcon from '@mui/icons-material/Check';
 
-import { InputsAuthType } from "../../types";
+import { InputsAuthType } from "../../../types";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchAuth } from "../../redux/User/userThunkAction";
@@ -23,6 +23,7 @@ export default function AuthForm(): JSX.Element {
   const [statPersonData, setStaPersonData] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
 
   const msg = useAppSelector((store) => store.userSlice.msg);
 

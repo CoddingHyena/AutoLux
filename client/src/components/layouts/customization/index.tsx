@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { setConfigKey, setDefaultConfig } from '@/store/theme';
-import { selectThemeConfig } from '@/store/theme/selectors';
-import { useSelector, useDispatch } from '@/store';
+import { setConfigKey, setDefaultConfig } from '../../../redux/theme';
+import { selectThemeConfig } from '../../../redux/theme/selectors';
+// import { useSelector, useDispatch } from '@/store';
+import { useSelector, useDispatch } from '../../../redux/';
 
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';

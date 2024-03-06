@@ -6,10 +6,10 @@ import Card from '@mui/material/Card';
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
 
-export default function profilePage() {
+export default function ProfilePage() {
 	return (
 		<>
-			<PageHeader title="Мой профиль">
+			<PageHeader title="Ваш профиль">
 				<Breadcrumbs
 					aria-label="breadcrumb"
 					sx={{
@@ -28,7 +28,7 @@ export default function profilePage() {
 					minHeight: '60vh',
 				}}
 			>
-				<CardHeader title="Заголовок секции Профиль пользователя" subtitle="Подзаголовок секции">
+				<CardHeader title="Заголовок секции профиль" subtitle="Подзаголовок секции">
 					Доп заголовок
 				</CardHeader>
                 контент

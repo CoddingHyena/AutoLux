@@ -6,9 +6,9 @@ import themePalette from './palette';
 import themeTypography from './typography';
 import componentStyleOverrides from './compStyleOverride';
 
-import { selectThemeConfig } from '@/store/theme/selectors';
-import { useSelector } from '@/store';
 
+import { selectThemeConfig } from '../../redux/theme/selectors';
+import { useSelector } from '../../redux/'
 const getTheme = () => {
 	const { mode, borderRadius } = useSelector(selectThemeConfig);
 
@@ -29,7 +29,7 @@ const getTheme = () => {
 				sp: 400,
 				sm: 600,
 				md: 900,
-				lg: 1200,
+				lg: '100%',
 				xl: 1536,
 			},
 		},
