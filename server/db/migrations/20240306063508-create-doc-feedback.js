@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      userName: {
         type: Sequelize.STRING
       },
-      datenow: {
+      dateNow: {
         type: Sequelize.DATE
       },
       manager: {
@@ -21,10 +21,13 @@ module.exports = {
       status: {
         type: Sequelize.BOOLEAN
       },
-      phonenumber: {
+      phoneNumber: {
         type: Sequelize.STRING
       },
-      ourcomment: {
+      ourComment: {
+        type: Sequelize.STRING
+      },
+      userComment: {
         type: Sequelize.STRING
       },
       createdAt: {
