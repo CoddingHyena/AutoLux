@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 // MUI
 import Typography from '@mui/material/Typography';
@@ -30,172 +30,194 @@ import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 
 // Components
 import NotificationsButton from './notificationButton';
+import { useDispatch } from 'react-redux';
+import { fetchLogout } from '../../redux/User/userThunkAction';
 
 function LoggedUser() {
-	const [anchorEl, setAnchorEl] = useState(null);
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
+  const [anchorEl, setAnchorEl] = useState(null);
 
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-	return (
-		<>
-			<Menu
-				elevation={26}
-				sx={{
-					'& .MuiMenuItem-root': {
-						mt: 0.5,
-					},
-				}}
-				anchorEl={anchorEl}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'right',
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'right',
-				}}
-				open={Boolean(anchorEl)}
-				onClose={handleClose}
-			>
-				<UserMenu handleClose={handleClose} />
-			</Menu>
-			<Stack height="100%" direction="row" flex={1} justifyContent="flex-end" alignItems="center" spacing={0}>
-				<NotificationsButton />
-				<IconButton size="small">
-					<Badge color="tertiary" overlap="rectangular" variant="dot">
-						<CommentOutlinedIcon color="primary" fontSize="small" />
-					</Badge>
-				</IconButton>
-				<ButtonBase
-					onClick={handleClick}
-					variant="outlined"
-					sx={{
-						ml: 1,
-						height: '100%',
-						overflow: 'hidden',
-						borderRadius: '25px',
-						transition: '.2s',
-						px: 1,
-						transitionProperty: 'background,color',
-						'&:hover': {
-							bgcolor: (theme) => alpha(theme.palette.primary.main, 0.06),
-						},
-						'&:hover .MuiSvgIcon-root': {
-							opacity: '1',
-							// transform: 'translateX(10px)',
-						},
-					}}
-				>
-					<Stack width="100%" direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-						<Avatar
-							alt="User Img"
-							sx={{
-								width: 35,
-								height: 35,
-								boxShadow: (theme) =>
-									`0px 0px 0px 4px ${theme.palette.background.paper} ,0px 0px 0px 5px ${theme.palette.primary.main} `,
-							}}
-						/>
-						<Typography
-							variant="body2"
-							display={{
-								xs: 'none',
-								sm: 'inline-block',
-							}}
-						>
-							Константин
-						</Typography>
-						<ExpandMoreIcon
-							fontSize="small"
-							sx={{
-								transition: '0.2s',
-								opacity: '0',
-							}}
-						/>
-					</Stack>
-				</ButtonBase>
-			</Stack>
-		</>
-	);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <Menu
+        elevation={26}
+        sx={{
+          '& .MuiMenuItem-root': {
+            mt: 0.5,
+          },
+        }}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <UserMenu handleClose={handleClose} />
+      </Menu>
+      <Stack
+        height="100%"
+        direction="row"
+        flex={1}
+        justifyContent="flex-end"
+        alignItems="center"
+        spacing={0}
+      >
+        <NotificationsButton />
+        <IconButton size="small">
+          <Badge color="tertiary" overlap="rectangular" variant="dot">
+            <CommentOutlinedIcon color="primary" fontSize="small" />
+          </Badge>
+        </IconButton>
+        <ButtonBase
+          onClick={handleClick}
+          variant="outlined"
+          sx={{
+            ml: 1,
+            height: '100%',
+            overflow: 'hidden',
+            borderRadius: '25px',
+            transition: '.2s',
+            px: 1,
+            transitionProperty: 'background,color',
+            '&:hover': {
+              bgcolor: (theme) => alpha(theme.palette.primary.main, 0.06),
+            },
+            '&:hover .MuiSvgIcon-root': {
+              opacity: '1',
+              // transform: 'translateX(10px)',
+            },
+          }}
+        >
+          <Stack
+            width="100%"
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={1}
+          >
+            <Avatar
+              alt="User Img"
+              sx={{
+                width: 35,
+                height: 35,
+                boxShadow: (theme) =>
+                  `0px 0px 0px 4px ${theme.palette.background.paper} ,0px 0px 0px 5px ${theme.palette.primary.main} `,
+              }}
+            />
+            <Typography
+              variant="body2"
+              display={{
+                xs: 'none',
+                sm: 'inline-block',
+              }}
+            >
+              Константин
+            </Typography>
+            <ExpandMoreIcon
+              fontSize="small"
+              sx={{
+                transition: '0.2s',
+                opacity: '0',
+              }}
+            />
+          </Stack>
+        </ButtonBase>
+      </Stack>
+    </>
+  );
 }
 
 function UserMenu({ handleClose }) {
-	return (
-		<MenuList
-			sx={{
-				p: 1,
-				'& .MuiMenuItem-root': {
-					borderRadius: 2,
-				},
-			}}
-		>
-			<Stack px={3}>
-				<Typography variant="subtitle1" textAlign="center">
-					Константин Беляков
-				</Typography>
-				<Typography variant="subtitle2" textAlign="center">
-					Должность
-				</Typography>
-			</Stack>
-			<Divider
-				sx={{
-					borderColor: 'primary.light',
-					my: 1,
-				}}
-			/>
-		
-		
-		<MenuItem onClick={handleClose} to="/profile" component={RouterLink}>
-				<ListItemIcon>
-					<Person2OutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Профиль
-			</MenuItem>
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
 
-			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
-				<ListItemIcon>
-					<TaskOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Мои документы <ListBadge color="error.main" count={23} />
-			</MenuItem>
-			<MenuItem onClick={handleClose} to="/" component={RouterLink}>
-				<ListItemIcon>
-					<CommentOutlinedIcon fontSize="small" />
-				</ListItemIcon>
-				Мои обращения <ListBadge color="warning.main" count={11} />
-			</MenuItem>
+  const logoutHandler = async (): Promise<void> => {
+    void dispatch(fetchLogout());
+    navigator('/');
+  };
 
+  return (
+    <MenuList
+      sx={{
+        p: 1,
+        '& .MuiMenuItem-root': {
+          borderRadius: 2,
+        },
+      }}
+    >
+      <Stack px={3}>
+        <Typography variant="subtitle1" textAlign="center">
+          Константин Беляков
+        </Typography>
+        <Typography variant="subtitle2" textAlign="center">
+          Должность
+        </Typography>
+      </Stack>
+      <Divider
+        sx={{
+          borderColor: 'primary.light',
+          my: 1,
+        }}
+      />
 
-			
-			<MenuItem onClick={handleClose} component={RouterLink} to="/">
-				<ListItemIcon>
-					<ExitToAppIcon fontSize="small" />
-				</ListItemIcon>
-				Выйти
-			</MenuItem>
-		</MenuList>
-	);
+      <MenuItem onClick={handleClose} to="/profile" component={RouterLink}>
+        <ListItemIcon>
+          <Person2OutlinedIcon fontSize="small" />
+        </ListItemIcon>
+        Профиль
+      </MenuItem>
+
+      <MenuItem onClick={handleClose} to="/" component={RouterLink}>
+        <ListItemIcon>
+          <TaskOutlinedIcon fontSize="small" />
+        </ListItemIcon>
+        Мои документы <ListBadge color="error.main" count={23} />
+      </MenuItem>
+      <MenuItem onClick={handleClose} to="/" component={RouterLink}>
+        <ListItemIcon>
+          <CommentOutlinedIcon fontSize="small" />
+        </ListItemIcon>
+        Мои обращения <ListBadge color="warning.main" count={11} />
+      </MenuItem>
+
+      <MenuItem onClick={handleClose} component={RouterLink} to="/">
+        <ListItemIcon>
+          <ExitToAppIcon fontSize="small" />
+        </ListItemIcon>
+        <button onClick={logoutHandler}>Выйти</button>
+      </MenuItem>
+    </MenuList>
+  );
 }
 
 function ListBadge({ color, count }) {
-	return (
-		<Box
-			ml={1}
-			bgcolor={color}
-			color="primary.contrastText"
-			height={20}
-			width={20}
-			fontSize="body1"
-			borderRadius="50%"
-			display="grid"
-			sx={{ placeItems: 'center' }}
-		>
-			{count}
-		</Box>
-	);
+  return (
+    <Box
+      ml={1}
+      bgcolor={color}
+      color="primary.contrastText"
+      height={20}
+      width={20}
+      fontSize="body1"
+      borderRadius="50%"
+      display="grid"
+      sx={{ placeItems: 'center' }}
+    >
+      {count}
+    </Box>
+  );
 }
 export default LoggedUser;

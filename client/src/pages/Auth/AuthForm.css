@@ -1,16 +1,16 @@
 .authContainer {
-    background-color: rgb(231, 218, 218);
-    width: 550px;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin: 70px;
-    padding: 40px;
-    border-radius: 11px;
+  background-color: #fff;
+  width: 550px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 70px;
+  padding: 40px;
+  border-radius: 11px;
 }
 
 .authText {
-    color: rgb(97, 97, 97);
-    font-size: 27px;
+  color: rgb(97, 97, 97);
+  font-size: 27px;
 }
