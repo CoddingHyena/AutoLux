@@ -13,10 +13,15 @@ userRoute.post('/reg', async (req, res) => {
     const {
       name, email, password, persDataAgrBool,
     } = req.body;
+
     console.log(req.body);
+
     const user = await User.findOne({ where: { email } });
     if (user) {
       res.sendStatus(403);
+    }
+    if (!email.includes('@')) {
+      res.sendStatus(405);
     } else {
       const hash = await bcrypt.hash(password, 10);
       const newUser = await User.create({

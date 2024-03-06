@@ -50,6 +50,9 @@ const userSlice = createSlice({
             if(action.error.message?.slice(-3) === '403'){
                 state.msg = 'Такой пользователь существует!'
             }
+            if(action.error.message?.slice(-3) === '405'){
+                state.msg = 'email.includes(@) ! '
+            }
            
         });
         
