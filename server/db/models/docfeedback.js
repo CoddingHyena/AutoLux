@@ -14,12 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   DocFeedback.init({
-    username: DataTypes.STRING,
-    datenow: DataTypes.DATE,
+    userName: DataTypes.STRING,
+    dateNow: DataTypes.DATE,
     manager: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    phonenumber: DataTypes.STRING,
-    ourcomment: DataTypes.STRING
+    phoneNumber: DataTypes.STRING,
+    ourComment: DataTypes.STRING,
+    userComment: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'DocFeedback',

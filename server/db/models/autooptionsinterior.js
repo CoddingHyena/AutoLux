@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   AutoOptionsInterior.init({
     optionName: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    price: DataTypes.INTEGER,
+    photo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'AutoOptionsInterior',

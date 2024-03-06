@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   AutoOptionsColor.init({
     model_id: DataTypes.INTEGER,
     colorName: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    price: DataTypes.INTEGER,
+    photo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'AutoOptionsColor',
