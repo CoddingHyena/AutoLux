@@ -9,7 +9,8 @@ module.exports = {
       {
         name: 'Иванов Иван Иванович',
         email: '123@321.ru',
-        password: '1',
+        phone: '+7 961 1111',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
         propType: false,
         persDataAgr: true,
@@ -19,7 +20,8 @@ module.exports = {
       {
         name: 'Администратор',
         email: '123@421.ru',
-        password: '1',
+        phone: '+7 961 1112',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 2,
         propType: false,
         persDataAgr: true,
@@ -29,7 +31,8 @@ module.exports = {
       {
         name: 'Менеджер Анна',
         email: '123@521.ru',
-        password: '1',
+        phone: '+7 961 1113',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 3,
         propType: false,
         persDataAgr: true,
@@ -39,7 +42,8 @@ module.exports = {
       {
         name: 'Менеджер Ксения',
         email: '123@621.ru',
-        password: '1',
+        phone: '+7 961 1114',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 3,
         propType: false,
         persDataAgr: true,
@@ -49,7 +53,8 @@ module.exports = {
       {
         name: 'Руководитель',
         email: '123@721.ru',
-        password: '1',
+        phone: '+7 961 1115',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 4,
         propType: false,
         persDataAgr: true,
@@ -59,7 +64,8 @@ module.exports = {
       {
         name: 'ООО "Рога и Копыта"',
         email: '122@621.ru',
-        password: '1',
+        phone: '2-15-37',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
         propType: true,
         persDataAgr: true,
@@ -69,7 +75,8 @@ module.exports = {
       {
         name: 'Петров Петр',
         email: '124@321.ru',
-        password: '1',
+        phone: '+7 961 5544',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
         propType: false,
         persDataAgr: true,
@@ -79,7 +86,8 @@ module.exports = {
       {
         name: 'Чернова Инна',
         email: '125@321.ru',
-        password: '1',
+        phone: '+7 965 6871',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
         propType: false,
         persDataAgr: true,
@@ -89,7 +97,8 @@ module.exports = {
       {
         name: 'Голованова Евгения Андреевна',
         email: '126@321.ru',
-        password: '1',
+        phone: '+7 961 7891',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
         propType: false,
         persDataAgr: true,
@@ -99,7 +108,8 @@ module.exports = {
       {
         name: 'ОАО АвтоЛюкс',
         email: '120@321.ru',
-        password: '1',
+        phone: '2-15-79',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
         propType: true,
         persDataAgr: false,

@@ -3,9 +3,26 @@ const bcrypt = require('bcrypt');
 
 const { User, Role } = require('../db/models');
 
+function getRoleName2(roleId) {
+  if (roleId === 1) {
+    return 'accessUser';
+  } if (roleId === 2) {
+    return 'accessAdmin';
+  } if (roleId === 3) {
+    return 'accessManager';
+  } if (roleId === 4) {
+    return 'accessBoss';
+  }
+  return 'none';
+}
+
 userRoute.get('/checkSession', async (req, res) => {
-  const { userId, name, email } = req.session;
-  res.json({ id: userId, name, email });
+  const {
+    userId, name, email, roleId,
+  } = req.session;
+  const role = getRoleName2(roleId);
+
+  res.json({ id: userId, name, email, role });
 });
 
 function getRoleName(role) {
@@ -43,6 +60,7 @@ userRoute.post('/reg', async (req, res) => {
       req.session.name = newUser.name;
       req.session.email = newUser.email;
       req.session.userId = newUser.id;
+      req.session.roleId = newUser.role_id;
       console.log('req.sessions====>', req.session);
 
       req.session.save(() => {
@@ -71,8 +89,6 @@ userRoute.post('/reg', async (req, res) => {
   }
 });
 
-
-
 userRoute.post('/log', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -85,6 +101,7 @@ userRoute.post('/log', async (req, res) => {
         req.session.name = reqUser.name;
         req.session.email = reqUser.email;
         req.session.userId = reqUser.id;
+        req.session.roleId = reqUser.role_id;
         req.session.save(() => {
           console.log(reqUser.id, reqUser.name, reqUser.email, 'Зашел!');
         });
@@ -95,9 +112,9 @@ userRoute.post('/log', async (req, res) => {
             where: { id: reqUser.role_id },
           }],
         });
-  
+
         const roleName = getRoleName(userWithRole.Role);
-  
+
         res.status(201).json({
           id: userWithRole.id,
           name: userWithRole.name,
