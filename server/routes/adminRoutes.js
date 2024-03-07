@@ -1,7 +1,7 @@
 const adminRoute = require('express').Router();
 
 const {
-  DocTestDrive, DocTo, DocFeedback, PhoneNum, Cars, User,
+  DocTestDrive, DocTO, DocFeedback, PhoneNum, Cars, User,
 } = require('../db/models');
 
 adminRoute.get('/docTD', async (req, res) => {
@@ -48,7 +48,7 @@ adminRoute.delete('/docTD/:id', async (req, res) => {
 
 adminRoute.get('/docTO', async (req, res) => {
   try {
-    const docsTO = await DocTo.findAll();
+    const docsTO = await DocTO.findAll();
     const getDocsTO = docsTO.map((el) => el.get({ plain: true }));
     res.json(getDocsTO);
   } catch (error) {
@@ -63,7 +63,7 @@ adminRoute.put('/docTO/:id', async (req, res) => {
     dateNow, manager, status, probegKm, ourComment,
   } = req.body;
   try {
-    const queryDocTO = await DocTo.findByPk(id);
+    const queryDocTO = await DocTO.findByPk(id);
     queryDocTO.dateNow = dateNow;
     queryDocTO.manager = manager;
     queryDocTO.status = status;
@@ -80,10 +80,10 @@ adminRoute.put('/docTO/:id', async (req, res) => {
 adminRoute.delete('/docTO/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    await DocTo.destroy({ where: { id } });
+    await DocTO.destroy({ where: { id } });
     res.json(id);
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ DELETE_DOCTO ADMIN');
+    console.log(error, 'ОШИБКА В РУЧКЕ DELETE_DocTO ADMIN');
     res.sendStatus(500);
   }
 });

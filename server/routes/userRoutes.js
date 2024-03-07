@@ -13,7 +13,7 @@ function getRoleName2(roleId) {
   } if (roleId === 4) {
     return 'accessBoss';
   }
-  return 'Unknown Role';
+  return 'none';
 }
 
 userRoute.get('/checkSession', async (req, res) => {
