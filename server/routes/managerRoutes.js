@@ -1,6 +1,6 @@
 const managerRoute = require('express').Router();
 
-const { DocFeedback, DocTestDrive, DocTo } = require('../db/models');
+const { DocFeedback, DocTestDrive, DocTo, Cars } = require('../db/models');
 
 managerRoute.get('/docFB/guest', async (req, res) => {
   try {
@@ -131,5 +131,16 @@ managerRoute.put('/docTO/:id', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+managerRoute.get('/car', async (req, res) => {
+    try {
+      const carsTD = await Cars.findAll({ where: { ours: true, bu: true } });
+      const getCarsTD = carsTD.map((el) => el.get({ plain: true }));
+      res.json(getCarsTD);
+    } catch (error) {
+      console.log(error, 'ошибка в ручке GET_carsTD  MANAGER');
+      res.sendStatus(500);
+    }
+  });
 
 module.exports = managerRoute;
