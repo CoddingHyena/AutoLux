@@ -1,0 +1,44 @@
+{
+	"files": [
+		{
+			"path": "client/src/components/layouts/mainLayout/navItems.ts",
+			"bookmarks": [
+				{
+					"line": 9,
+					"column": 62,
+					"label": "Ссылки верхнего меню"
+				}
+			]
+		},
+		{
+			"path": "client/src/components/navbar/navLinks/index.tsx",
+			"bookmarks": [
+				{
+					"line": 6,
+					"column": 33,
+					"label": "Компоненты верхнего меню"
+				}
+			]
+		},
+		{
+			"path": "client/src/utils/routes/index.tsx",
+			"bookmarks": [
+				{
+					"line": 21,
+					"column": 19,
+					"label": "Роуты"
+				}
+			]
+		},
+		{
+			"path": "client/src/pages/Main/Main.tsx",
+			"bookmarks": [
+				{
+					"line": 51,
+					"column": 36,
+					"label": ""
+				}
+			]
+		}
+	]
+}
