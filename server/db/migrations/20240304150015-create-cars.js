@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       gosNum: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       gear: {
         type: Sequelize.STRING,
