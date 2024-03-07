@@ -11,7 +11,7 @@ import MainLayout from '../../components/layouts/mainLayout';
 const SamplePage = withLazyLoadably(lazy(() => import('../../pages/sample')));
 const BossPage = withLazyLoadably(lazy(() => import('../../pages/Boss/Boss')));
 const ProfilePage = withLazyLoadably(lazy(() => import('../../pages/Profile/Profile')));
-const MainPage = withLazyLoadably(lazy(() => import('../../pages/Main/mainPage')));
+const MainPage = withLazyLoadably(lazy(() => import('../../pages/Main/Main')));
 const ManagerPage = withLazyLoadably(lazy(() => import('../../pages/Manager/Manager')));
 const Auth = withLazyLoadably(lazy(() => import('../../pages/Auth/Auth')));
 const AdminPage = withLazyLoadably(lazy(() => import('../../pages/Admin/Admin')));

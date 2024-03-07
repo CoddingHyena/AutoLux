@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { fetchCheckUser } from '../redux/User/userThunkAction';
 import { useAppDispatch } from '../redux/hooks';
 
-
 import '@/assets/css/style.css';
 import '@fontsource/rubik/300.css';
 import '@fontsource/rubik/400.css';
@@ -18,7 +17,7 @@ import '@fontsource/roboto/700.css';
 
 // import StoreProvider from './store';
 import store from './redux';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 import { Provider as SnackbarProvider } from './components/snackbar';
 
@@ -27,30 +26,25 @@ import Router from './utils/routes';
 import CustomizationLayout from './components/layouts/customization';
 function App() {
 
-
   // const dispatch = useAppDispatch();
 
   // useEffect(() => {
   //   void dispatch(fetchCheckUser())
   // }, []);
 
-
-	return (
-		<Provider store={store}>
-			<MUITheme>
-				<SnackbarProvider>
-					<CustomizationLayout />
-					<Router />
-				</SnackbarProvider>
-			</MUITheme>
+  return (
+    <Provider store={store}>
+      <MUITheme>
+        <SnackbarProvider>
+          <CustomizationLayout />
+          <Router />
+        </SnackbarProvider>
+      </MUITheme>
     </Provider>
-	);
+  );
 }
 
 export default App;
-
-
-
 
 // import store from '../redux/store.ts'
 // import { BrowserRouter } from 'react-router-dom'
@@ -62,9 +56,6 @@ export default App;
 //  </BrowserRouter>
 //  </Provider>
 // )
-
-
-
 
 // import StoreProvider from './store';
 

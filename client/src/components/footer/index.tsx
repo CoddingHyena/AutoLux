@@ -91,9 +91,9 @@ function Footer() {
 							<Typography variant="h6" my={1}>
 								Контакты
 							</Typography>
-							<ContactLink Icon={LocalPhoneOutlinedIcon} text="+00 000 000 00 00" />
-							<ContactLink Icon={EmailOutlinedIcon} text="support@slim_template.com" />
-							<ContactLink Icon={LocationOnOutlinedIcon} text="42322 DF ciudad paleta, Noxus, México" />
+							<ContactLink Icon={LocalPhoneOutlinedIcon} text="+79998887766" />
+							<ContactLink Icon={EmailOutlinedIcon} text="support@autolux.black" />
+							<ContactLink Icon={LocationOnOutlinedIcon} text="127322, г. Москва, Сиреневый бульвар 19" />
 						</Stack>
 					</Grid>
 					<Grid item xs={12} sm={6} md={3}>

@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   AutoOptionsComplect.init({
     model_id: DataTypes.INTEGER,
     complectationName: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    price: DataTypes.INTEGER,
+    photo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'AutoOptionsComplect',
