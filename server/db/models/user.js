@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Role, { foreignKey: 'role_id' });
-      this.hasMany(models.PhoneNum, { foreignKey: 'user_id' });
       this.hasMany(models.Cars, { foreignKey: 'user_id' });
       this.hasMany(models.DocUserForm, { foreignKey: 'user_id' });
       this.hasMany(models.DocTestDrive, { foreignKey: 'user_id' });
