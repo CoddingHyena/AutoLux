@@ -144,7 +144,7 @@ module.exports = {
         engine: '1.4 GASOLINE',
         vin: 'WL539111664AN97',
         user_id: 10,
-        probegTotal: 233,
+        probegTotal: 235,
         ours: true,
         bu: true,
         createdAt: new Date(),
