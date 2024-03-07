@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.DocUserForm, { foreignKey: 'user_id' });
       this.hasMany(models.DocTestDrive, { foreignKey: 'user_id' });
       this.hasMany(models.DocTO, { foreignKey: 'user_id' });
+      this.hasMany(models.DocFeedback, { foreignKey: 'user_id' });
     }
   }
   User.init({

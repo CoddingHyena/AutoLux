@@ -11,6 +11,7 @@ const userRoute = require('./routes/userRoutes');
 const lkRoute = require('./routes/lkRoutes');
 const feedBackRoute = require('./routes/feedBackRoutes');
 const adminRoute = require('./routes/adminRoutes');
+const managerRoute = require('./routes/managerRoutes');
 
 const app = express();
 const { PORT, SECRET_KEY_SESSION } = process.env;
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/users', userRoute);
 app.use('/api/lk', lkRoute);
 app.use('/api/feedBack', feedBackRoute);
-app.use('/api/admin', adminRoute)
+app.use('/api/admin', adminRoute);
+app.use('/api/manager', managerRoute);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

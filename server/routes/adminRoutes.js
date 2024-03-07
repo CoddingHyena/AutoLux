@@ -105,7 +105,7 @@ adminRoute.put('/docFB/:id', async (req, res) => {
     dateNow, manager, status, phoneNumber, ourComment,
   } = req.body;
   try {
-    const queryDocFB = await DocTo.findByPk(id);
+    const queryDocFB = await DocFeedback.findByPk(id);
     queryDocFB.dateNow = dateNow;
     queryDocFB.manager = manager;
     queryDocFB.status = status;
@@ -114,7 +114,7 @@ adminRoute.put('/docFB/:id', async (req, res) => {
     queryDocFB.save();
     res.json(queryDocFB);
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ PUT_docTD');
+    console.log(error, 'ОШИБКА В РУЧКЕ PUT_docFB admin');
     res.sendStatus(500);
   }
 });
