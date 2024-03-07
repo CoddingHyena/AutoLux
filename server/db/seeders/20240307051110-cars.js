@@ -79,7 +79,7 @@ module.exports = {
         gear: '5x MANUAL',
         engine: '1.6 GASOLINE TURBO',
         vin: 'FF98879884AN97',
-        user_id: 6,
+        user_id: 8,
         probegTotal: 383633,
         ours: false,
         bu: true,
