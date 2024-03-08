@@ -5,6 +5,7 @@ import userSlice from './User/userSlice'; // Путь к вашему userSlice
 import themeReducer from '../redux/theme'; // Путь к вашему themeReducer
 import lkSlice from '../redux/lk/lkSlice';
 import adminSlice from '../redux/admin/adminSlice';
+import managerSlice from '../redux/manager/managerSlice';
 
 // Определяем тип стора, если вам нужно строгая типизация
 type StoreType = {
@@ -12,6 +13,7 @@ type StoreType = {
     theme: ReturnType<typeof themeReducer>;
     lkSlice: ReturnType<typeof lkSlice>;
     adminSlice: ReturnType<typeof adminSlice>;
+    managerSlice: ReturnType<typeof managerSlice>
 };
 
 // Создаем конфигурацию стора с объединением редьюсеров
@@ -21,6 +23,7 @@ const store = configureStore({
         theme: themeReducer, // themeReducer отвечает за раздел 'theme'
         lkSlice,
         adminSlice,
+        managerSlice,
     },
 });
 
