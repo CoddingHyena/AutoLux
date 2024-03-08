@@ -80,8 +80,16 @@ export type UserType = {
     role_id: number;
     propType: boolean;
     persDataArg?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
 }
 
 export type UserSType = UserType[];
+
+export  type inputsUserPutType = {
+    name: string;
+    phone: string;
+}
+
+export type UpdateUserType = {
+    inputsName: string;
+    inputsPhone: string;
+}

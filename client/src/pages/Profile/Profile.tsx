@@ -27,8 +27,8 @@ import CardHeader from '../../components/cardHeader';
 import toUserDocs from '../../_mocks/toUserDocs';
 import userCars from '../../_mocks/cars';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchCars, fetchDocTD, fetchDocTO } from '../../redux/lk/lkThunkActions';
-import { useEffect } from 'react';
+import { fetchCars, fetchDocTD, fetchDocTO, fetchLkUsers, fetchUpdatUser } from '../../redux/lk/lkThunkActions';
+import { useEffect, useState } from 'react';
 
 const getHeadCellsTO = [
   {
@@ -121,17 +121,53 @@ const getHeadCellsUserAuto = [
 ];
 
 export default function Account() {
-  return (
-    <Stack spacing={6} sx={{ marginTop: 4 }}>
-      <GeneralSettingsSection />
-      <UserDocsToTable />
-      <UserDocsTestDriveTable />
-      <UserAutoTable />
-    </Stack>
-  );
-}
+  
+    return (
+      <Stack spacing={6} sx={{ marginTop: 4 }}>
+           <GeneralSettingsSection />
+           <UserDocsToTable />
+           <UserDocsTestDriveTable />
+           <UserAutoTable />
+      </Stack>
+    );  
+  }
+   
+
 
 function GeneralSettingsSection() {
+
+  const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
+  
+
+  const user = useAppSelector((store) => store.lkSlice.user);
+  const name = user.name;
+  const phone = user.phone;
+  console.log('userUpdate', user)
+
+  const [inputsName, setInputsName] = useState<string>(name);
+  const [inputsPhone, setInputsPhone] = useState<string>(phone);
+  const dispatch = useAppDispatch();
+
+  
+
+
+
+  useEffect(() => {
+    void dispatch(fetchLkUsers())
+  }, []);
+
+  const handleTitleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputsName(event.target.value);
+   
+  }
+  const handleTitleChange2 = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputsPhone(event.target.value);
+  }
+
+  const handleSaveUser = async () : Promise<void> => {
+    void dispatch(fetchUpdatUser({inputsName, inputsPhone}))
+  }
+  if(!isLoading){
   return (
     <Card type="section">
       <CardHeader title="Ваш профиль" />
@@ -139,20 +175,27 @@ function GeneralSettingsSection() {
         <form onSubmit={() => {}}>
           <Grid container rowSpacing={2} columnSpacing={4}>
             <Grid item xs={12} sm={6} md={6}>
-              <TextField label="ФИО" variant="outlined" defaultValue="elizabeth_123" fullWidth />
+              <TextField label="ФИО"
+               variant="outlined"
+                defaultValue={`${name}`} 
+                fullWidth 
+                onChange={handleTitleChange1}
+                />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <TextField
-                type="Email"
-                label="Email"
+                type="Phone"
+                label="Phone"
                 variant="outlined"
-                defaultValue="demo@sample.com"
+                defaultValue={`${phone}`}
                 fullWidth
+                onChange={handleTitleChange2}
               />
             </Grid>
 
             <Grid item xs={12} sm={12} md={12}>
               <Button
+              onClick={(() => handleSaveUser())}
                 disableElevation
                 variant="contained"
                 endIcon={<EditIcon />}
@@ -168,6 +211,7 @@ function GeneralSettingsSection() {
       </Stack>
     </Card>
   );
+}
 }
 
 // GET('/api/lk/DocTestDrive')

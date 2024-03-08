@@ -1,17 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserCarsType, UserDocsTDType } from "../../../types"
-import { fetchCars, fetchDocTD, fetchDocTO } from "./lkThunkActions";
+import { UserCarsType, UserDocsTDType, UserType } from "../../../types"
+import { fetchCars, fetchDocTD, fetchDocTO, fetchLkUsers, fetchUpdatUser } from "./lkThunkActions";
 
 export type SliceState = {
+    user?: UserType;
     docsTD?: UserDocsTDType;
     docsTO?: UserDocsTDType;
     cars?: UserCarsType;
+    isLoading: boolean;
 };
 
 const initialState: SliceState = {
+    user: {
+    id: 0,
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    role_id: 0,
+    propType: false,
+    persDataArg: false
+    },
     docsTD: [],
     docsTO: [],
-    cars: []
+    cars: [],
+    isLoading: true,
 
 };
 
@@ -20,14 +33,25 @@ const lkSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        builder.addCase(fetchLkUsers.fulfilled, (state, {payload}) => {
+            state.user = payload;
+            state.isLoading = false;
+        })
+        builder.addCase(fetchUpdatUser.fulfilled, (state, {payload}) => {
+            state.user = payload;
+            state.isLoading = false;
+        })
         builder.addCase(fetchDocTD.fulfilled, (state, {payload}) => {
             state.docsTD = payload;
+            state.isLoading = false;
         })
         builder.addCase(fetchDocTO.fulfilled, (state, {payload}) => {
             state.docsTO = payload;
+            state.isLoading = false;
         })
         builder.addCase(fetchCars.fulfilled, (state, {payload}) => {
             state.cars = payload;
+            state.isLoading = false;
         })
     }
 })
