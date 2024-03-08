@@ -17,10 +17,22 @@ import SaleProgressCard from './saleProgressCard';
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
 import toUserDocs from '../../_mocks/toUserDocs';
+import managersByDocs from '../../_mocks/managersByDocs';
+import problemDocs from '../../_mocks/problemDocs';
+
+import StatsSection from './statsSection';
 
 export default function BossPage() {
   return (
-    <Stack sx={{ marginTop: 4 }}>
+    <Stack>
+      <WelcomeSection />
+      {/* StatsSection на всю ширину и первым элементом с отступом снизу */}
+      <Grid item xs={12} sx={{ mb: 3 }}>
+        {' '}
+        {/* Устанавливаем отступ снизу */}
+        <StatsSection />
+      </Grid>
+
       <Grid container spacing={3}>
         {/* Колонка для SaleProgressCard */}
         <Grid
@@ -45,6 +57,7 @@ export default function BossPage() {
         </Grid>
       </Grid>
       <ManagersTable />
+      <ProblemsTable />
     </Stack>
   );
 }
@@ -55,14 +68,39 @@ function ManagersTable({ name, props }) {
       <CardHeader title="Менеджеры выполнено за месяц" subtitle=""></CardHeader>
       <DataTable
         {...props}
-        headCells={getHeadCellsTO}
-        rows={toUserDocs}
+        headCells={getHeadCellsManagers}
+        rows={managersByDocs}
         emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
         render={(row) => (
           <TableRow hover tabIndex={-1} key={row.id}>
             <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row.dateNow}</TableCell>
-            <TableCell align="left">{row?.car_id}</TableCell>
+            <TableCell align="left">{row.name}</TableCell>
+            <TableCell align="left">{row?.closedsTestdrives}</TableCell>
+            <TableCell align="left">{row?.closedsFeedbacks}</TableCell>
+            <TableCell align="left">{row?.closedsTO}</TableCell>
+            <TableCell align="left">{row?.closedTickets}</TableCell>
+            <TableCell align="left">{row?.averageRating}</TableCell>
+          </TableRow>
+        )}
+      />
+    </Card>
+  );
+}
+
+function ProblemsTable({ name, props }) {
+  return (
+    <Card component="section" type="section" sx={{ marginTop: 4 }}>
+      <CardHeader title="Документы с низкой оценкой" subtitle=""></CardHeader>
+      <DataTable
+        {...props}
+        headCells={getHeadproblemsTable}
+        rows={problemDocs}
+        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+        render={(row) => (
+          <TableRow hover tabIndex={-1} key={row.id}>
+            <TableCell>{row.id}</TableCell>
+            <TableCell align="left">{row.date}</TableCell>
+            <TableCell align="left">{row?.docType}</TableCell>
             <TableCell align="left">{row?.userScore}</TableCell>
             <TableCell align="left">{row?.userComment}</TableCell>
           </TableRow>
@@ -72,7 +110,70 @@ function ManagersTable({ name, props }) {
   );
 }
 
-const getHeadCellsTO = [
+function WelcomeSection() {
+  return (
+    <PageHeader title="Статистика за текущий месяц">
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        sx={{
+          textTransform: 'uppercase',
+        }}
+      >
+        <Link underline="hover" href="#!">
+          Inicio
+        </Link>
+        <Typography color="text.tertiary">Dashboard</Typography>
+      </Breadcrumbs>
+    </PageHeader>
+  );
+}
+
+const getHeadCellsManagers = [
+  {
+    id: 'id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Id',
+  },
+  {
+    id: 'name',
+    numeric: false,
+    disablePadding: false,
+    label: 'ФИО',
+  },
+  {
+    id: 'closedsTestdrives',
+    numeric: false,
+    disablePadding: false,
+    label: 'Тестдрайвы',
+  },
+  {
+    id: 'closedsFeedbacks',
+    numeric: false,
+    disablePadding: false,
+    label: 'Обращения',
+  },
+  {
+    id: 'closedsTO',
+    numeric: false,
+    disablePadding: false,
+    label: 'Техобслуживание',
+  },
+  {
+    id: 'closedTickets',
+    numeric: false,
+    disablePadding: false,
+    label: 'Всего заявок',
+  },
+  {
+    id: 'averageRating',
+    numeric: false,
+    disablePadding: false,
+    label: 'Средняя оценка',
+  },
+];
+
+const getHeadproblemsTable = [
   {
     id: 'id',
     numeric: false,
@@ -86,10 +187,10 @@ const getHeadCellsTO = [
     label: 'Дата',
   },
   {
-    id: 'carId',
+    id: 'docType',
     numeric: false,
     disablePadding: false,
-    label: 'Автомобиль',
+    label: 'Тип документа',
   },
   {
     id: 'userScore',
