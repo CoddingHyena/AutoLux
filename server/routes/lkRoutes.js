@@ -6,14 +6,14 @@ const {
 
 lkRoute.get('/DocTestDrive', async (req, res) => {
   const { userId } = req.session;
+  console.log(userId, ' sessionID')
   try {
     const docsTD = await DocTestDrive.findAll({
       where: { user_id: userId },
       attributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment'],
     });
-
     const getDocsTD = docsTD.map((el) => el.get({ plain: true }));
-
+    console.log('======>DOCSTD', getDocsTD);
     res.json(getDocsTD);
   } catch (error) {
     console.log(error, 'ОШИБКА В РУЧКЕ ГЕТ ТЕСТДРАЙВ');
@@ -21,7 +21,7 @@ lkRoute.get('/DocTestDrive', async (req, res) => {
   }
 });
 
-lkRoute.get('/DocTO', async (req, res) => {
+lkRoute.get('/docTO', async (req, res) => {
   const { userId } = req.session;
   try {
     const docsTO = await DocTO.findAll({
@@ -151,8 +151,8 @@ lkRoute.get('/car', async (req, res) => {
         where: { user_id: userId },
         attributes: ['id', 'mark', 'model', 'color', 'prodYear', 'gosNum', 'gear', 'engine', 'vin'],
       });
-      const result = carsAll.map((el) => el.get({ plain: true }));
-      res.json(result);
+      const resultAllcar = carsAll.map((el) => el.get({ plain: true }));
+      res.json(resultAllcar);
     }
   } catch (error) {
     console.log(error, 'ОШИБКА В РУЧКЕ GET CARS');

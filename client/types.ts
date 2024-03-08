@@ -17,3 +17,14 @@ export type AuthType {
     authWord: string,
     inputs: InputsAuthType,
 }
+
+export type UserDocTDType = {
+    id: number;
+    dateNow: string;
+    user_id: number;
+    car_id: number;
+    userScore: string;
+    userComment: string;
+}
+
+export type UserDocsTDType = UserDocTDType[];
