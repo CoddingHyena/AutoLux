@@ -1,13 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserDocsTDType } from "../../../types"
+import { UserCarsType, UserDocsTDType } from "../../../types"
 import { fetchCars, fetchDocTD, fetchDocTO } from "./lkThunkActions";
 
 export type SliceState = {
-    docs: UserDocsTDType;
+    docsTD?: UserDocsTDType;
+    docsTO?: UserDocsTDType;
+    cars?: UserCarsType;
 };
 
 const initialState: SliceState = {
-    docs: []
+    docsTD: [],
+    docsTO: [],
+    cars: []
+
 };
 
 const lkSlice = createSlice({
@@ -16,14 +21,14 @@ const lkSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchDocTD.fulfilled, (state, {payload}) => {
-            state.docs = payload;
+            state.docsTD = payload;
         })
-        // builder.addCase(fetchDocTO.fulfilled, (state, {payload}) => {
-        //     state.docs = payload;
-        // })
-        // builder.addCase(fetchCars.fulfilled, (state, {payload}) => {
-        //     state.docs = payload;
-        // })
+        builder.addCase(fetchDocTO.fulfilled, (state, {payload}) => {
+            state.docsTO = payload;
+        })
+        builder.addCase(fetchCars.fulfilled, (state, {payload}) => {
+            state.cars = payload;
+        })
     }
 })
 
