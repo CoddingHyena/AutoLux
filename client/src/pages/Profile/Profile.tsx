@@ -176,13 +176,24 @@ function GeneralSettingsSection() {
 //  atributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment']
 
 function UserDocsToTable({ name, props }) {
+
+
+  const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
+  console.log('docsTD',docsTO)
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchDocTO());
+  }, []);
+
   return (
     <Card component="section" type="section">
       <CardHeader title="Документы на Техобслуживание" subtitle=""></CardHeader>
       <DataTable
         {...props}
         headCells={getHeadCellsTO}
-        rows={toUserDocs}
+        rows={docsTO}
         emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
         render={(row) => (
           <TableRow hover tabIndex={-1} key={row.id}>
@@ -215,7 +226,8 @@ function UserDocsToTable({ name, props }) {
 }
 
 function UserDocsTestDriveTable({ name, props }) {
-  const docsTD = useAppSelector((store) => store.lkSlice.docs);
+
+  const docsTD = useAppSelector((store) => store.lkSlice.docsTD);
   console.log('docsTD',docsTD)
 
   const dispatch = useAppDispatch();
@@ -263,13 +275,21 @@ function UserDocsTestDriveTable({ name, props }) {
 }
 
 function UserAutoTable({ name, props }) {
+  const myCars = useAppSelector((store) => store.lkSlice.cars);
+  console.log('getMyCars LK',myCars)
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchCars());
+  }, []);
+  
   return (
     <Card component="section" type="section">
       <CardHeader title="Мои автомобили" subtitle=""></CardHeader>
       <DataTable
         {...props}
         headCells={getHeadCellsUserAuto}
-        rows={userCars}
+        rows={myCars}
         emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
         render={(row) => (
           <TableRow hover tabIndex={-1} key={row.id}>

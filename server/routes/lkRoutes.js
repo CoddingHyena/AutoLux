@@ -6,7 +6,7 @@ const {
 
 lkRoute.get('/DocTestDrive', async (req, res) => {
   const { userId } = req.session;
-  console.log(userId, ' sessionID')
+  console.log(userId, 'тестдрайв рчка гет sessionID')
   try {
     const docsTD = await DocTestDrive.findAll({
       where: { user_id: userId },
@@ -143,7 +143,8 @@ lkRoute.put('/phone/:id', async (req, res) => {
 });
 
 lkRoute.get('/car', async (req, res) => {
-  const { userId } = req.sesion;
+  const { userId } = req.session;
+  console.log('на машины ручка сессия',userId)
 
   try {
     if (userId) {
@@ -152,6 +153,7 @@ lkRoute.get('/car', async (req, res) => {
         attributes: ['id', 'mark', 'model', 'color', 'prodYear', 'gosNum', 'gear', 'engine', 'vin'],
       });
       const resultAllcar = carsAll.map((el) => el.get({ plain: true }));
+      console.log(resultAllcar)
       res.json(resultAllcar);
     }
   } catch (error) {
