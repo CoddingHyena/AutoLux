@@ -26,6 +26,9 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CardHeader from '../../components/cardHeader';
 import toUserDocs from '../../_mocks/toUserDocs';
 import userCars from '../../_mocks/cars';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { fetchCars, fetchDocTD, fetchDocTO } from '../../redux/lk/lkThunkActions';
+import { useEffect } from 'react';
 
 const getHeadCellsTO = [
   {
@@ -212,13 +215,22 @@ function UserDocsToTable({ name, props }) {
 }
 
 function UserDocsTestDriveTable({ name, props }) {
+  const docsTD = useAppSelector((store) => store.lkSlice.docs);
+  console.log('docsTD',docsTD)
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchDocTD());
+  }, []);
+  
   return (
     <Card component="section" type="section">
       <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
       <DataTable
         {...props}
         headCells={getHeadCellsTO}
-        rows={toUserDocs}
+        rows={docsTD}
         emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
         render={(row) => (
           <TableRow hover tabIndex={-1} key={row.id}>
@@ -306,3 +318,7 @@ function UserAutoTable({ name, props }) {
     </Card>
   );
 }
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+
