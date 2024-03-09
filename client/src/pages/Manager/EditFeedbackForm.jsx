@@ -1,126 +1,124 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
 import { TextField, Checkbox, FormControlLabel, Button } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
 
 export default function EditFeedbackForm({ formData, currentUserId }) {
-  const { register, handleSubmit, setValue } = useForm({
-    defaultValues: {
-      ...formData,
-      manager: formData.manager || currentUserId, // Если manager пуст, используем currentUserId
-      status: Boolean(formData.status), // Преобразуем статус в булевое значение
-    },
-  });
+  // Локальное состояние для каждого поля формы
+  const [id, setId] = useState(formData.id || '');
+  const [userName, setUserName] = useState(formData.userName || '');
+  const [userId, setUserId] = useState(formData.user_id || '');
+  const [dateNow, setDateNow] = useState(formData.dateNow || '');
+  const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || '');
+  const [managerId, setManagerId] = useState(formData.manager || currentUserId);
+  const [ourComment, setOurComment] = useState(formData.ourComment || '');
+  const [userComment, setUserComment] = useState(formData.userComment || '');
+  const [status, setStatus] = useState(Boolean(formData.status));
 
+  // Получение данных менеджера из Redux store
   const manager = useAppSelector((store) => store.userSlice.user);
-  console.log('manager', manager);
-  const managerName = manager.name;
-  const managerId = manager.id;
 
-  const onSubmit = (data) => {
-    // Функция для отправки формы
-    console.log(data);
-    // Здесь будет код для отправки данных на сервер
+  // Обновление локального состояния при изменении данных менеджера
+  useEffect(() => {
+    if (manager?.id || currentUserId) {
+      setManagerId(manager?.id || currentUserId);
+    }
+  }, [manager, currentUserId]);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const formData = {
+      id,
+      userName,
+      user_id: userId,
+      dateNow,
+      phoneNumber,
+      manager: managerId,
+      ourComment,
+      userComment,
+      status,
+    };
+    console.log(formData);
+    // Здесь код для отправки данных на сервер
   };
 
-  React.useEffect(() => {
-    setValue('manager', formData.manager || currentUserId);
-  }, [formData, currentUserId, setValue]);
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <TextField
         label="Номер заявки обратной связи"
-        {...register('id')}
-        InputProps={{
-          readOnly: true,
-        }}
+        value={id}
         variant="outlined"
         margin="normal"
         fullWidth
-        className="readOnly"
+        InputProps={{ readOnly: true }}
       />
       <TextField
         label="Имя пользователя"
-        {...register('userName')}
-        InputProps={{
-          readOnly: true,
-        }}
+        value={userName}
         variant="outlined"
         margin="normal"
         fullWidth
-        className="readOnly"
+        InputProps={{ readOnly: true }}
       />
       <TextField
         label="ID пользователя"
-        {...register('user_id')}
-        InputProps={{
-          readOnly: true,
-        }}
+        value={userId}
         variant="outlined"
         margin="normal"
         fullWidth
-        className="readOnly"
+        InputProps={{ readOnly: true }}
       />
       <TextField
         label="Дата создания"
-        {...register('dateNow')}
-        InputProps={{
-          readOnly: true,
-        }}
+        value={dateNow}
         variant="outlined"
         margin="normal"
         fullWidth
-        className="readOnly"
+        InputProps={{ readOnly: true }}
       />
       <TextField
         label="Телефон"
-        {...register('phoneNumber')}
-        InputProps={{
-          readOnly: true,
-        }}
+        value={phoneNumber}
         variant="outlined"
         margin="normal"
         fullWidth
-        className="readOnly"
+        InputProps={{ readOnly: true }}
       />
-      {formData.manager && (
+
+      {managerId && (
         <Box component={Paper} p={2} my={2}>
           <Typography variant="h6" gutterBottom>
             Менеджер (ответственный)
           </Typography>
           <Typography variant="body1">
-            {managerName} (ID: {managerId})
+            {manager?.name} (ID: {managerId})
           </Typography>
         </Box>
       )}
-      <input
-        type="hidden"
-        name="manager" // Имя поля, под которым значение будет отправлено на сервер
-        value={managerId} // Значение, которое вы хотите отправить
-      />
+
       <TextField
         label="Комментарий менеджера"
-        {...register('ourComment')}
+        value={ourComment}
+        onChange={(e) => setOurComment(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
       />
       <TextField
         label="Комментарий пользователя"
-        {...register('userComment')}
-        InputProps={{
-          readOnly: true,
-        }}
+        value={userComment}
         variant="outlined"
         margin="normal"
         fullWidth
-        className="readOnly"
+        InputProps={{ readOnly: true }}
       />
-      <FormControlLabel control={<Checkbox {...register('status')} />} label="Обработано" />
+      <FormControlLabel
+        control={<Checkbox checked={status} onChange={(e) => setStatus(e.target.checked)} />}
+        label="Обработано"
+      />
+
       <Button type="submit" variant="contained" color="primary">
         Сохранить
       </Button>
