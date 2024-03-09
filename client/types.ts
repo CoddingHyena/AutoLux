@@ -106,3 +106,9 @@ export type ModalFBType = {
     status: boolean;
 
 }
+
+export type InputsFBType = {
+    userName: string;
+    phoneNumber: string;
+    userComment: string;
+}

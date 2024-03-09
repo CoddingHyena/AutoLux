@@ -4,10 +4,11 @@ const { DocFeedback } = require('../db/models');
 
 feedBackRoutes.post('/guest', async (req, res) => {
   const { userName, phoneNumber, userComment } = req.body;
+  console.log(req.body, '=========req.body FB MAIN')
   try {
     const newFeedBack = await DocFeedback.create(
       {
-        userName, user_id: null, dateNow: new Date(), manager: '', status: false, phoneNumber, ourComment: '', userComment,
+        userName, user_id: null, dateNow: new Date(), manager: null, status: false, phoneNumber, ourComment: '', userComment,
       }
     );
     res.sendStatus(201);
@@ -23,7 +24,7 @@ feedBackRoutes.post('/user', async (req, res) => {
   try {
     const newFeedBack = await DocFeedback.create(
       {
-        userName, user_id: userId, dateNow: new Date(), manager: '', status: false, phoneNumber, ourComment: '', userComment,
+        userName, user_id: userId, dateNow: new Date(), manager: null, status: false, phoneNumber, ourComment: '', userComment,
       }
     );
     res.sendStatus(201);

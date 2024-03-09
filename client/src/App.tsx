@@ -12,9 +12,6 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-
-import { useDispatch } from 'react-redux';
-
 import { Provider as SnackbarProvider } from './components/snackbar';
 
 import MUITheme from './utils/theme';

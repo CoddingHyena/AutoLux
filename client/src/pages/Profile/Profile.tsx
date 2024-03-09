@@ -35,6 +35,7 @@ import {
   fetchUpdatUser,
 } from '../../redux/lk/lkThunkActions';
 import { useEffect, useState } from 'react';
+import TestDrive from '../../components/testDrive';
 
 const getHeadCellsTO = [
   {
@@ -133,6 +134,7 @@ export default function Account() {
       <UserDocsToTable />
       <UserDocsTestDriveTable />
       <UserAutoTable />
+      <TestDrive/>
     </Stack>
   );
 }
