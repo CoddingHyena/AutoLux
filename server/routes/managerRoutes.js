@@ -15,16 +15,14 @@ managerRoute.get('/docFB', async (req, res) => {
 
 
 
-managerRoute.put('/docFB/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    manager, status, ourComment,
-  } = req.body;
+managerRoute.put('/docFB', async (req, res) => {
+  const {formData} = req.body;
+  console.log('data docFB manager put',formData)
   try {
-    const queryDocFB = await DocFeedback.findByPk(id);
-    queryDocFB.manager = manager;
-    queryDocFB.status = status;
-    queryDocFB.ourComment = ourComment;
+    const queryDocFB = await DocFeedback.findByPk(formData.id);
+    queryDocFB.manager = formData.manager;
+    queryDocFB.status = formData.status;
+    queryDocFB.ourComment = formData.ourComment;
     queryDocFB.save();
     res.json(queryDocFB);
   } catch (error) {

@@ -289,7 +289,8 @@ function DataTableDocFB({ props }) {
   };
 
   // Функция для закрытия модального окна
-  const handleCloseModal = () => {
+  const updateAndClose = () => {
+    dispatch(fetchManagerDocFB()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
   };
 
@@ -340,7 +341,7 @@ function DataTableDocFB({ props }) {
       </Card>
 
       {isModalOpen && (
-        <BasicModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={currentData} />
+        <BasicModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={currentData} updateAndClose={updateAndClose} />
       )}
     </>
   );

@@ -60,7 +60,7 @@ export type UserFBType = {
     userName: string;
     user_id: number;
     dateNow: Date;
-    manager: string;
+    manager: number;
     status: boolean;
     phoneNumber: string;
     ourComment: string;
@@ -92,4 +92,17 @@ export  type inputsUserPutType = {
 export type UpdateUserType = {
     inputsName: string;
     inputsPhone: string;
+}
+
+export type ModalFBType = {
+    id: number;
+    userName: string;
+    user_id: number;
+    dateNow: Date;
+    phoneNumber: string;
+    manager: number;
+    ourComment: string;
+    userComment: string;
+    status: boolean;
+
 }

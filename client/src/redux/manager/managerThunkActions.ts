@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { UserCarType, UserDocTDType, UserFBType } from '../../../types';
-import axios from 'axios';
+import { ModalFBType, UserCarType, UserDocTDType, UserFBType } from '../../../types';
+import axios, { AxiosResponse } from 'axios';
 
 export const fetchManagerDocFB = createAsyncThunk('docFB/all', async () => {
   const response = await axios.get<UserFBType>(`${import.meta.env.VITE_URL}/manager/docFB`, {
@@ -8,6 +8,17 @@ export const fetchManagerDocFB = createAsyncThunk('docFB/all', async () => {
   });
   return response.data;
 });
+
+export const fetchAdminDocFBUpdate = createAsyncThunk('docFB/put', async ({formData}) => {
+   
+  const response = await axios.put<ModalFBType, AxiosResponse<UserFBType>>(
+      `${import.meta.env.VITE_URL}/manager/docFB`, {formData}, {
+        withCredentials: true,
+      })
+      return response.data;  
+})
+
+
 export const fetchManagerDocTD = createAsyncThunk('docTD/all', async () => {
   const response = await axios.get<UserDocTDType>(`${import.meta.env.VITE_URL}/manager/docTD`, {
     withCredentials: true,
