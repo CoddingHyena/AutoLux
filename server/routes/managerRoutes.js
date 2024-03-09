@@ -2,9 +2,9 @@ const managerRoute = require('express').Router();
 
 const { DocFeedback, DocTestDrive, DocTO, Cars } = require('../db/models');
 
-managerRoute.get('/docFB/guest', async (req, res) => {
+managerRoute.get('/docFB', async (req, res) => {
   try {
-    const docFBfalse = await DocFeedback.findAll({ where: { user_id: null, status: false } });
+    const docFBfalse = await DocFeedback.findAll({ where: { status: false } });
     const getDocFB = docFBfalse.map((el) => el.get({ plain: true }));
     res.json(getDocFB);
   } catch (error) {
@@ -13,16 +13,7 @@ managerRoute.get('/docFB/guest', async (req, res) => {
   }
 });
 
-managerRoute.get('/docFB/user', async (req, res) => {
-  try {
-    const docFBfalse = await DocFeedback.findAll({ where: { user_id: !null, status: false } });
-    const getDocFB = docFBfalse.map((el) => el.get({ plain: true }));
-    res.json(getDocFB);
-  } catch (error) {
-    console.log(error, 'ошибка в ручке GET_docFB user MANAGER');
-    res.sendStatus(500);
-  }
-});
+
 
 managerRoute.put('/docFB/:id', async (req, res) => {
   const { id } = req.params;

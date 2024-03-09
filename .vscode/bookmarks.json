@@ -9,16 +9,6 @@
 					"label": ""
 				}
 			]
-		},
-		{
-			"path": "client/src/pages/Boss/Boss.tsx",
-			"bookmarks": [
-				{
-					"line": 15,
-					"column": 0,
-					"label": ""
-				}
-			]
 		}
 	]
 }
