@@ -59,3 +59,7 @@
   border: 1px solid #000;
   display: none;
 }
+
+.readOnly {
+  background-color: rgba(0, 0, 0, 0.09);
+}

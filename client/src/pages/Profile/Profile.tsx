@@ -27,7 +27,13 @@ import CardHeader from '../../components/cardHeader';
 import toUserDocs from '../../_mocks/toUserDocs';
 import userCars from '../../_mocks/cars';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchCars, fetchDocTD, fetchDocTO, fetchLkUsers, fetchUpdatUser } from '../../redux/lk/lkThunkActions';
+import {
+  fetchCars,
+  fetchDocTD,
+  fetchDocTO,
+  fetchLkUsers,
+  fetchUpdatUser,
+} from '../../redux/lk/lkThunkActions';
 import { useEffect, useState } from 'react';
 
 const getHeadCellsTO = [
@@ -121,97 +127,88 @@ const getHeadCellsUserAuto = [
 ];
 
 export default function Account() {
-  
-    return (
-      <Stack spacing={6} sx={{ marginTop: 4 }}>
-           <GeneralSettingsSection />
-           <UserDocsToTable />
-           <UserDocsTestDriveTable />
-           <UserAutoTable />
-      </Stack>
-    );  
-  }
-   
-
+  return (
+    <Stack spacing={6} sx={{ marginTop: 4 }}>
+      <GeneralSettingsSection />
+      <UserDocsToTable />
+      <UserDocsTestDriveTable />
+      <UserAutoTable />
+    </Stack>
+  );
+}
 
 function GeneralSettingsSection() {
-
   const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
-  
 
   const user = useAppSelector((store) => store.lkSlice.user);
   const name = user.name;
   const phone = user.phone;
-  console.log('userUpdate', user)
+  console.log('userUpdate', user);
 
   const [inputsName, setInputsName] = useState<string>(name);
   const [inputsPhone, setInputsPhone] = useState<string>(phone);
   const dispatch = useAppDispatch();
 
-  
-
-
-
   useEffect(() => {
-    void dispatch(fetchLkUsers())
+    void dispatch(fetchLkUsers());
   }, []);
 
   const handleTitleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputsName(event.target.value);
-   
-  }
+  };
   const handleTitleChange2 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputsPhone(event.target.value);
-  }
+  };
 
-  const handleSaveUser = async () : Promise<void> => {
-    void dispatch(fetchUpdatUser({inputsName, inputsPhone}))
-  }
-  if(!isLoading){
-  return (
-    <Card type="section">
-      <CardHeader title="Ваш профиль" />
-      <Stack spacing={6}>
-        <form onSubmit={() => {}}>
-          <Grid container rowSpacing={2} columnSpacing={4}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField label="ФИО"
-               variant="outlined"
-                defaultValue={`${name}`} 
-                fullWidth 
-                onChange={handleTitleChange1}
+  const handleSaveUser = async (): Promise<void> => {
+    void dispatch(fetchUpdatUser({ inputsName, inputsPhone }));
+  };
+  if (!isLoading) {
+    return (
+      <Card type="section">
+        <CardHeader title="Ваш профиль" />
+        <Stack spacing={6}>
+          <form onSubmit={() => {}}>
+            <Grid container rowSpacing={2} columnSpacing={4}>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  label="ФИО"
+                  variant="outlined"
+                  defaultValue={`${name}`}
+                  fullWidth
+                  onChange={handleTitleChange1}
                 />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                type="Phone"
-                label="Phone"
-                variant="outlined"
-                defaultValue={`${phone}`}
-                fullWidth
-                onChange={handleTitleChange2}
-              />
-            </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  type="Phone"
+                  label="Phone"
+                  variant="outlined"
+                  defaultValue={`${phone}`}
+                  fullWidth
+                  onChange={handleTitleChange2}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={12} md={12}>
-              <Button
-              onClick={(() => handleSaveUser())}
-                disableElevation
-                variant="contained"
-                endIcon={<EditIcon />}
-                sx={{
-                  float: 'right',
-                }}
-              >
-                Сохранить
-              </Button>
+              <Grid item xs={12} sm={12} md={12}>
+                <Button
+                  onClick={() => handleSaveUser()}
+                  disableElevation
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  sx={{
+                    float: 'right',
+                  }}
+                >
+                  Сохранить
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </Stack>
-    </Card>
-  );
-}
+          </form>
+        </Stack>
+      </Card>
+    );
+  }
 }
 
 // GET('/api/lk/DocTestDrive')
@@ -220,10 +217,8 @@ function GeneralSettingsSection() {
 //  atributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment']
 
 function UserDocsToTable({ name, props }) {
-
-
   const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
-  console.log('docsTD',docsTO)
+  console.log('docsTD', docsTO);
 
   const dispatch = useAppDispatch();
 
@@ -270,16 +265,15 @@ function UserDocsToTable({ name, props }) {
 }
 
 function UserDocsTestDriveTable({ name, props }) {
-
   const docsTD = useAppSelector((store) => store.lkSlice.docsTD);
-  console.log('docsTD',docsTD)
+  console.log('docsTD', docsTD);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchDocTD());
   }, []);
-  
+
   return (
     <Card component="section" type="section">
       <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
@@ -320,13 +314,13 @@ function UserDocsTestDriveTable({ name, props }) {
 
 function UserAutoTable({ name, props }) {
   const myCars = useAppSelector((store) => store.lkSlice.cars);
-  console.log('getMyCars LK',myCars)
+  console.log('getMyCars LK', myCars);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchCars());
   }, []);
-  
+
   return (
     <Card component="section" type="section">
       <CardHeader title="Мои автомобили" subtitle=""></CardHeader>
@@ -385,4 +379,3 @@ function UserAutoTable({ name, props }) {
 function dispatch(arg0: any) {
   throw new Error('Function not implemented.');
 }
-

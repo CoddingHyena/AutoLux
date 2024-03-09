@@ -120,9 +120,9 @@ function WelcomeSection() {
         }}
       >
         <Link underline="hover" href="#!">
-          Inicio
+          Главная
         </Link>
-        <Typography color="text.tertiary">Dashboard</Typography>
+        <Typography color="text.tertiary">Статистика</Typography>
       </Breadcrumbs>
     </PageHeader>
   );

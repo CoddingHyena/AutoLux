@@ -28,7 +28,7 @@ const problemDocs = [
     userComment: 'Во время тестдрайва отвалился руль',
   },
   {
-    id: 10,
+    id: 12,
     date: '30.04.2022',
     docType: 'ТО',
     userScore: '2',
