@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Checkbox, FormControlLabel, Button } from '@mui/material';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
+import { fetchAdminDocFBUpdate } from '../../redux/manager/managerThunkActions';
 
-export default function EditFeedbackForm({ formData, currentUserId }) {
+export default function EditFeedbackForm({ formData, currentUserId, onSuccess }) {
+
   // Локальное состояние для каждого поля формы
   const [id, setId] = useState(formData.id || '');
   const [userName, setUserName] = useState(formData.userName || '');
@@ -19,6 +21,7 @@ export default function EditFeedbackForm({ formData, currentUserId }) {
 
   // Получение данных менеджера из Redux store
   const manager = useAppSelector((store) => store.userSlice.user);
+  const dispatch = useAppDispatch();
 
   // Обновление локального состояния при изменении данных менеджера
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function EditFeedbackForm({ formData, currentUserId }) {
     }
   }, [manager, currentUserId]);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     const formData = {
       id,
@@ -40,9 +43,13 @@ export default function EditFeedbackForm({ formData, currentUserId }) {
       userComment,
       status,
     };
-    console.log(formData);
-    // Здесь код для отправки данных на сервер
+    console.log('======formData FB',formData);
+    
+    await dispatch(fetchAdminDocFBUpdate({formData}))
+
+    onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
+
 
   return (
     <form onSubmit={onSubmit}>
@@ -119,7 +126,7 @@ export default function EditFeedbackForm({ formData, currentUserId }) {
         label="Обработано"
       />
 
-      <Button type="submit" variant="contained" color="primary">
+      <Button  type="submit" variant="contained" color="primary">
         Сохранить
       </Button>
     </form>
