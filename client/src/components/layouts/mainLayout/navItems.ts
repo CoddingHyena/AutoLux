@@ -75,6 +75,46 @@ const NAV_LINKS_CONFIG = [
   {
     id: uuid(),
     type: 'item',
+    title: 'Автомобили в наличии',
+    Icon: WebOutlinedIcon,
+    href: '/sellCars',
+    role: 'accessUser',
+  },
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Автомобили в наличии',
+    Icon: WebOutlinedIcon,
+    href: '/sellCars',
+    role: 'none',
+  },
+
+  //  {
+  // 	id: uuid(),
+  // 	type: 'group',
+  // 	title: 'Автомобили в наличии',
+  // 	Icon: BarChartOutlinedIcon,
+  // 	menuChildren: [
+  // 		{
+  // 			title: 'Folo',
+  // 			href: '',
+  // 		},
+  // 		{
+  // 			title: 'Feramont',
+  // 			href: '/sellCars',
+  // 		},
+  //     {
+  // 			title: 'Figuan',
+  // 			href: '',
+  // 		},
+
+  // 	],
+  // },
+
+
+  {
+    id: uuid(),
+    type: 'item',
     title: 'Админ',
     Icon: WebOutlinedIcon,
     href: '/admin',
@@ -160,7 +200,7 @@ const NAV_LINKS_CONFIG = [
   // 	type: 'group',
   // 	title: 'Профиль',
   // 	Icon: BarChartOutlinedIcon,
-  // 	menuChildren: [
+  //   menuChildren: [
   // 		{
   // 			title: 'Профиль (Страница Юзера)',
   // 			href: '/profile',
