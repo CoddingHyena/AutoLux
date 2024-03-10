@@ -36,6 +36,8 @@ import { useState, useEffect } from 'react';
 // import ModalOptions from './modalOptions';
 import BasicModal from '../../components/BasicModal/BasicModal';
 import EditFeedbackForm from './EditFeedbackForm';
+import EditTDForm from './EditTDForm';
+import EditTOForm from './EditTOForm';
 
 const getDocsFB = [
   {
@@ -143,12 +145,7 @@ const getDocsTD = [
     disablePadding: false,
     label: 'dateNow',
   },
-  {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: 'Управление',
-  },
+
 ];
 
 const getDocsCars = [
@@ -299,9 +296,6 @@ function DataTableDocFB({ props }) {
     <>
       <Card component="section" type="section">
         <CardHeader title="Открытые заявки" subtitle="">
-          <Button variant="contained" disableElevation endIcon={<AddIcon />}>
-            Новый документ
-          </Button>
         </CardHeader>
         <DataTable
           {...props}
@@ -355,16 +349,33 @@ function DataTableDocFB({ props }) {
 }
 
 function DataTableDocTD({ name, props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+  
   const docsTD = useAppSelector((store) => store.adminSlice.docsTD);
-  console.log('store usersAll admin', docsTD);
+  // console.log('store usersAll admin', docsTD);
 
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchManagerDocTD());
   }, []);
 
+    // Функция для открытия модального окна
+    const handleEditClick = (row) => {
+      setCurrentData(row); // Установить текущие данные заявки
+      setIsModalOpen(true); // Открывает модальное окно
+    };
+  
+    // Функция для закрытия модального окна
+    const updateAndClose = () => {
+      dispatch(fetchManagerDocTD()); // Перезапрашиваем данные, обновляя список
+      setIsModalOpen(false);
+    };
+  
+
   return (
+  <>
     <Card component="section" type="section">
       <CardHeader title="Документы Тестдрайв" subtitle="">
         <Button variant="contained" disableElevation endIcon={<AddIcon />}>
@@ -393,34 +404,36 @@ function DataTableDocTD({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row); // Передаем данные записи в функцию
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title="Удалить" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="error"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <PersonOffOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
+
             </TableCell>
           </TableRow>
         )}
       />
     </Card>
+
+    {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditTDForm}
+        />
+      )}
+    </>
   );
 }
 
 function DataTableDocTO({ name, props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
   const docsTO = useAppSelector((store) => store.adminSlice.docsTO);
   console.log('store usersAll admin', docsTO);
 
@@ -430,7 +443,20 @@ function DataTableDocTO({ name, props }) {
     void dispatch(fetchManagerDocTO());
   }, []);
 
+   // Функция для открытия модального окна
+   const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные заявки
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchManagerDocTO()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <Card component="section" type="section">
       <CardHeader title="Документы ТО" subtitle="">
         <Button variant="contained" disableElevation endIcon={<AddIcon />}>
@@ -459,30 +485,30 @@ function DataTableDocTO({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row); // Передаем данные записи в функцию
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title="Удалить" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="error"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <PersonOffOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
             </TableCell>
           </TableRow>
         )}
       />
     </Card>
+
+
+    {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditTOForm}
+        />
+      )}
+    </>
   );
 }
 
@@ -499,9 +525,6 @@ function DataTableCars({ name, props }) {
   return (
     <Card component="section" type="section">
       <CardHeader title="Cars" subtitle="">
-        <Button variant="contained" disableElevation endIcon={<AddIcon />}>
-          Новый документ
-        </Button>
       </CardHeader>
       <DataTable
         {...props}
@@ -537,19 +560,7 @@ function DataTableCars({ name, props }) {
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title="Удалить" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="error"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <PersonOffOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
+
             </TableCell>
           </TableRow>
         )}

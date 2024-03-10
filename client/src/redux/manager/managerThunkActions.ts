@@ -26,12 +26,30 @@ export const fetchManagerDocTD = createAsyncThunk('docTD/all', async () => {
   return response.data;
 });
 
+export const fetchManagerDocTDUpdate = createAsyncThunk('docTD/put', async ({formData}) => {
+   
+  const response = await axios.put<ModalFBType, AxiosResponse<UserFBType>>(
+      `${import.meta.env.VITE_URL}/manager/docTD`, {formData}, {
+        withCredentials: true,
+      })
+      return response.data;  
+})
+
 export const fetchManagerDocTO = createAsyncThunk('docTO/all', async () => {
   const response = await axios.get<UserDocTDType>(`${import.meta.env.VITE_URL}/manager/docTO`, {
     withCredentials: true,
   });
   return response.data;
 });
+
+export const fetchManagerDocTOUpdate = createAsyncThunk('docTO/put', async ({formData}) => {
+   
+  const response = await axios.put<ModalFBType, AxiosResponse<UserFBType>>(
+      `${import.meta.env.VITE_URL}/manager/docTO`, {formData}, {
+        withCredentials: true,
+      })
+      return response.data;  
+})
 
 export const fetchManagerCars = createAsyncThunk('car/all', async () => {
   const response = await axios.get<UserCarType>(`${import.meta.env.VITE_URL}/manager/car`, {

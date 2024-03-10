@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserCarsType, UserDocsTDType, UserFBSType } from "../../../types";
-import {fetchManagerDocFBUpdate, fetchManagerCars, fetchManagerDocFB, fetchManagerDocTD, fetchManagerDocTO } from "./managerThunkActions";
+import {fetchManagerDocFBUpdate, fetchManagerDocTDUpdate, fetchManagerDocTOUpdate, fetchManagerCars, fetchManagerDocFB, fetchManagerDocTD, fetchManagerDocTO } from "./managerThunkActions";
 
 
 
@@ -35,9 +35,27 @@ const managerSlice = createSlice({
         builder.addCase(fetchManagerDocTD.fulfilled, (state, {payload}) => {
             state.docsTD = payload;
         });
+
+        builder.addCase(fetchManagerDocTDUpdate.fulfilled, (state, {payload}) => {
+            const index = state.docsTD.findIndex((el) => el.id === payload.id);
+            if(index !== -1){
+                state.docsTD[index] = payload;
+            }
+        });
+
         builder.addCase(fetchManagerDocTO.fulfilled, (state, {payload}) => {
             state.docsTO = payload;
         });
+
+
+        builder.addCase(fetchManagerDocTOUpdate.fulfilled, (state, {payload}) => {
+            const index = state.docsTO.findIndex((el) => el.id === payload.id);
+            if(index !== -1){
+                state.docsTO[index] = payload;
+            }
+        });
+
+
         builder.addCase(fetchManagerCars.fulfilled, (state, {payload}) => {
             state.cars = payload;
         });
