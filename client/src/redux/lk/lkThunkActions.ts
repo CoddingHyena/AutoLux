@@ -48,9 +48,24 @@ export const fetchCars = createAsyncThunk('car/all', async () => {
     return response.data;
 })
 
-// export const fetchUpdateDocTD = createAsyncThunk('docTD/put', async ({, id}: typeUpdate) => {
+export const fetchCarsUpdate = createAsyncThunk('car/put', async ({formData}) => {
    
-//     const response = await axios.put<inputsType, AxiosResponse<TodoType>>(
-//         `${import.meta.env.VITE_URL}/todos/${id}`, {})
-//         return response.data;  
-// })
+    const response = await axios.put<UserCarType, AxiosResponse<UserCarType>>(
+        `${import.meta.env.VITE_URL}/lk/car`, {formData},
+         {
+          withCredentials: true,
+        })
+        return response.data;  
+  })
+
+  export const fetchCarsDel = createAsyncThunk('car/del', async (id: number) => {
+   
+    const response = await axios.delete(
+        `${import.meta.env.VITE_URL}/lk/car/${id}`,
+         {
+          withCredentials: true,
+        })
+        if(response.data === 200){
+            return id;  
+        }
+  })

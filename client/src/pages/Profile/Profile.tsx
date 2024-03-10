@@ -29,6 +29,7 @@ import userCars from '../../_mocks/cars';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   fetchCars,
+  fetchCarsDel,
   fetchDocTD,
   fetchDocTO,
   fetchLkUsers,
@@ -39,6 +40,7 @@ import TestDrive from '../../components/testDrive';
 import BasicModal from '../../components/BasicModal/BasicModal';
 import EditTOForm from './EditTOForm';
 import EditTDForm from './EditTDForm';
+import EditCarsForm from './EditCarsForm';
 
 const getHeadCellsTO = [
   {
@@ -149,8 +151,8 @@ function GeneralSettingsSection() {
   const user = useAppSelector((store) => store.lkSlice.user);
   const dispatch = useAppDispatch();
   
-  const [inputsName, setInputsName] = useState<string>(user?.name || 'error');
-  const [inputsPhone, setInputsPhone] = useState<string>(user?.phone || 'error');
+  const [inputsName, setInputsName] = useState<string>(user?.name || 'Введите имя');
+  const [inputsPhone, setInputsPhone] = useState<string>(user?.phone || 'Введите телефон');
 
 
   useEffect(() => {
@@ -159,8 +161,8 @@ function GeneralSettingsSection() {
   
   useEffect(() => {
     if(user?.name !== inputsName || user?.phone !== inputsPhone){
-      setInputsName(user?.name || 'error2')
-      setInputsPhone(user?.phone || 'error2')
+      setInputsName(user?.name || 'Введите имя')
+      setInputsPhone(user?.phone || 'Введите телефон')
     }
   }, [user])
   console.log('userUpdate LK', user);
@@ -380,15 +382,37 @@ function UserDocsTestDriveTable({ name, props }) {
 }
 
 function UserAutoTable({ name, props }) {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
   const myCars = useAppSelector((store) => store.lkSlice.cars);
-  console.log('getMyCars LK', myCars);
+  // console.log('getMyCars LK', myCars);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchCars());
   }, []);
 
+   // Функция для открытия модального окна
+   const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+        // Функция для закрытия модального окна
+        const updateAndClose = () => {
+          dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
+          setIsModalOpen(false);
+        };
+
+        const delHandler = async (carId) : Promise<void> => {
+          await dispatch(fetchCarsDel(carId));
+          dispatch(fetchCars())
+        }
+
   return (
+    <>
     <Card component="section" type="section">
       <CardHeader title="Мои автомобили" subtitle=""></CardHeader>
       <DataTable
@@ -417,6 +441,7 @@ function UserAutoTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row); //передаем данные записи в функцию
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -431,6 +456,7 @@ function UserAutoTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    delHandler(row.id);
                   }}
                 >
                   <PersonOffOutlinedIcon fontSize="medium" />
@@ -441,6 +467,16 @@ function UserAutoTable({ name, props }) {
         )}
       />
     </Card>
+       {isModalOpen && (
+        <BasicModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={currentData}
+        updateAndClose={updateAndClose}
+        FormComponent={EditCarsForm}
+        />
+      )}
+      </>
   );
 }
 
