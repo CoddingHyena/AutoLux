@@ -7,7 +7,6 @@ import { Box } from '@mui/system';
 import { fetchAdminDocFBUpdate } from '../../redux/manager/managerThunkActions';
 
 export default function EditFeedbackForm({ formData, currentUserId, onSuccess }) {
-
   // Локальное состояние для каждого поля формы
   const [id, setId] = useState(formData.id || '');
   const [userName, setUserName] = useState(formData.userName || '');
@@ -43,13 +42,12 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
       userComment,
       status,
     };
-    console.log('======formData FB',formData);
-    
-    await dispatch(fetchAdminDocFBUpdate({formData}))
+    console.log('======formData FB', formData);
+
+    await dispatch(fetchAdminDocFBUpdate({ formData }));
 
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
-
 
   return (
     <form onSubmit={onSubmit}>
@@ -60,6 +58,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
+        class
       />
       <TextField
         label="Имя пользователя"
@@ -126,7 +125,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         label="Обработано"
       />
 
-      <Button  type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="primary">
         Сохранить
       </Button>
     </form>

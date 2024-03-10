@@ -1,0 +1,23 @@
+const charts = [
+  { id: 1, dateNow: '2024-03-06T00:52:29.153Z', status: false },
+  { id: 2, dateNow: '2024-03-11T00:52:29.153Z', status: true },
+  { id: 3, dateNow: '2024-03-11T00:52:29.153Z', status: true },
+  { id: 4, dateNow: '2024-03-10T00:52:29.000Z', status: false },
+  { id: 5, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+  { id: 6, dateNow: '2024-03-09T00:52:29.153Z', status: true },
+  { id: 7, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+  { id: 8, dateNow: '2024-03-11T00:52:29.153Z', status: true },
+  { id: 10, dateNow: '2024-03-06T00:52:29.153Z', status: true },
+  { id: 11, dateNow: '2024-03-09T00:52:29.153Z', status: true },
+  { id: 12, dateNow: '2024-03-09T00:52:29.153Z', status: true },
+  { id: 13, dateNow: '2024-03-09T00:52:29.153Z', status: true },
+  { id: 14, dateNow: '2024-03-06T00:52:29.153Z', status: false },
+  { id: 15, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+  { id: 16, dateNow: '2024-03-09T00:52:29.153Z', status: true },
+  { id: 17, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+  { id: 18, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+  { id: 19, dateNow: '2024-03-09T00:52:29.153Z', status: true },
+  { id: 20, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+  { id: 21, dateNow: '2024-03-09T00:52:29.153Z', status: false },
+];
+export default charts;

@@ -297,7 +297,7 @@ function DataTableDocFB({ props }) {
   return (
     <>
       <Card component="section" type="section">
-        <CardHeader title="FeeDBack" subtitle="">
+        <CardHeader title="Открытые заявки" subtitle="">
           <Button variant="contained" disableElevation endIcon={<AddIcon />}>
             Новый документ
           </Button>
@@ -341,7 +341,12 @@ function DataTableDocFB({ props }) {
       </Card>
 
       {isModalOpen && (
-        <BasicModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={currentData} updateAndClose={updateAndClose} />
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={currentData}
+          updateAndClose={updateAndClose}
+        />
       )}
     </>
   );
