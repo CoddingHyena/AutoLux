@@ -4,16 +4,19 @@ const {
   DocTestDrive, DocTO, Cars, User,
 } = require('../db/models');
 
+
+
+
 lkRoute.get('/DocTestDrive', async (req, res) => {
   const { userId } = req.session;
-  console.log(userId, 'тестдрайв рчка гет sessionID');
+  // console.log(userId, 'тестдрайв рчка гет sessionID');
   try {
     const docsTD = await DocTestDrive.findAll({
       where: { user_id: userId },
       attributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment'],
     });
     const getDocsTD = docsTD.map((el) => el.get({ plain: true }));
-    console.log('======>DOCSTD', getDocsTD);
+    // console.log('======>DOCSTD', getDocsTD);
     res.json(getDocsTD);
   } catch (error) {
     console.log(error, 'ОШИБКА В РУЧКЕ ГЕТ ТЕСТДРАЙВ');
@@ -41,7 +44,7 @@ lkRoute.get('/docTO', async (req, res) => {
 lkRoute.put('/docTD/', async (req, res) => {
   const { userId } = req.session;
   const { formData } = req.body;
-  console.log('LK TD PUT formData', formData);
+  // console.log('LK TD PUT formData', formData);
   try {
     if (userId) {
       const queryDoc = await DocTestDrive.findByPk(formData.id);
@@ -113,7 +116,7 @@ lkRoute.get('/user', async (req, res) => {
 lkRoute.put('/user', async (req, res) => {
   const { userId } = req.session;
   const { inputsName, inputsPhone } = req.body;
-  console.log('===req.body PUT USER', req.body);
+  // console.log('===req.body PUT USER', req.body);
   try {
     if (userId) {
       const user = await User.findByPk(userId);
@@ -187,7 +190,7 @@ lkRoute.put('/user', async (req, res) => {
 
 lkRoute.get('/car', async (req, res) => {
   const { userId } = req.session;
-  console.log('на машины ручка сессия', userId);
+  // console.log('на машины ручка сессия', userId);
 
   try {
     if (userId) {
@@ -231,18 +234,19 @@ lkRoute.put('/car', async (req, res) => {
 lkRoute.post('/car', async (req, res) => {
   const { userId } = req.session;
   const {
-    mark, model, color, prodYear, gosNum, gear, engine, vin,
+   formData
   } = req.body;
+  console.log(req.body, '=====reqbody post avto')
   if (userId) {
     const newCar = await Cars.create({
-      mark,
-      model,
-      color,
-      prodYear,
-      gosNum,
-      gear,
-      engine,
-      vin,
+      mark: formData.mark,
+      model: formData.model,
+      color: formData.color,
+      prodYear: formData.prodYear,
+      gosNum: formData.gosNum,
+      gear: formData.gear,
+      engine: formData.engine,
+      vin: formData.vin,
       user_id: userId,
       probegTotal: 0,
       ours: false,

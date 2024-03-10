@@ -16,11 +16,11 @@ const ZoomTransition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />)
 //     </>
 //   );
 // }
-function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent }) {
+function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent, isCreatingNewCar }) {
   // Изменено с currentData на data
   console.log('🚀 ~ BasicModal ~ data:', data);
 
-  const title = data ? `Редактирование документа id${data.id}` : 'Basic Modal Message';
+  const title = isCreatingNewCar ? `Создание нового автомобиля` : `Редактирование документа id${data?.id || ''}`;
 
   return (
     <Modal
@@ -32,7 +32,7 @@ function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent }) {
       padding={true}
     >
       <Box height="50vh" sx={{ marginBottom: '120px' }}>
-        <FormComponent formData={data} onSuccess={updateAndClose}/>
+        <FormComponent formData={data} onSuccess={updateAndClose} isCreatingNewCar={isCreatingNewCar}/>
       </Box>
     </Modal>
   );

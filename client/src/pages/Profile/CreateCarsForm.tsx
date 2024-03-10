@@ -4,19 +4,18 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
-import {fetchCarsUpdate} from '../../redux/lk/lkThunkActions';
+import {fetchAddCars} from '../../redux/lk/lkThunkActions';
 
-export default function EditCarsForm({ formData, onSuccess, isCreatingNewCar }) {
+export default function CreateCarForm({ formData, onSuccess, isCreatingNewCar }) {
   // Локальное состояние для каждого поля формы
-  const [id, setId] = useState(formData.id || '');
-  const [mark, setMark] = useState(formData.mark || '');
-  const [model, setModel] = useState(formData.model || '');
-  const [color, setColor] = useState(formData.color || '');
-  const [prodYear, setProdYear] = useState(formData.prodYear || '');
-  const [gosNum, setGosNum] = useState(formData.gosNum || '');
-  const [gear, setGear] = useState(formData.gear || '');
-  const [engine, setEngine] = useState(formData.engine || '');
-  const [vin, setVin] = useState(formData.vin || '');
+  const [mark, setMark] = useState('');
+  const [model, setModel] = useState( '');
+  const [color, setColor] = useState( '');
+  const [prodYear, setProdYear] = useState( '');
+  const [gosNum, setGosNum] = useState('');
+  const [gear, setGear] = useState( '');
+  const [engine, setEngine] = useState( '');
+  const [vin, setVin] = useState('');
 
   // Получение данных менеджера из Redux store
   const dispatch = useAppDispatch();
@@ -24,7 +23,6 @@ export default function EditCarsForm({ formData, onSuccess, isCreatingNewCar }) 
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = {
-      id,
       mark,
       model,
       color,
@@ -35,21 +33,12 @@ export default function EditCarsForm({ formData, onSuccess, isCreatingNewCar }) 
       vin
     };
     console.log('======formData cars LK USER', formData);
-    await dispatch(fetchCarsUpdate({ formData }));
+    await dispatch(fetchAddCars({ formData }));
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <TextField
-        label="Номер документа авто"
-        value={id}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
-      />
       <TextField
         label="Марка"
         value={mark}
@@ -118,5 +107,6 @@ export default function EditCarsForm({ formData, onSuccess, isCreatingNewCar }) 
         Сохранить
       </Button>
     </form>
+
   );
 }

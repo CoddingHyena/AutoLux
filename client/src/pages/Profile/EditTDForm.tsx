@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
 import {fetchLKDocTDUpdate} from '../../redux/lk/lkThunkActions';
 
-export default function EditTOForm({ formData, onSuccess }) {
+export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
   // Локальное состояние для каждого поля формы
   const [id, setId] = useState(formData.id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');

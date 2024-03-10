@@ -41,6 +41,7 @@ import BasicModal from '../../components/BasicModal/BasicModal';
 import EditTOForm from './EditTOForm';
 import EditTDForm from './EditTDForm';
 import EditCarsForm from './EditCarsForm';
+import CreateCarsForm from './CreateCarsForm';
 
 const getHeadCellsTO = [
   {
@@ -326,7 +327,7 @@ function UserDocsTestDriveTable({ name, props }) {
 
          // Функция для закрытия модального окна
   const updateAndClose = () => {
-    dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
+    dispatch(fetchDocTD()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
   };
 
@@ -386,6 +387,8 @@ function UserAutoTable({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
 
+  const [isCreatingNewCar, setIsCreatingNewCar] = useState(false);
+
   const myCars = useAppSelector((store) => store.lkSlice.cars);
   // console.log('getMyCars LK', myCars);
   const dispatch = useAppDispatch();
@@ -402,7 +405,7 @@ function UserAutoTable({ name, props }) {
 
         // Функция для закрытия модального окна
         const updateAndClose = () => {
-          dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
+          dispatch(fetchCars()); // Перезапрашиваем данные, обновляя список
           setIsModalOpen(false);
         };
 
@@ -411,10 +414,25 @@ function UserAutoTable({ name, props }) {
           dispatch(fetchCars())
         }
 
+        const handleCreateClick = () => {
+          setIsModalOpen(true);
+          setIsCreatingNewCar(true);
+          setCurrentData(null);
+        }
+
+        const handleCloseModal = () => {
+          setIsModalOpen(false);
+          setIsCreatingNewCar(false); // Возвращаемся к дефолтному состоянию
+        };
+
   return (
     <>
     <Card component="section" type="section">
-      <CardHeader title="Мои автомобили" subtitle=""></CardHeader>
+      <CardHeader title="Мои автомобили" subtitle="">
+      <Button onClick={handleCreateClick} variant="contained" disableElevation endIcon={<AddIcon />}>
+          Добавить авто
+        </Button>
+      </CardHeader>
       <DataTable
         {...props}
         headCells={getHeadCellsUserAuto}
@@ -470,10 +488,11 @@ function UserAutoTable({ name, props }) {
        {isModalOpen && (
         <BasicModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         data={currentData}
+        isCreatingNewCar={isCreatingNewCar}
         updateAndClose={updateAndClose}
-        FormComponent={EditCarsForm}
+        FormComponent={ isCreatingNewCar ?  CreateCarsForm :  EditCarsForm}
         />
       )}
       </>
