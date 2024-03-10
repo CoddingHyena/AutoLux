@@ -65,16 +65,15 @@ lkRoute.put('/TD/:id', async (req, res) => {
   }
 });
 
-lkRoute.put('/TO/:id', async (req, res) => {
+lkRoute.put('/TO', async (req, res) => {
   const { userId } = req.sesion;
-  const { id } = req.params;
-  const { userScore, userComment } = req.body;
-
+  const { formData } = req.body;
+  console.log('LK TO PUT formData', formData);
   try {
     if (userId) {
-      const queryDoc = await DocTO.findByPk(id);
-      queryDoc.userScore = userScore;
-      queryDoc.userComment = userComment;
+      const queryDoc = await DocTO.findByPk(formData.id);
+      queryDoc.userScore = formData.userScore;
+      queryDoc.userComment = formData.userComment;
       await queryDoc.save();
 
       res.json({
@@ -87,7 +86,7 @@ lkRoute.put('/TO/:id', async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ PUTH ДОКУМЕНТА TO');
+    console.log(error, 'ОШИБКА В РУЧКЕ PUTH LK ДОКУМЕНТА TO');
     res.sendStatus(500);
   }
 });

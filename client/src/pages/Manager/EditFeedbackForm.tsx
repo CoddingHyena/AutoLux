@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
-import { fetchAdminDocFBUpdate } from '../../redux/manager/managerThunkActions';
+import { fetchManagerDocFBUpdate } from '../../redux/manager/managerThunkActions';
 
 export default function EditFeedbackForm({ formData, currentUserId, onSuccess }) {
   // Локальное состояние для каждого поля формы
@@ -44,7 +44,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
     };
     console.log('======formData FB', formData);
 
-    await dispatch(fetchAdminDocFBUpdate({ formData }));
+    await dispatch(fetchManagerDocFBUpdate({formData}));
 
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };

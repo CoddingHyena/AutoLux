@@ -34,7 +34,8 @@ import { useState, useEffect } from 'react';
 
 // import Modal from '../../components/modal';
 // import ModalOptions from './modalOptions';
-import BasicModal from './BasicModal';
+import BasicModal from '../../components/BasicModal/BasicModal';
+import EditFeedbackForm from './EditFeedbackForm';
 
 const getDocsFB = [
   {
@@ -346,6 +347,7 @@ function DataTableDocFB({ props }) {
           onClose={() => setIsModalOpen(false)}
           data={currentData}
           updateAndClose={updateAndClose}
+          FormComponent={EditFeedbackForm}
         />
       )}
     </>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserCarsType, UserDocsTDType, UserType } from "../../../types"
-import { fetchCars, fetchDocTD, fetchDocTO, fetchLkUsers, fetchUpdatUser } from "./lkThunkActions";
+import { fetchCars, fetchDocTD, fetchDocTO, fetchLKDocTOUpdate, fetchLkUsers, fetchUpdatUser } from "./lkThunkActions";
 
 export type SliceState = {
     user?: UserType;
@@ -49,6 +49,12 @@ const lkSlice = createSlice({
             state.docsTO = payload;
             state.isLoading = false;
         })
+        builder.addCase(fetchLKDocTOUpdate.fulfilled, (state, {payload}) => {
+            const index = state.docsTO?.findIndex((el) => el.id === payload.id);
+            if(index !== -1){
+                state.docsTO[index] = payload;
+            }
+        });
         builder.addCase(fetchCars.fulfilled, (state, {payload}) => {
             state.cars = payload;
             state.isLoading = false;
