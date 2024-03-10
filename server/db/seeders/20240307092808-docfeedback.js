@@ -14,7 +14,6 @@ module.exports = {
       {
         userName: 'Игнат Павлович Чепушной',
         dateNow: new Date(randomDay),
-        manager: '',
         status: false,
         phoneNumber: '+7 961 1315',
         userComment: 'Сколько стоит дом построить?',
@@ -25,7 +24,7 @@ module.exports = {
       {
         userName: 'Игнат Павлович Чепушной',
         dateNow: new Date(tomorrow),
-        manager: '',
+        manager: 2,
         status: false,
         phoneNumber: '+7 961 1315',
         userComment: 'Сколько стоит дом построить?',
@@ -36,7 +35,6 @@ module.exports = {
       {
         userName: 'Игнат Павлович Чепушной',
         dateNow: new Date(tomorrow),
-        manager: '',
         status: false,
         phoneNumber: '+7 961 1315',
         userComment: 'Сколько стоит дом построить?',
@@ -47,7 +45,6 @@ module.exports = {
       {
         userName: 'Игнат Павлович Чепушной',
         dateNow: new Date(currentDate),
-        manager: '',
         status: false,
         phoneNumber: '+7 961 1315',
         userComment: 'Сколько стоит дом построить?',
@@ -58,8 +55,7 @@ module.exports = {
       {
         userName: 'Игнат Павлович Чепушной',
         dateNow: new Date(yesterday),
-        manager: '',
-        status: false,
+        status: true,
         phoneNumber: '+7 961 1315',
         userComment: 'Сколько стоит дом построить?',
         ourComment: 'Дана консультация, просил перезвонить еще раз',
@@ -69,7 +65,7 @@ module.exports = {
       {
         userName: 'Игнат Павлович Чепушной',
         dateNow: new Date(yesterday),
-        manager: '',
+        manager: 3,
         status: false,
         phoneNumber: '+7 961 1315',
         userComment: 'Сколько стоит дом построить?',
@@ -80,7 +76,6 @@ module.exports = {
       {
         userName: 'Константин',
         dateNow: new Date(yesterday),
-        manager: '',
         status: false,
         phoneNumber: '+7 961 5577',
         userComment: 'Как записаться на тест драйв',
@@ -91,7 +86,6 @@ module.exports = {
       {
         userName: 'Инокентий',
         dateNow: new Date(tomorrow),
-        manager: '',
         status: true,
         phoneNumber: '+7 965 3387',
         userComment: 'Как записаться на тест драйв',
@@ -102,7 +96,6 @@ module.exports = {
       {
         userName: 'Валя суетной',
         dateNow: new Date(monthAgo),
-        manager: '',
         status: true,
         phoneNumber: '+7 961 5478 ',
         userComment: 'Почему всё так дорого?',
@@ -113,8 +106,8 @@ module.exports = {
       {
         userName: 'Эдуард Петров',
         dateNow: new Date(randomDay),
-        manager: '',
-        status: false,
+        manager: 1,
+        status: true,
         phoneNumber: '+7 982 6472 ',
         userComment: 'Хочу записаться на ТО',
         ourComment: 'Попросил позвонить в следующем месяце',
@@ -124,7 +117,6 @@ module.exports = {
       {
         userName: 'Семён Петров',
         dateNow: new Date(yesterday),
-        manager: '',
         status: true,
         phoneNumber: '+7 982 8214 ',
         userComment: 'Хочу записаться на ТО',
@@ -135,7 +127,6 @@ module.exports = {
       {
         userName: 'Петр Семёнов',
         dateNow: new Date(yesterday),
-        manager: '',
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на ТО',
@@ -146,7 +137,7 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
+
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -157,7 +148,6 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(randomDay),
-        manager: '',
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -168,7 +158,17 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
+        manager: 4,
+        status: true,
+        phoneNumber: '+7 983 4784 ',
+        userComment: 'Хочу записаться на тестдрайв Фоло',
+        ourComment: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        userName: 'Владимир',
+        dateNow: new Date(yesterday),
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -179,7 +179,6 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -190,7 +189,6 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -201,7 +199,6 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -212,7 +209,7 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
+        manager: 3,
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
@@ -223,18 +220,7 @@ module.exports = {
       {
         userName: 'Владимир',
         dateNow: new Date(yesterday),
-        manager: '',
-        status: false,
-        phoneNumber: '+7 983 4784 ',
-        userComment: 'Хочу записаться на тестдрайв Фоло',
-        ourComment: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        userName: 'Владимир',
-        dateNow: new Date(yesterday),
-        manager: '',
+        manager: 1,
         status: false,
         phoneNumber: '+7 983 4784 ',
         userComment: 'Хочу записаться на тестдрайв Фоло',
