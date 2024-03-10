@@ -1,156 +1,98 @@
-import { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-
-import Chart from 'react-apexcharts';
-import getDefaultChartsColors from '@helpers/getDefaultChartsColors';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-
-import CardHeader from '@/components/cardHeader';
+import React, { useState, useEffect } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import charts from '../../_mocks/charts';
 
 function CustomersOverviewCard() {
-  const [viewBy, setViewBy] = useState('day');
+  let ordersData = charts;
 
-  const changeTab = (tabKey) => {
-    setViewBy(tabKey);
-  };
-  return (
-    <Card>
-      <CardHeader title="График документов" size="small">
-        <ButtonGroup variant="outlined" size="small" aria-label="temporaly button group">
-          <TabButton changeTab={changeTab} tabKey="day" activeView={viewBy}>
-            День
-          </TabButton>
-          <TabButton changeTab={changeTab} tabKey="week" activeView={viewBy}>
-            Неделя
-          </TabButton>
-          <TabButton changeTab={changeTab} tabKey="month" activeView={viewBy}>
-            Месяц
-          </TabButton>
-        </ButtonGroup>
-      </CardHeader>
-      <CustomersChart activeView={viewBy} />
-    </Card>
-  );
-}
-function TabButton({ children, tabKey, changeTab, activeView }) {
-  return (
-    <Button
-      onClick={() => changeTab(tabKey)}
-      disableElevation
-      variant={activeView === tabKey ? 'contained' : 'outlined'}
-    >
-      {children}
-    </Button>
-  );
-}
+  const [series, setSeries] = useState([
+    {
+      name: 'Заказы (Выполненные)',
+      data: [],
+    },
+    {
+      name: 'Заказы (Не выполненные)',
+      data: [],
+    },
+  ]);
 
-function getCustomerGraphConfig(config) {
-  return {
-    options: {
-      colors: getDefaultChartsColors(config?.mode === 'dark' ? 3 : 1),
-      fill: {
-        opacity: 0.6,
-        type: 'solid',
-      },
-      ...(config?.mode === 'dark' && {
-        tooltip: {
-          theme: 'dark',
-        },
-      }),
+  useEffect(() => {
+    if (ordersData) {
+      let completedOrdersMap = {};
+      let pendingOrdersMap = {};
 
-      chart: {
-        ...(config?.mode === 'dark' && { foreColor: '#fff' }),
-        toolbar: {
-          show: false,
-        },
-        zoom: {
-          enabled: false,
-        },
-        parentHeightOffset: 0,
-      },
-      stroke: {
-        width: 0,
-        curve: 'straight',
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      yaxis: {
-        seriesName: 'customers cuantity',
-        min: 0,
-        max: 15.0,
-        tickAmount: 7,
-        decimalsInFloat: 1,
-      },
-      grid: {
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: true,
-          },
-        },
-      },
-      legend: {
-        show: true,
-        position: 'bottom',
-        floating: true,
-        offsetY: 20,
+      ordersData.forEach((order) => {
+        const date = new Date(order.dateNow).toDateString();
+        if (order.status) {
+          completedOrdersMap[date] = (completedOrdersMap[date] || 0) + 1;
+        } else {
+          pendingOrdersMap[date] = (pendingOrdersMap[date] || 0) + 1;
+        }
+      });
+
+      const sortData = (data) => {
+        return data.sort((a, b) => new Date(a.x) - new Date(b.x));
+      };
+
+      const completedSeriesData = sortData(
+        Object.keys(completedOrdersMap).map((date) => {
+          return { x: new Date(date).getTime(), y: completedOrdersMap[date] };
+        })
+      );
+
+      const pendingSeriesData = sortData(
+        Object.keys(pendingOrdersMap).map((date) => {
+          return { x: new Date(date).getTime(), y: pendingOrdersMap[date] };
+        })
+      );
+
+      setSeries([
+        { name: 'Заказы (Выполненные)', data: completedSeriesData },
+        { name: 'Заказы (Не выполненные)', data: pendingSeriesData },
+      ]);
+    }
+  }, [ordersData]);
+
+  const options = {
+    chart: {
+      type: 'area',
+      height: 350,
+      stacked: false,
+    },
+    colors: ['#008FFB', '#FF4500'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        opacityFrom: 0.6,
+        opacityTo: 0.8,
       },
     },
-    series: {
-      day: [
-        {
-          name: 'New Customer',
-          data: [2.0, 3.0, 6.0, 5.0, 7.0, 8.0, 10.0],
-        },
-        {
-          name: 'Returning Customer',
-          data: [1.0, 2.0, 5.0, 3.0, 5.0, 6.0, 9.0],
-        },
-      ],
-      week: [
-        {
-          name: 'New Customer',
-          data: [5.0, 4.0, 9.0, 6.0, 8.0, 11.0, 7.0],
-        },
-        {
-          name: 'Returning Customer',
-          data: [4.0, 3.0, 7.0, 4.0, 6.0, 9.0, 7.0],
-        },
-      ],
-      month: [
-        {
-          name: 'New Customer',
-          data: [5.0, 6.0, 3.0, 5.0, 6.0, 11.0, 4.0],
-        },
-        {
-          name: 'Returning Customer',
-          data: [4.0, 5.0, 2.0, 4.0, 5.0, 7.0, 3.0],
-        },
-      ],
+    legend: {
+      position: 'top',
+      horizontalAlign: 'left',
+    },
+    xaxis: {
+      type: 'datetime',
+    },
+    yaxis: {
+      title: {
+        text: 'Количество заказов',
+      },
     },
   };
-}
 
-function CustomersChart({ activeView }) {
-  const theme = useTheme();
   return (
-    <Box
-      component={Chart}
-      options={getCustomerGraphConfig({ mode: theme.palette.mode })?.options}
-      series={getCustomerGraphConfig()?.series?.[activeView]}
-      type="area"
-      width="100%"
-      ml={-1}
-    />
+    <div>
+      <div id="chart">
+        <ReactApexChart options={options} series={series} type="area" height={350} />
+      </div>
+    </div>
   );
 }
 

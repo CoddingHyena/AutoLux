@@ -64,7 +64,7 @@ export default function mainPage() {
 				<CardHeader title="Заголовок секции на главной">
 					Доп заголовок
 				</CardHeader>
-                Контент главной
+                <img src="banners/bannerMain.jpg" />
 			</Card>
 
 

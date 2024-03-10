@@ -31,9 +31,12 @@ import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 // Components
 import NotificationsButton from './notificationButton';
 import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../redux/hooks';
 import { fetchLogout } from '../../redux/User/userThunkAction';
 
 function LoggedUser() {
+  const currentUser = useAppSelector((store) => store.userSlice.user);
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -75,12 +78,6 @@ function LoggedUser() {
         alignItems="center"
         spacing={0}
       >
-        <NotificationsButton />
-        <IconButton size="small">
-          <Badge color="tertiary" overlap="rectangular" variant="dot">
-            <CommentOutlinedIcon color="primary" fontSize="small" />
-          </Badge>
-        </IconButton>
         <ButtonBase
           onClick={handleClick}
           variant="outlined"
@@ -124,7 +121,7 @@ function LoggedUser() {
                 sm: 'inline-block',
               }}
             >
-              Константин
+              {currentUser.name}
             </Typography>
             <ExpandMoreIcon
               fontSize="small"
@@ -141,6 +138,8 @@ function LoggedUser() {
 }
 
 function UserMenu({ handleClose }) {
+  const currentUser = useAppSelector((store) => store.userSlice.user);
+
   const navigator = useNavigate();
   const dispatch = useDispatch();
 
@@ -160,11 +159,11 @@ function UserMenu({ handleClose }) {
     >
       <Stack px={3}>
         <Typography variant="subtitle1" textAlign="center">
-          Константин Беляков
+          {currentUser.name}
         </Typography>
-        <Typography variant="subtitle2" textAlign="center">
+        {/* <Typography variant="subtitle2" textAlign="center">
           Должность
-        </Typography>
+        </Typography> */}
       </Stack>
       <Divider
         sx={{
@@ -180,24 +179,37 @@ function UserMenu({ handleClose }) {
         Профиль
       </MenuItem>
 
-      <MenuItem onClick={handleClose} to="/" component={RouterLink}>
+      {/* <MenuItem onClick={handleClose} to="/" component={RouterLink}>
         <ListItemIcon>
           <TaskOutlinedIcon fontSize="small" />
         </ListItemIcon>
         Мои документы <ListBadge color="error.main" count={23} />
-      </MenuItem>
-      <MenuItem onClick={handleClose} to="/" component={RouterLink}>
+      </MenuItem> */}
+      {/* <MenuItem onClick={handleClose} to="/" component={RouterLink}>
         <ListItemIcon>
           <CommentOutlinedIcon fontSize="small" />
         </ListItemIcon>
         Мои обращения <ListBadge color="warning.main" count={11} />
-      </MenuItem>
+      </MenuItem> */}
 
       <MenuItem onClick={handleClose} component={RouterLink} to="/">
         <ListItemIcon>
           <ExitToAppIcon fontSize="small" />
         </ListItemIcon>
-        <button onClick={logoutHandler}>Выйти</button>
+        <button
+          onClick={logoutHandler}
+          style={{
+            background: 'none',
+            color: 'inherit',
+            border: 'none',
+            padding: 0,
+            font: 'inherit',
+            cursor: 'pointer',
+            outline: 'inherit',
+          }}
+        >
+          Выйти
+        </button>{' '}
       </MenuItem>
     </MenuList>
   );

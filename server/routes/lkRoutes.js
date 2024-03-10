@@ -1,19 +1,22 @@
 const lkRoute = require('express').Router();
 
 const {
-  DocTestDrive, DocTO, PhoneNum, Cars,
+  DocTestDrive, DocTO, Cars, User,
 } = require('../db/models');
+
+
+
 
 lkRoute.get('/DocTestDrive', async (req, res) => {
   const { userId } = req.session;
-  console.log(userId, ' sessionID')
+  // console.log(userId, 'тестдрайв рчка гет sessionID');
   try {
     const docsTD = await DocTestDrive.findAll({
       where: { user_id: userId },
       attributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment'],
     });
     const getDocsTD = docsTD.map((el) => el.get({ plain: true }));
-    console.log('======>DOCSTD', getDocsTD);
+    // console.log('======>DOCSTD', getDocsTD);
     res.json(getDocsTD);
   } catch (error) {
     console.log(error, 'ОШИБКА В РУЧКЕ ГЕТ ТЕСТДРАЙВ');
@@ -38,16 +41,15 @@ lkRoute.get('/docTO', async (req, res) => {
   }
 });
 
-lkRoute.put('/TD/:id', async (req, res) => {
+lkRoute.put('/docTD/', async (req, res) => {
   const { userId } = req.session;
-  const { id } = req.params;
-  const { userScore, userComment } = req.body;
-
+  const { formData } = req.body;
+  // console.log('LK TD PUT formData', formData);
   try {
     if (userId) {
-      const queryDoc = await DocTestDrive.findByPk(id);
-      queryDoc.userScore = userScore;
-      queryDoc.userComment = userComment;
+      const queryDoc = await DocTestDrive.findByPk(formData.id);
+      queryDoc.userScore = formData.userScore;
+      queryDoc.userComment = formData.userComment;
       await queryDoc.save();
 
       res.json({
@@ -65,16 +67,15 @@ lkRoute.put('/TD/:id', async (req, res) => {
   }
 });
 
-lkRoute.put('TO/:id', async (req, res) => {
-  const { userId } = req.sesion;
-  const { id } = req.params;
-  const { userScore, userComment } = req.body;
-
+lkRoute.put('/docTO', async (req, res) => {
+  const { userId } = req.session;
+  const { formData } = req.body;
+  // console.log('LK TO PUT formData', formData);
   try {
     if (userId) {
-      const queryDoc = await DocTO.findByPk(id);
-      queryDoc.userScore = userScore;
-      queryDoc.userComment = userComment;
+      const queryDoc = await DocTO.findByPk(formData.id);
+      queryDoc.userScore = formData.userScore;
+      queryDoc.userComment = formData.userComment;
       await queryDoc.save();
 
       res.json({
@@ -87,63 +88,109 @@ lkRoute.put('TO/:id', async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ PUTH ДОКУМЕНТА TO');
+    console.log(error, 'ОШИБКА В РУЧКЕ PUTH LK ДОКУМЕНТА TO');
     res.sendStatus(500);
   }
 });
 
-lkRoute.get('/phone', async (req, res) => {
-  const { userId } = req.sesion;
+lkRoute.get('/user', async (req, res) => {
+  const { userId } = req.session;
   try {
     if (userId) {
-      const phoneNumber = await PhoneNum.findAll({
-        where: { user_id: userId },
-        attributes: ['id', 'phoneNumber'],
+      const user = await User.findByPk(userId);
+      res.json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role_id: user.role_id,
+        propType: user.propType,
+        persDataArg: user.persDataArg,
       });
-      const result = phoneNumber.map((el) => el.get({ plain: true }));
-      res.json(result);
     }
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ GET PHONE');
+    console.log(error, 'ошибка в ручке get user ');
   }
 });
 
-lkRoute.post('/phone', async (req, res) => {
+lkRoute.put('/user', async (req, res) => {
   const { userId } = req.session;
-  const { phoneNumber } = req.body;
-
+  const { inputsName, inputsPhone } = req.body;
+  // console.log('===req.body PUT USER', req.body);
   try {
     if (userId) {
-      const newNum = await PhoneNum.create({ user_id: userId, phoneNumber });
-      res.json({ id: newNum.id, phoneNumber: newNum.phoneNumber });
+      const user = await User.findByPk(userId);
+      user.name = inputsName;
+      user.phone = inputsPhone;
+      user.save();
+      res.json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role_id: user.role_id,
+        propType: user.propType,
+        persDataArg: user.persDataArg,
+      });
     }
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ POST PHONE');
+    console.log(error, 'Ошибка в ручке put user lk');
     res.sendStatus(500);
   }
 });
+// lkRoute.get('/phone', async (req, res) => {
+//   const { userId } = req.sesion;
+//   try {
+//     if (userId) {
+//       const phoneNumber = await PhoneNum.findAll({
+//         where: { user_id: userId },
+//         attributes: ['id', 'phoneNumber'],
+//       });
+//       const result = phoneNumber.map((el) => el.get({ plain: true }));
+//       res.json(result);
+//     }
+//   } catch (error) {
+//     console.log(error, 'ОШИБКА В РУЧКЕ GET PHONE');
+//   }
+// });
 
-lkRoute.put('/phone/:id', async (req, res) => {
-  const { userId } = req.session;
-  const { phoneNumber } = req.body;
-  const { id } = req.params;
-  try {
-    if (userId) {
-      const queryNum = await PhoneNum.findByPk(id);
-      if (queryNum.user_id === userId) {
-        queryNum.phoneNumber = phoneNumber;
-        await queryNum.save();
-        res.json({ id: queryNum.id, phoneNumber: queryNum.phoneNumber });
-      }
-    }
-  } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ PUT PHONE');
-    res.sendStatus(500);
-  }
-});
+// lkRoute.post('/phone', async (req, res) => {
+//   const { userId } = req.session;
+//   const { phoneNumber } = req.body;
+
+//   try {
+//     if (userId) {
+//       const newNum = await PhoneNum.create({ user_id: userId, phoneNumber });
+//       res.json({ id: newNum.id, phoneNumber: newNum.phoneNumber });
+//     }
+//   } catch (error) {
+//     console.log(error, 'ОШИБКА В РУЧКЕ POST PHONE');
+//     res.sendStatus(500);
+//   }
+// });
+
+// lkRoute.put('/phone/:id', async (req, res) => {
+//   const { userId } = req.session;
+//   const { phoneNumber } = req.body;
+//   const { id } = req.params;
+//   try {
+//     if (userId) {
+//       const queryNum = await PhoneNum.findByPk(id);
+//       if (queryNum.user_id === userId) {
+//         queryNum.phoneNumber = phoneNumber;
+//         await queryNum.save();
+//         res.json({ id: queryNum.id, phoneNumber: queryNum.phoneNumber });
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error, 'ОШИБКА В РУЧКЕ PUT PHONE');
+//     res.sendStatus(500);
+//   }
+// });
 
 lkRoute.get('/car', async (req, res) => {
-  const { userId } = req.sesion;
+  const { userId } = req.session;
+  // console.log('на машины ручка сессия', userId);
 
   try {
     if (userId) {
@@ -152,6 +199,7 @@ lkRoute.get('/car', async (req, res) => {
         attributes: ['id', 'mark', 'model', 'color', 'prodYear', 'gosNum', 'gear', 'engine', 'vin'],
       });
       const resultAllcar = carsAll.map((el) => el.get({ plain: true }));
+      console.log(resultAllcar);
       res.json(resultAllcar);
     }
   } catch (error) {
@@ -160,21 +208,45 @@ lkRoute.get('/car', async (req, res) => {
   }
 });
 
+lkRoute.put('/car', async (req, res) => {
+  const { formData } = req.body;
+  const { userId } = req.session;
+  try {
+    if (userId) {
+      const car = await Cars.findByPk(formData.id);
+      car.mark = formData.mark;
+      car.model = formData.model;
+      car.color = formData.color;
+      car.prodYear = formData.prodYear;
+      car.gosNum = formData.gosNum;
+      car.gear = formData.gear;
+      car.engine = formData.engine;
+      car.vin = formData.vin;
+      car.save();
+      res.json(car)
+    }
+  } catch (error) {
+    console.log(error, 'ошибка в ручке pur car LK ');
+    res.sendStatus(500);
+  }
+});
+
 lkRoute.post('/car', async (req, res) => {
   const { userId } = req.session;
   const {
-    mark, model, color, prodYear, gosNum, gear, engine, vin,
+   formData
   } = req.body;
+  console.log(req.body, '=====reqbody post avto')
   if (userId) {
     const newCar = await Cars.create({
-      mark,
-      model,
-      color,
-      prodYear,
-      gosNum,
-      gear,
-      engine,
-      vin,
+      mark: formData.mark,
+      model: formData.model,
+      color: formData.color,
+      prodYear: formData.prodYear,
+      gosNum: formData.gosNum,
+      gear: formData.gear,
+      engine: formData.engine,
+      vin: formData.vin,
       user_id: userId,
       probegTotal: 0,
       ours: false,
@@ -200,7 +272,7 @@ lkRoute.delete('/car/:id', async (req, res) => {
   try {
     if (userId) {
       const queryCar = await Cars.destroy({ where: { id, user_id: userId } });
-      res.json(id)
+      res.json(id);
     }
   } catch (error) {
     console.log(error, 'ОШИБКА В РУЧКЕ УДАЛЕНИЯ CAR');

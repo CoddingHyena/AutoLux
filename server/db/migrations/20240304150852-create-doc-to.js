@@ -30,7 +30,12 @@ module.exports = {
         type: Sequelize.DATE,
       },
       manager: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'cascade',
       },
       status: {
         type: Sequelize.BOOLEAN,

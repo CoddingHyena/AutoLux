@@ -27,8 +27,21 @@ import CardHeader from '../../components/cardHeader';
 import toUserDocs from '../../_mocks/toUserDocs';
 import userCars from '../../_mocks/cars';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchCars, fetchDocTD, fetchDocTO } from '../../redux/lk/lkThunkActions';
-import { useEffect } from 'react';
+import {
+  fetchCars,
+  fetchCarsDel,
+  fetchDocTD,
+  fetchDocTO,
+  fetchLkUsers,
+  fetchUpdatUser,
+} from '../../redux/lk/lkThunkActions';
+import { useEffect, useState } from 'react';
+import TestDrive from '../../components/testDrive';
+import BasicModal from '../../components/BasicModal/BasicModal';
+import EditTOForm from './EditTOForm';
+import EditTDForm from './EditTDForm';
+import EditCarsForm from './EditCarsForm';
+import CreateCarsForm from './CreateCarsForm';
 
 const getHeadCellsTO = [
   {
@@ -127,62 +140,128 @@ export default function Account() {
       <UserDocsToTable />
       <UserDocsTestDriveTable />
       <UserAutoTable />
+      <TestDrive/>
     </Stack>
   );
 }
 
 function GeneralSettingsSection() {
-  return (
-    <Card type="section">
-      <CardHeader title="Ваш профиль" />
-      <Stack spacing={6}>
-        <form onSubmit={() => {}}>
-          <Grid container rowSpacing={2} columnSpacing={4}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField label="ФИО" variant="outlined" defaultValue="elizabeth_123" fullWidth />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                type="Email"
-                label="Email"
-                variant="outlined"
-                defaultValue="demo@sample.com"
-                fullWidth
-              />
-            </Grid>
 
-            <Grid item xs={12} sm={12} md={12}>
-              <Button
-                disableElevation
-                variant="contained"
-                endIcon={<EditIcon />}
-                sx={{
-                  float: 'right',
-                }}
-              >
-                Сохранить
-              </Button>
+  const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
+
+  const user = useAppSelector((store) => store.lkSlice.user);
+  const dispatch = useAppDispatch();
+  
+  const [inputsName, setInputsName] = useState<string>(user?.name || 'Введите имя');
+  const [inputsPhone, setInputsPhone] = useState<string>(user?.phone || 'Введите телефон');
+
+
+  useEffect(() => {
+    void dispatch(fetchLkUsers());
+  }, []); // Пустой массив зависимостей, чтобы вызвать эффект только при монтировании
+  
+  useEffect(() => {
+    if(user?.name !== inputsName || user?.phone !== inputsPhone){
+      setInputsName(user?.name || 'Введите имя')
+      setInputsPhone(user?.phone || 'Введите телефон')
+    }
+  }, [user])
+  console.log('userUpdate LK', user);
+
+
+  const handleTitleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputsName(event.target.value);
+  };
+  const handleTitleChange2 = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputsPhone(event.target.value);
+  };
+
+  const handleSaveUser = async (): Promise<void> => {
+    void dispatch(fetchUpdatUser({ inputsName, inputsPhone }));
+  };
+  if (!isLoading) {
+    return (
+      <Card type="section">
+        <CardHeader title="Ваш профиль" />
+        <Stack spacing={6}>
+          <form onSubmit={() => {}}>
+            <Grid container rowSpacing={2} columnSpacing={4}>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  label="ФИО"
+                  variant="outlined"
+                  value={inputsName}
+                  fullWidth
+                  onChange={handleTitleChange1}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  type="Phone"
+                  label="Phone"
+                  variant="outlined"
+                  value={inputsPhone}
+                  fullWidth
+                  onChange={handleTitleChange2}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={12}>
+                <Button
+                  onClick={() => handleSaveUser()}
+                  disableElevation
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  sx={{
+                    float: 'right',
+                  }}
+                >
+                  Сохранить
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </Stack>
-    </Card>
-  );
+          </form>
+        </Stack>
+      </Card>
+    );
+  }
 }
 
-// GET('/api/lk/DocTestDrive')
-// GET('/api/lk/DocTO')
-//  возвращают массив с элементами
-//  atributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment']
 
 function UserDocsToTable({ name, props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
+  // console.log('docsTO LK USer', docsTO);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchDocTO());
+  }, []);
+
+    // Функция для открытия модального окна
+    const handleEditClick = (row) => {
+      setCurrentData(row); // Установить текущие данные документа
+      setIsModalOpen(true); // Открывает модальное окно
+    };
+
+
+      // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <Card component="section" type="section">
       <CardHeader title="Документы на Техобслуживание" subtitle=""></CardHeader>
       <DataTable
         {...props}
         headCells={getHeadCellsTO}
-        rows={toUserDocs}
+        rows={docsTO}
         emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
         render={(row) => (
           <TableRow hover tabIndex={-1} key={row.id}>
@@ -201,6 +280,8 @@ function UserDocsToTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row); //передаем данные записи в функцию
+                    // console.log('🚀 ~ LK docsTO row:', row);
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -211,20 +292,47 @@ function UserDocsToTable({ name, props }) {
         )}
       />
     </Card>
+
+    {isModalOpen && (
+      <BasicModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      data={currentData}
+      updateAndClose={updateAndClose}
+      FormComponent={EditTOForm}
+      />
+    )}
+    </>
   );
 }
 
 function UserDocsTestDriveTable({ name, props }) {
-  const docsTD = useAppSelector((store) => store.lkSlice.docs);
-  console.log('docsTD',docsTD)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const docsTD = useAppSelector((store) => store.lkSlice.docsTD);
+  // console.log('docsTD LK USer', docsTD);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchDocTD());
   }, []);
-  
+
+     // Функция для открытия модального окна
+     const handleEditClick = (row) => {
+      setCurrentData(row); // Установить текущие данные документа
+      setIsModalOpen(true); // Открывает модальное окно
+    };
+
+         // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchDocTD()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <Card component="section" type="section">
       <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
       <DataTable
@@ -249,6 +357,8 @@ function UserDocsTestDriveTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row);
+                    console.log('🚀 ~ LK docsTD row:', row)
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -259,17 +369,74 @@ function UserDocsTestDriveTable({ name, props }) {
         )}
       />
     </Card>
+       {isModalOpen && (
+        <BasicModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={currentData}
+        updateAndClose={updateAndClose}
+        FormComponent={EditTDForm}
+        />
+      )}
+      </>
   );
 }
 
 function UserAutoTable({ name, props }) {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const [isCreatingNewCar, setIsCreatingNewCar] = useState(false);
+
+  const myCars = useAppSelector((store) => store.lkSlice.cars);
+  // console.log('getMyCars LK', myCars);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchCars());
+  }, []);
+
+   // Функция для открытия модального окна
+   const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+        // Функция для закрытия модального окна
+        const updateAndClose = () => {
+          dispatch(fetchCars()); // Перезапрашиваем данные, обновляя список
+          setIsModalOpen(false);
+        };
+
+        const delHandler = async (carId) : Promise<void> => {
+          await dispatch(fetchCarsDel(carId));
+          dispatch(fetchCars())
+        }
+
+        const handleCreateClick = () => {
+          setIsModalOpen(true);
+          setIsCreatingNewCar(true);
+          setCurrentData(null);
+        }
+
+        const handleCloseModal = () => {
+          setIsModalOpen(false);
+          setIsCreatingNewCar(false); // Возвращаемся к дефолтному состоянию
+        };
+
   return (
+    <>
     <Card component="section" type="section">
-      <CardHeader title="Мои автомобили" subtitle=""></CardHeader>
+      <CardHeader title="Мои автомобили" subtitle="">
+      <Button onClick={handleCreateClick} variant="contained" disableElevation endIcon={<AddIcon />}>
+          Добавить авто
+        </Button>
+      </CardHeader>
       <DataTable
         {...props}
         headCells={getHeadCellsUserAuto}
-        rows={userCars}
+        rows={myCars}
         emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
         render={(row) => (
           <TableRow hover tabIndex={-1} key={row.id}>
@@ -292,6 +459,7 @@ function UserAutoTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row); //передаем данные записи в функцию
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -306,6 +474,7 @@ function UserAutoTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    delHandler(row.id);
                   }}
                 >
                   <PersonOffOutlinedIcon fontSize="medium" />
@@ -316,9 +485,17 @@ function UserAutoTable({ name, props }) {
         )}
       />
     </Card>
+       {isModalOpen && (
+        <BasicModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        data={currentData}
+        isCreatingNewCar={isCreatingNewCar}
+        updateAndClose={updateAndClose}
+        FormComponent={ isCreatingNewCar ?  CreateCarsForm :  EditCarsForm}
+        />
+      )}
+      </>
   );
-}
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.');
 }
 

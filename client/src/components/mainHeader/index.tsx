@@ -1,15 +1,17 @@
-import Typography from '@mui/material/Typography';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 
-// assets
 import logo from '@/assets/images/logo/png/Color_logotext2_nobg.png';
-
 import LoggedUser from './loggedUser';
-// import SearchBar from './searchBar';
+import { useAppSelector } from '../../redux/hooks';
 
 function MainHeader() {
+  const user = useAppSelector((state) => state.userSlice.user);
+
+  const isUserAuthenticated = user.id > 0;
+
   return (
     <Box bgcolor="background.paper" component="header" py={1.5} zIndex={1}>
       <div className="debugel">Бокс хедер</div>
@@ -37,7 +39,7 @@ function MainHeader() {
           />
         </Stack>
 
-        <LoggedUser />
+        {isUserAuthenticated && <LoggedUser />}
       </Stack>
     </Box>
   );
