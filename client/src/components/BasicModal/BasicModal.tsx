@@ -20,7 +20,7 @@ function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent }) {
   // Изменено с currentData на data
   console.log('🚀 ~ BasicModal ~ data:', data);
 
-  const title = data ? `Редактирование заявки на обр. связь id${data.id}` : 'Basic Modal Message';
+  const title = data ? `Редактирование документа id${data.id}` : 'Basic Modal Message';
 
   return (
     <Modal
