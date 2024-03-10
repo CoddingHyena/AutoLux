@@ -36,7 +36,7 @@ import {
 } from '../../redux/lk/lkThunkActions';
 import { useEffect, useState } from 'react';
 import TestDrive from '../../components/testDrive';
-import BasicModal from '../../components/BasicModal/BasicModal';
+import BasicModalLk from '../Profile';
 
 const getHeadCellsTO = [
   {
@@ -143,7 +143,7 @@ export default function Account() {
 function GeneralSettingsSection() {
 
   const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
-  
+
   const user = useAppSelector((store) => store.lkSlice.user);
   const dispatch = useAppDispatch();
   
@@ -228,7 +228,7 @@ function UserDocsToTable({ name, props }) {
   const [currentData, setCurrentData] = useState(null);
 
   const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
-  console.log('docsTD LK USer', docsTO);
+  console.log('docsTO LK USer', docsTO);
 
   const dispatch = useAppDispatch();
 

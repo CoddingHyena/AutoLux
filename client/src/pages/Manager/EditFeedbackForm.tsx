@@ -44,7 +44,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
     };
     console.log('======formData FB', formData);
 
-    await dispatch(fetchManagerDocFBUpdate({ formData }));
+    await dispatch(fetchManagerDocFBUpdate({formData}));
 
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };

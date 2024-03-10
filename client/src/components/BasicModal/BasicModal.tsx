@@ -16,7 +16,7 @@ const ZoomTransition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />)
 //     </>
 //   );
 // }
-function BasicModal({ isOpen, onClose, data, updateAndClose }) {
+function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent }) {
   // Изменено с currentData на data
   console.log('🚀 ~ BasicModal ~ data:', data);
 
@@ -32,7 +32,7 @@ function BasicModal({ isOpen, onClose, data, updateAndClose }) {
       padding={true}
     >
       <Box height="50vh" sx={{ marginBottom: '120px' }}>
-        <EditFeedbackForm formData={data} onSuccess={updateAndClose}/>
+        <FormComponent formData={data} onSuccess={updateAndClose}/>
       </Box>
     </Modal>
   );
