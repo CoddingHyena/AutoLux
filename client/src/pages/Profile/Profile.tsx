@@ -140,20 +140,27 @@ export default function Account() {
 }
 
 function GeneralSettingsSection() {
+
   const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
-
   const user = useAppSelector((store) => store.lkSlice.user);
-  const name = user.name;
-  const phone = user.phone;
-  console.log('userUpdate', user);
-
-  const [inputsName, setInputsName] = useState<string>(name);
-  const [inputsPhone, setInputsPhone] = useState<string>(phone);
   const dispatch = useAppDispatch();
+  
+  const [inputsName, setInputsName] = useState<string>(user?.name || 'error');
+  const [inputsPhone, setInputsPhone] = useState<string>(user?.phone || 'error');
+
 
   useEffect(() => {
     void dispatch(fetchLkUsers());
-  }, []);
+  }, []); // Пустой массив зависимостей, чтобы вызвать эффект только при монтировании
+  
+  useEffect(() => {
+    if(user?.name !== inputsName || user?.phone !== inputsPhone){
+      setInputsName(user?.name || 'error2')
+      setInputsPhone(user?.phone || 'error2')
+    }
+  }, [user])
+  console.log('userUpdate LK', user);
+
 
   const handleTitleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputsName(event.target.value);
@@ -176,7 +183,7 @@ function GeneralSettingsSection() {
                 <TextField
                   label="ФИО"
                   variant="outlined"
-                  defaultValue={`${name}`}
+                  value={inputsName}
                   fullWidth
                   onChange={handleTitleChange1}
                 />
@@ -186,7 +193,7 @@ function GeneralSettingsSection() {
                   type="Phone"
                   label="Phone"
                   variant="outlined"
-                  defaultValue={`${phone}`}
+                  value={inputsPhone}
                   fullWidth
                   onChange={handleTitleChange2}
                 />
@@ -213,10 +220,6 @@ function GeneralSettingsSection() {
   }
 }
 
-// GET('/api/lk/DocTestDrive')
-// GET('/api/lk/DocTO')
-//  возвращают массив с элементами
-//  atributes: ['id', 'dateNow', 'user_id', 'car_id', 'userScore', 'userComment']
 
 function UserDocsToTable({ name, props }) {
   const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
@@ -378,6 +381,4 @@ function UserAutoTable({ name, props }) {
     </Card>
   );
 }
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.');
-}
+

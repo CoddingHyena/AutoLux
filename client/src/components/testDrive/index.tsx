@@ -43,7 +43,7 @@ const addHandler = async (): Promise<void> => {
   return (
     <Card>
       <CardHeader
-        title="Записаться на тест-драйв"
+        title="Записаться на тест-драйв\техническое обслуживание"
         size="small"
         sx={{
           mb: 2,
