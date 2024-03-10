@@ -58,16 +58,15 @@ managerRoute.post('/docTD', async (req, res) => {
   }
 });
 
-managerRoute.put('/docTD/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    manager, status, ourComment,
+managerRoute.put('/docTD', async (req, res) => {
+   const {
+    formData
   } = req.body;
   try {
-    const queryDocTD = await DocTestDrive.findByPk(id);
-    queryDocTD.manager = manager;
-    queryDocTD.status = status;
-    queryDocTD.ourComment = ourComment;
+    const queryDocTD = await DocTestDrive.findByPk(formData.id);
+    queryDocTD.manager = formData.manager;
+    queryDocTD.status = formData.status;
+    queryDocTD.ourComment = formData.ourComment;
     queryDocTD.save();
     res.json(queryDocTD);
   } catch (error) {
@@ -103,16 +102,15 @@ managerRoute.post('/docTO', async (req, res) => {
   }
 });
 
-managerRoute.put('/docTO/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    manager, status, ourComment,
+managerRoute.put('/docTO', async (req, res) => {
+    const {
+      formData
   } = req.body;
   try {
-    const queryDocTO = await DocTO.findByPk(id);
-    queryDocTO.manager = manager;
-    queryDocTO.status = status;
-    queryDocTO.ourComment = ourComment;
+    const queryDocTO = await DocTO.findByPk(formData.id);
+    queryDocTO.manager = formData.manager;
+    queryDocTO.status = formData.status;
+    queryDocTO.ourComment = formData.ourComment;
     queryDocTO.save();
     res.json(queryDocTO);
   } catch (error) {

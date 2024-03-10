@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
-import { fetchManagerDocFBUpdate } from '../../redux/manager/managerThunkActions';
+import { fetchManagerDocTOUpdate } from '../../redux/manager/managerThunkActions';
 
 export default function EditFeedbackForm({ formData, currentUserId, onSuccess }) {
   // Локальное состояние для каждого поля формы
@@ -42,9 +42,9 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
       userComment,
       status,
     };
-    console.log('======formData FB', formData);
+    console.log('======formData TO', formData);
 
-    await dispatch(fetchManagerDocFBUpdate({formData}));
+    await dispatch(fetchManagerDocTOUpdate({formData}));
 
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
@@ -52,7 +52,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
   return (
     <form onSubmit={onSubmit}>
       <TextField
-        label="Номер заявки на ТО"
+        label="Номер заявки обратной связи"
         value={id}
         variant="outlined"
         margin="normal"
