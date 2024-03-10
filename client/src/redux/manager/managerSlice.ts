@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserCarsType, UserDocsTDType, UserFBSType } from "../../../types";
-import { fetchAdminDocFBUpdate, fetchManagerCars, fetchManagerDocFB, fetchManagerDocTD, fetchManagerDocTO } from "./managerThunkActions";
+import {fetchManagerDocFBUpdate, fetchManagerCars, fetchManagerDocFB, fetchManagerDocTD, fetchManagerDocTO } from "./managerThunkActions";
 
 
 
@@ -26,20 +26,20 @@ const managerSlice = createSlice({
         builder.addCase(fetchManagerDocFB.fulfilled, (state, {payload}) => {
             state.docsFB = payload;
         });
-        builder.addCase(fetchAdminDocFBUpdate.fulfilled, (state, {payload}) => {
+        builder.addCase(fetchManagerDocFBUpdate.fulfilled, (state, {payload}) => {
             const index = state.docsFB.findIndex((el) => el.id === payload.id);
             if(index !== -1){
                 state.docsFB[index] = payload;
             }
         });
-        builder.addCase(fetchManagerDocTD.fulfilled, (state, {paylod}) => {
-            state.docsTD = paylod;
+        builder.addCase(fetchManagerDocTD.fulfilled, (state, {payload}) => {
+            state.docsTD = payload;
         });
-        builder.addCase(fetchManagerDocTO.fulfilled, (state, {paylod}) => {
-            state.docsTO = paylod;
+        builder.addCase(fetchManagerDocTO.fulfilled, (state, {payload}) => {
+            state.docsTO = payload;
         });
-        builder.addCase(fetchManagerCars.fulfilled, (state, {paylod}) => {
-            state.cars = paylod;
+        builder.addCase(fetchManagerCars.fulfilled, (state, {payload}) => {
+            state.cars = payload;
         });
     }
 })

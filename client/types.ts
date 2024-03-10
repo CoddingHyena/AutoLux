@@ -20,7 +20,7 @@ export type AuthType {
 
 export type UserDocTDType = {
     id: number;
-    user_id: number;
+    user_id?: number;
     car_id: number;
     dateNow: string;
     manager?: string;

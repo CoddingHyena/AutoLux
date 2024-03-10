@@ -9,7 +9,7 @@ export const fetchManagerDocFB = createAsyncThunk('docFB/all', async () => {
   return response.data;
 });
 
-export const fetchAdminDocFBUpdate = createAsyncThunk('docFB/put', async ({formData}) => {
+export const fetchManagerDocFBUpdate = createAsyncThunk('docFB/put', async ({formData}) => {
    
   const response = await axios.put<ModalFBType, AxiosResponse<UserFBType>>(
       `${import.meta.env.VITE_URL}/manager/docFB`, {formData}, {

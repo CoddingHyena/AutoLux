@@ -34,7 +34,7 @@ import { useState, useEffect } from 'react';
 
 // import Modal from '../../components/modal';
 // import ModalOptions from './modalOptions';
-import BasicModal from './BasicModal';
+import BasicModal from '../../components/BasicModal/BasicModal';
 
 const getDocsFB = [
   {

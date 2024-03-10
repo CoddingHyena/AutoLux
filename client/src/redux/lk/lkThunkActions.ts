@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios, { AxiosResponse } from "axios"
-import { UserCarType, UserDocTDType, UserType, inputsUserPutType, UpdateUserType } from "../../../types"
+import { UserCarType, UserDocTDType, UserType, inputsUserPutType, UpdateUserType, UserDocTDType } from "../../../types"
 
 export const fetchLkUsers = createAsyncThunk('user/all', async () => {
     const response = await axios.get<UserType>(`${import.meta.env.VITE_URL}/lk/user`, { withCredentials: true })
@@ -23,6 +23,16 @@ export const fetchDocTO = createAsyncThunk('docTO/all', async () => {
     const response = await axios.get<UserDocTDType>(`${import.meta.env.VITE_URL}/lk/DocTO`, { withCredentials: true })
     return response.data;
 })
+
+export const fetchLKDocTOUpdate = createAsyncThunk('docTO/put', async ({formData}) => {
+   
+    const response = await axios.put<UserDocTDType, AxiosResponse<UserDocTDType>>(
+        `${import.meta.env.VITE_URL}/lk/docTO`, {formData},
+         {
+          withCredentials: true,
+        })
+        return response.data;  
+  })
 
 export const fetchCars = createAsyncThunk('car/all', async () => {
     const response = await axios.get<UserCarType>(`${import.meta.env.VITE_URL}/lk/car`, { withCredentials: true })

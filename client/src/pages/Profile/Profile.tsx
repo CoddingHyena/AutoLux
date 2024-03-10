@@ -36,6 +36,7 @@ import {
 } from '../../redux/lk/lkThunkActions';
 import { useEffect, useState } from 'react';
 import TestDrive from '../../components/testDrive';
+import BasicModal from '../../components/BasicModal/BasicModal';
 
 const getHeadCellsTO = [
   {
@@ -142,6 +143,7 @@ export default function Account() {
 function GeneralSettingsSection() {
 
   const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
+  
   const user = useAppSelector((store) => store.lkSlice.user);
   const dispatch = useAppDispatch();
   
@@ -222,8 +224,11 @@ function GeneralSettingsSection() {
 
 
 function UserDocsToTable({ name, props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
   const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
-  console.log('docsTD', docsTO);
+  console.log('docsTD LK USer', docsTO);
 
   const dispatch = useAppDispatch();
 
@@ -231,7 +236,21 @@ function UserDocsToTable({ name, props }) {
     void dispatch(fetchDocTO());
   }, []);
 
+    // Функция для открытия модального окна
+    const handleEditClick = (row) => {
+      setCurrentData(row); // Установить текущие данные документа
+      setIsModalOpen(true); // Открывает модальное окно
+    };
+
+
+      // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <Card component="section" type="section">
       <CardHeader title="Документы на Техобслуживание" subtitle=""></CardHeader>
       <DataTable
@@ -256,6 +275,8 @@ function UserDocsToTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row); //передаем данные записи в функцию
+                    console.log('🚀 ~ LK docsTO row:', row);
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -266,6 +287,16 @@ function UserDocsToTable({ name, props }) {
         )}
       />
     </Card>
+
+    {isModalOpen && (
+      <BasicModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      data={currentData}
+      updateAndClose={updateAndClose}
+      />
+    )}
+    </>
   );
 }
 
