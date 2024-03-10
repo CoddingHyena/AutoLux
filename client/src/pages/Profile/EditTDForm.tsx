@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
-import {fetchLKDocTOUpdate} from '../../redux/lk/lkThunkActions';
+import {fetchLKDocTDUpdate} from '../../redux/lk/lkThunkActions';
 
 export default function EditTOForm({ formData, onSuccess }) {
   // Локальное состояние для каждого поля формы
@@ -27,7 +27,7 @@ export default function EditTOForm({ formData, onSuccess }) {
       userComment,
     };
     console.log('======formData docTO LK USER', formData);
-    await dispatch(fetchLKDocTOUpdate({ formData }));
+    await dispatch(fetchLKDocTDUpdate({ formData }));
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 

@@ -38,16 +38,15 @@ lkRoute.get('/docTO', async (req, res) => {
   }
 });
 
-lkRoute.put('/TD/:id', async (req, res) => {
+lkRoute.put('/docTD/', async (req, res) => {
   const { userId } = req.session;
-  const { id } = req.params;
-  const { userScore, userComment } = req.body;
-
+  const { formData } = req.body;
+  console.log('LK TD PUT formData', formData);
   try {
     if (userId) {
-      const queryDoc = await DocTestDrive.findByPk(id);
-      queryDoc.userScore = userScore;
-      queryDoc.userComment = userComment;
+      const queryDoc = await DocTestDrive.findByPk(formData.id);
+      queryDoc.userScore = formData.userScore;
+      queryDoc.userComment = formData.userComment;
       await queryDoc.save();
 
       res.json({
@@ -65,10 +64,10 @@ lkRoute.put('/TD/:id', async (req, res) => {
   }
 });
 
-lkRoute.put('/TO', async (req, res) => {
-  const { userId } = req.sesion;
+lkRoute.put('/docTO', async (req, res) => {
+  const { userId } = req.session;
   const { formData } = req.body;
-  console.log('LK TO PUT formData', formData);
+  // console.log('LK TO PUT formData', formData);
   try {
     if (userId) {
       const queryDoc = await DocTO.findByPk(formData.id);

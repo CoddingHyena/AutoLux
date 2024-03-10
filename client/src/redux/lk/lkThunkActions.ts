@@ -18,6 +18,15 @@ export const fetchDocTD = createAsyncThunk('docTD/all', async () => {
     const response = await axios.get<UserDocTDType>(`${import.meta.env.VITE_URL}/lk/DocTestDrive`, { withCredentials: true })
     return response.data;
 })
+export const fetchLKDocTDUpdate = createAsyncThunk('docTD/put', async ({formData}) => {
+   
+    const response = await axios.put<UserDocTDType, AxiosResponse<UserDocTDType>>(
+        `${import.meta.env.VITE_URL}/lk/docTD`, {formData},
+         {
+          withCredentials: true,
+        })
+        return response.data;  
+  })
 
 export const fetchDocTO = createAsyncThunk('docTO/all', async () => {
     const response = await axios.get<UserDocTDType>(`${import.meta.env.VITE_URL}/lk/DocTO`, { withCredentials: true })

@@ -36,7 +36,9 @@ import {
 } from '../../redux/lk/lkThunkActions';
 import { useEffect, useState } from 'react';
 import TestDrive from '../../components/testDrive';
-import BasicModalLk from '../Profile';
+import BasicModal from '../../components/BasicModal/BasicModal';
+import EditTOForm from './EditTOForm';
+import EditTDForm from './EditTDForm';
 
 const getHeadCellsTO = [
   {
@@ -228,7 +230,7 @@ function UserDocsToTable({ name, props }) {
   const [currentData, setCurrentData] = useState(null);
 
   const docsTO = useAppSelector((store) => store.lkSlice.docsTO);
-  console.log('docsTO LK USer', docsTO);
+  // console.log('docsTO LK USer', docsTO);
 
   const dispatch = useAppDispatch();
 
@@ -276,7 +278,7 @@ function UserDocsToTable({ name, props }) {
                   onClick={(e) => {
                     e.stopPropagation();
                     handleEditClick(row); //передаем данные записи в функцию
-                    console.log('🚀 ~ LK docsTO row:', row);
+                    // console.log('🚀 ~ LK docsTO row:', row);
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -294,6 +296,7 @@ function UserDocsToTable({ name, props }) {
       onClose={() => setIsModalOpen(false)}
       data={currentData}
       updateAndClose={updateAndClose}
+      FormComponent={EditTOForm}
       />
     )}
     </>
@@ -301,8 +304,11 @@ function UserDocsToTable({ name, props }) {
 }
 
 function UserDocsTestDriveTable({ name, props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
   const docsTD = useAppSelector((store) => store.lkSlice.docsTD);
-  console.log('docsTD', docsTD);
+  // console.log('docsTD LK USer', docsTD);
 
   const dispatch = useAppDispatch();
 
@@ -310,7 +316,20 @@ function UserDocsTestDriveTable({ name, props }) {
     void dispatch(fetchDocTD());
   }, []);
 
+     // Функция для открытия модального окна
+     const handleEditClick = (row) => {
+      setCurrentData(row); // Установить текущие данные документа
+      setIsModalOpen(true); // Открывает модальное окно
+    };
+
+         // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <Card component="section" type="section">
       <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
       <DataTable
@@ -335,6 +354,8 @@ function UserDocsTestDriveTable({ name, props }) {
                   sx={{ fontSize: 2 }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    handleEditClick(row);
+                    console.log('🚀 ~ LK docsTD row:', row)
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
@@ -345,6 +366,16 @@ function UserDocsTestDriveTable({ name, props }) {
         )}
       />
     </Card>
+       {isModalOpen && (
+        <BasicModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={currentData}
+        updateAndClose={updateAndClose}
+        FormComponent={EditTDForm}
+        />
+      )}
+      </>
   );
 }
 
