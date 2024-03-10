@@ -38,6 +38,8 @@ import BasicModal from '../../components/BasicModal/BasicModal';
 import EditFeedbackForm from './EditFeedbackForm';
 import EditTDForm from './EditTDForm';
 import EditTOForm from './EditTOForm';
+import NewDocTDForm from './NewDocTDForm';
+import NewDocTOForm from './NewDocTOForm';
 
 const getDocsFB = [
   {
@@ -351,7 +353,10 @@ function DataTableDocFB({ props }) {
 function DataTableDocTD({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
-  
+  const [createDocTD, setCreateDocTD] = useState(false);
+
+
+
   const docsTD = useAppSelector((store) => store.adminSlice.docsTD);
   // console.log('store usersAll admin', docsTD);
 
@@ -366,19 +371,33 @@ function DataTableDocTD({ name, props }) {
       setCurrentData(row); // Установить текущие данные заявки
       setIsModalOpen(true); // Открывает модальное окно
     };
-  
+
+    
     // Функция для закрытия модального окна
     const updateAndClose = () => {
       dispatch(fetchManagerDocTD()); // Перезапрашиваем данные, обновляя список
       setIsModalOpen(false);
     };
+    
+    const handleCreateTDClick = () => {
+      setCreateDocTD(true);    
+      setIsModalOpen(true);
+      setCurrentData(null); 
+    };
+
+    const handlerCloseModal = () => {
+      setIsModalOpen(false);
+      setCreateDocTD(false);
+    };
+
+ 
   
 
   return (
   <>
     <Card component="section" type="section">
       <CardHeader title="Документы Тестдрайв" subtitle="">
-        <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+        <Button onClick={handleCreateTDClick} variant="contained" disableElevation endIcon={<AddIcon />}>
           Новый документ
         </Button>
       </CardHeader>
@@ -421,10 +440,10 @@ function DataTableDocTD({ name, props }) {
     {isModalOpen && (
         <BasicModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={handlerCloseModal}
           data={currentData}
           updateAndClose={updateAndClose}
-          FormComponent={EditTDForm}
+          FormComponent={ createDocTD ? NewDocTDForm : EditTDForm}
         />
       )}
     </>
@@ -435,6 +454,7 @@ function DataTableDocTO({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
   const docsTO = useAppSelector((store) => store.adminSlice.docsTO);
+  const [createDocTO, setCreateDocTO] = useState(false);
   console.log('store usersAll admin', docsTO);
 
   const dispatch = useAppDispatch();
@@ -455,11 +475,22 @@ function DataTableDocTO({ name, props }) {
     setIsModalOpen(false);
   };
 
+  const handleCreateTOClick = () => {
+    setCreateDocTO(true);    
+    setIsModalOpen(true);
+    setCurrentData(null); 
+  };
+
+  const handlerCloseModalTO = () => {
+    setIsModalOpen(false);
+    setCreateDocTO(false);
+  };
+
   return (
     <>
     <Card component="section" type="section">
       <CardHeader title="Документы ТО" subtitle="">
-        <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+        <Button onClick={handleCreateTOClick} variant="contained" disableElevation endIcon={<AddIcon />}>
           Новый документ
         </Button>
       </CardHeader>
@@ -502,10 +533,10 @@ function DataTableDocTO({ name, props }) {
     {isModalOpen && (
         <BasicModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={handlerCloseModalTO}
           data={currentData}
           updateAndClose={updateAndClose}
-          FormComponent={EditTOForm}
+          FormComponent={ createDocTO ? NewDocTOForm : EditTOForm }
         />
       )}
     </>

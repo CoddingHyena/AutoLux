@@ -44,11 +44,14 @@ managerRoute.get('/docTD', async (req, res) => {
 
 managerRoute.post('/docTD', async (req, res) => {
   const {
-    userId, carId, dateNow, manager, probegKm, ourComment,
+    formData
   } = req.body;
+  const userId = Number(formData.userId) 
+  const carId = Number(formData.carId)
+  
   try {
     const newTD = await DocTestDrive.create({
-      userId, carId, dateNow, manager, status: false, probegKm, ourComment, userScore: '', userComment: '',
+      user_id: userId, car_id: carId, dateNow: new Date(), manager: formData.managerId, status: false, probegKm: 0, ourComment: formData.ourComment, userScore: 10, userComment: '',
     });
     const getNewTD = newTD.get({ plain: true });
     res.json(getNewTD);
@@ -86,18 +89,38 @@ managerRoute.get('/docTO', async (req, res) => {
   }
 });
 
+// managerRoute.post('/docTO', async (req, res) => {
+//   const {
+//     userId, carId, dateNow, manager, probegKm, ourComment,
+//   } = req.body;
+//   try {
+//     const newTO = await DocTO.create({
+//       userId, carId, dateNow, manager, status: false, probegKm, ourComment, userScore: '', userComment: '',
+//     });
+//     const getNewTO = newTO.get({ plain: true });
+//     res.json(getNewTO);
+//   } catch (error) {
+//     console.log(error, 'ОШИБКА В РУЧКЕ POST DocTO manager');
+//     res.sendStatus(500);
+//   }
+// });
+
 managerRoute.post('/docTO', async (req, res) => {
   const {
-    userId, carId, dateNow, manager, probegKm, ourComment,
+    formData
   } = req.body;
+  const userId = Number(formData.userId) 
+  const carId = Number(formData.carId)
+  console.log('НАШ РЕКБОДИ', req.body, userId, carId);
+  
   try {
     const newTO = await DocTO.create({
-      userId, carId, dateNow, manager, status: false, probegKm, ourComment, userScore: '', userComment: '',
+      user_id: userId, car_id: carId, dateNow: new Date(), manager: formData.managerId, status: false, probegKm: 0, ourComment: formData.ourComment, userScore: 10, userComment: '',
     });
     const getNewTO = newTO.get({ plain: true });
     res.json(getNewTO);
   } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ POST DocTO manager');
+    console.log(error, 'ОШИБКА В РУЧКЕ POST docTO manager');
     res.sendStatus(500);
   }
 });

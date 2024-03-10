@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ModalFBType, UserCarType, UserDocTDType, UserFBType } from '../../../types';
+import { ModalCreateDocType, ModalFBType, UserCarType, UserDocTDType, UserFBType } from '../../../types';
 import axios, { AxiosResponse } from 'axios';
 
 export const fetchManagerDocFB = createAsyncThunk('docFB/all', async () => {
@@ -35,6 +35,15 @@ export const fetchManagerDocTDUpdate = createAsyncThunk('docTD/put', async ({for
       return response.data;  
 })
 
+export const fetchManagerCreateDocTD = createAsyncThunk('docTD/post', async ({formData}) => {
+   
+  const response = await axios.post<ModalCreateDocType, AxiosResponse<UserDocTDType>>(
+      `${import.meta.env.VITE_URL}/manager/docTD`, {formData}, {
+        withCredentials: true,
+      })
+      return response.data;  
+})
+
 export const fetchManagerDocTO = createAsyncThunk('docTO/all', async () => {
   const response = await axios.get<UserDocTDType>(`${import.meta.env.VITE_URL}/manager/docTO`, {
     withCredentials: true,
@@ -45,6 +54,15 @@ export const fetchManagerDocTO = createAsyncThunk('docTO/all', async () => {
 export const fetchManagerDocTOUpdate = createAsyncThunk('docTO/put', async ({formData}) => {
    
   const response = await axios.put<ModalFBType, AxiosResponse<UserFBType>>(
+      `${import.meta.env.VITE_URL}/manager/docTO`, {formData}, {
+        withCredentials: true,
+      })
+      return response.data;  
+})
+
+export const fetchManagerCreateDocTO = createAsyncThunk('docTO/post', async ({formData}) => {
+   
+  const response = await axios.post<ModalCreateDocType, AxiosResponse<UserDocTDType>>(
       `${import.meta.env.VITE_URL}/manager/docTO`, {formData}, {
         withCredentials: true,
       })
