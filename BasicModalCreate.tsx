@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Zoom from '@mui/material/Zoom';
 
 import Modal from '@/components/modal';
-import EditFeedbackForm from '../../pages/Manager/EditFeedbackForm';
+import NewDocTDForm from '../../pages/Manager/NewDocTDForm';
 
 const ZoomTransition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 
@@ -16,17 +16,11 @@ const ZoomTransition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />)
 //     </>
 //   );
 // }
-function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent, isCreatingNewCar, }) {
+function BasicModalCreate({ isOpen, onClose, updateAndClose, FormComponent }) {
   // Изменено с currentData на data
-  console.log('🚀 ~ BasicModal ~ data:', data);
-  
-  let title; 
-  if (data !== null) {
-  title = `Редактирование документа id${data?.id || ''}`
-} else {
-  title = 'Создание элемента'
-}
+//   console.log('🚀 ~ BasicModal ~ data:', data);
 
+  const title = 'Создание нового документа';
 
   return (
     <Modal
@@ -38,12 +32,12 @@ function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent, isCr
       padding={true}
     >
       <Box height="50vh" sx={{ marginBottom: '120px' }}>
-        <FormComponent formData={data} onSuccess={updateAndClose} isCreatingNewCar={isCreatingNewCar}/>
+        <FormComponent formData={data} onSuccess={updateAndClose}/>
       </Box>
     </Modal>
   );
 }
 
 
-export default BasicModal;
+export default BasicModalCreate;
 

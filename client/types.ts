@@ -107,6 +107,15 @@ export type ModalFBType = {
 
 }
 
+export type ModalCreateDocType = {
+    user_id: number;
+    car_id: number;
+    manager: number;
+    ourComment: string;
+    status: boolean;
+
+}
+
 export type InputsFBType = {
     userName: string;
     phoneNumber: string;

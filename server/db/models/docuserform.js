@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     car_id: DataTypes.INTEGER,
     dateNow: DataTypes.DATE,
-    manager: DataTypes.STRING,
+    manager: DataTypes.INTEGER,
     status: DataTypes.BOOLEAN,
     probegKm: DataTypes.INTEGER,
     ourComment: DataTypes.STRING,
