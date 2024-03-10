@@ -58,7 +58,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
-        class
+        className="readOnly"
       />
       <TextField
         label="Имя пользователя"
@@ -67,6 +67,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
+        className="readOnly"
       />
       <TextField
         label="ID пользователя"
@@ -75,6 +76,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
+        className="readOnly"
       />
       <TextField
         label="Дата создания"
@@ -83,6 +85,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
+        className="readOnly"
       />
       <TextField
         label="Телефон"
@@ -91,6 +94,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
+        className="readOnly"
       />
 
       {managerId && (
@@ -119,6 +123,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         margin="normal"
         fullWidth
         InputProps={{ readOnly: true }}
+        className="readOnly"
       />
       <FormControlLabel
         control={<Checkbox checked={status} onChange={(e) => setStatus(e.target.checked)} />}
