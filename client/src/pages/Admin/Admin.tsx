@@ -25,6 +25,7 @@ import employeesData from '../../_mocks/employees';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   fetchAdminCars,
+  fetchAdminCarsDel,
   fetchAdminDocFB,
   fetchAdminDocFBDel,
   fetchAdminDocTD,
@@ -46,6 +47,7 @@ import {
   fetchManagerDocTD,
   fetchManagerDocTO,
 } from '../../redux/manager/managerThunkActions';
+import EditCarsForm from './EditDocsCarsForm';
 
 const getHeadCells = [
   {
@@ -576,16 +578,7 @@ function DataTableDocTO({ name, props }) {
   return (
     <>
       <Card component="section" type="section">
-        <CardHeader title="Документы ТО" subtitle="">
-          <Button
-            onClick={handleCreateTOClick}
-            variant="contained"
-            disableElevation
-            endIcon={<AddIcon />}
-          >
-            Новый документ
-          </Button>
-        </CardHeader>
+        <CardHeader title="Документы ТО" subtitle=""></CardHeader>
         <DataTable
           {...props}
           headCells={getDocsTD}
@@ -776,19 +769,12 @@ function DataTableCars({ name, props }) {
   };
 
   const delHandler = async (carId): Promise<void> => {
-    await dispatch(fetchCarsDel(carId));
+    await dispatch(fetchAdminCarsDel(carId));
     dispatch(fetchAdminCars());
-  };
-
-  const handleCreateClick = () => {
-    setIsModalOpen(true);
-    // setIsCreatingNewCar(true);
-    setCurrentData(null);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    // setIsCreatingNewCar(false);
   };
 
   return (
@@ -813,11 +799,11 @@ function DataTableCars({ name, props }) {
               <TableCell align="left">{row?.prodYear}</TableCell>
               <TableCell align="left">{row?.gosNum}</TableCell>
               <TableCell align="left">{row?.gear}</TableCell>
-              <TableCell align="right">{row?.engine}</TableCell>
-              <TableCell align="right">{row?.vin}</TableCell>
-              <TableCell align="right">{row?.user_id}</TableCell>
-              <TableCell align="right">{`${row.ours}`}</TableCell>
-              <TableCell align="right">{`${row.bu}`}</TableCell>
+              <TableCell align="left">{row?.engine}</TableCell>
+              <TableCell align="left">{row?.vin}</TableCell>
+              <TableCell align="left">{row?.user_id}</TableCell>
+              <TableCell align="left">{row.ours ? 'Наша' : 'Не наша'}</TableCell>{' '}
+              <TableCell align="left">{`${row.bu}`}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -858,9 +844,8 @@ function DataTableCars({ name, props }) {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           data={currentData}
-          isCreatingNewCar={isCreatingNewCar}
           updateAndClose={updateAndClose}
-          FormComponent={isCreatingNewCar ? CreateCarsForm : EditCarsForm}
+          FormComponent={EditCarsForm}
         />
       )}
     </>

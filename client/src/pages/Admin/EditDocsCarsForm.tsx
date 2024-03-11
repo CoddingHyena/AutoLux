@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
 import { fetchCarsUpdate } from '../../redux/lk/lkThunkActions';
+import { fetchAdminCarsUpdate } from '../../redux/admin/adminThunkActions';
 
 export default function EditCarsForm({ formData, onSuccess, isCreatingNewCar }) {
   // Локальное состояние для каждого поля формы
@@ -35,7 +36,7 @@ export default function EditCarsForm({ formData, onSuccess, isCreatingNewCar }) 
       vin,
     };
     console.log('======formData cars LK USER', formData);
-    await dispatch(fetchCarsUpdate({ formData }));
+    await dispatch(fetchAdminCarsUpdate({ formData }));
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 
