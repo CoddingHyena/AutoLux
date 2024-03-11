@@ -136,6 +136,17 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        name: 'Boss Филипович',
+        email: 'boss@boss',
+        phone: '2-15-79',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
+        role_id: 4,
+        propType: true,
+        persDataAgr: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 
