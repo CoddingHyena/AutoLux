@@ -3,9 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-    "Users",
-    [
+    await queryInterface.bulkInsert('Users', [
       {
         name: 'Иванов Иван Иванович',
         email: '123@321.ru',
@@ -127,21 +125,28 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-    ],
-  );
+      {
+        name: 'Иван тест',
+        email: 'iv',
+        phone: '2-15-79',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
+        role_id: 4,
+        propType: true,
+        persDataAgr: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+  },
 
-
-},
-
-
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };
 
 // 'use strict';

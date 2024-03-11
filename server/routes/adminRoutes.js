@@ -1,8 +1,6 @@
 const adminRoute = require('express').Router();
 
-const {
-  DocTestDrive, DocTO, DocFeedback, PhoneNum, Cars, User,
-} = require('../db/models');
+const { DocTestDrive, DocTO, DocFeedback, PhoneNum, Cars, User } = require('../db/models');
 
 adminRoute.get('/docTD', async (req, res) => {
   try {
@@ -15,18 +13,15 @@ adminRoute.get('/docTD', async (req, res) => {
   }
 });
 
-adminRoute.put('/docTD/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    dateNow, manager, status, probegKm, ourComment,
-  } = req.body;
+adminRoute.put('/docTD', async (req, res) => {
+  const { formData } = req.body;
+  console.log(req.body, 'req.body docTD put');
+
   try {
-    const queryDocTD = await DocTestDrive.findByPk(id);
-    queryDocTD.dateNow = dateNow;
-    queryDocTD.manager = manager;
-    queryDocTD.status = status;
-    queryDocTD.probegKm = probegKm;
-    queryDocTD.ourComment = ourComment;
+    const queryDocTD = await DocTestDrive.findByPk(formData.id);
+    queryDocTD.manager = formData.manager;
+    queryDocTD.status = formData.status;
+    queryDocTD.ourComment = formData.ourComment;
     queryDocTD.save();
     res.json(queryDocTD);
   } catch (error) {
@@ -57,18 +52,14 @@ adminRoute.get('/docTO', async (req, res) => {
   }
 });
 
-adminRoute.put('/docTO/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    dateNow, manager, status, probegKm, ourComment,
-  } = req.body;
+adminRoute.put('/docTO', async (req, res) => {
+  const { formData } = req.body;
+  console.log(req.body, 'req.body docTO put');
   try {
-    const queryDocTO = await DocTO.findByPk(id);
-    queryDocTO.dateNow = dateNow;
-    queryDocTO.manager = manager;
-    queryDocTO.status = status;
-    queryDocTO.probegKm = probegKm;
-    queryDocTO.ourComment = ourComment;
+    const queryDocTO = await DocTO.findByPk(formData.id);
+    queryDocTO.manager = formData.manager;
+    queryDocTO.status = formData.status;
+    queryDocTO.ourComment = formData.ourComment;
     queryDocTO.save();
     res.json(queryDocTO);
   } catch (error) {
@@ -99,18 +90,14 @@ adminRoute.get('/docFB', async (req, res) => {
   }
 });
 
-adminRoute.put('/docFB/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    dateNow, manager, status, phoneNumber, ourComment,
-  } = req.body;
+adminRoute.put('/docFB', async (req, res) => {
+  const { formData } = req.body;
+  console.log(req.body, 'req.body docFB put');
   try {
-    const queryDocFB = await DocFeedback.findByPk(id);
-    queryDocFB.dateNow = dateNow;
-    queryDocFB.manager = manager;
-    queryDocFB.status = status;
-    queryDocFB.phoneNumber = phoneNumber;
-    queryDocFB.ourComment = ourComment;
+    const queryDocFB = await DocFeedback.findByPk(formData.id);
+    queryDocFB.manager = formData.manager;
+    queryDocFB.status = formData.status;
+    queryDocFB.ourComment = formData.ourComment;
     queryDocFB.save();
     res.json(queryDocFB);
   } catch (error) {
@@ -140,14 +127,12 @@ adminRoute.get('/user', async (req, res) => {
   }
 });
 
-adminRoute.put('/user/:id', async (req, res) => {
-  const { id } = req.params;
-  const { roleId, propType, persDataArg } = req.body;
+adminRoute.put('/user', async (req, res) => {
+  const { formData } = req.body;
+  console.log(req.body, 'req.body user put');
   try {
-    const queryUser = await User.findByPk(id);
-    queryUser.role_id = roleId;
-    queryUser.propType = propType;
-    queryUser.persDataArg = persDataArg;
+    const queryUser = await User.findByPk(formData.id);
+    queryUser.role_id = Number(formData.role_id);
     queryUser.save();
     res.json(queryUser);
   } catch (error) {
@@ -212,25 +197,21 @@ adminRoute.get('/car', async (req, res) => {
   }
 });
 
-adminRoute.put('/car/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-    mark, model, color, prodYear, gosNum,
-    gear, engine, vin, probegTotal, ours, bu,
-  } = req.body;
+adminRoute.put('/car', async (req, res) => {
+  const { formData } = req.body;
   try {
-    const queryCar = await Cars.findByPk(id);
-    queryCar.mark = mark;
-    queryCar.model = model;
-    queryCar.color = color;
-    queryCar.prodYear = prodYear;
-    queryCar.gosNum = gosNum;
-    queryCar.gear = gear;
-    queryCar.engine = engine;
-    queryCar.vin = vin;
-    queryCar.probegTotal = probegTotal;
-    queryCar.ours = ours;
-    queryCar.bu = bu;
+    const queryCar = await Cars.findByPk(formData.id);
+    queryCar.mark = formData.mark;
+    queryCar.model = formData.model;
+    queryCar.color = formData.color;
+    queryCar.prodYear = formData.prodYear;
+    queryCar.gosNum = formData.gosNum;
+    queryCar.gear = formData.gear;
+    queryCar.engine = formData.engine;
+    queryCar.vin = formData.vin;
+    queryCar.probegTotal = formData.probegTotal;
+    queryCar.ours = formData.ours;
+    queryCar.bu = formData.bu;
     queryCar.save();
     res.json(queryCar);
   } catch (error) {

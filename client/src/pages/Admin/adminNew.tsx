@@ -18,30 +18,34 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 
 import DataTable from '../../components/dataTable';
+
+import { useEffect, useState } from 'react';
+
+import employeesData from '../../_mocks/employees';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  fetchAdminCars,
+  fetchAdminDocFB,
+  fetchAdminDocTD,
+  fetchAdminDocTO,
+  fetchAdminUserDel,
+  fetchAdminUsers,
+} from '../../redux/admin/adminThunkActions';
+
+import BasicModal from '../../components/BasicModal/BasicModal';
+import EditUserForm from './EditUserForm';
+import EditFeedbackForm from './EditFeedbackForm';
+import EditTDForm from './EditTDForm';
+import EditTOForm from './EditTOForm';
+
 import {
   fetchManagerCars,
   fetchManagerDocFB,
   fetchManagerDocTD,
   fetchManagerDocTO,
 } from '../../redux/manager/managerThunkActions';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useState, useEffect } from 'react';
 
-// import { useState } from 'react';
-// // MUI
-// import Box from '@mui/material/Box';
-// import Stack from '@mui/material/Stack';
-
-// import Modal from '../../components/modal';
-// import ModalOptions from './modalOptions';
-import BasicModal from '../../components/BasicModal/BasicModal';
-import EditFeedbackForm from './EditFeedbackForm';
-import EditTDForm from './EditTDForm';
-import EditTOForm from './EditTOForm';
-import NewDocTDForm from './NewDocTDForm';
-import NewDocTOForm from './NewDocTOForm';
-
-const getDocsFB = [
+const getHeadCells = [
   {
     id: 'id',
     numeric: false,
@@ -49,52 +53,34 @@ const getDocsFB = [
     label: 'Id',
   },
   {
-    id: 'dateNow',
-    numeric: false,
-    disablePadding: false,
-    label: 'Дата создания',
-  },
-  {
-    id: 'userName',
+    id: 'Name',
     numeric: false,
     disablePadding: false,
     label: 'Имя',
   },
   {
-    id: 'user_id',
+    id: 'email',
     numeric: false,
     disablePadding: false,
-    label: 'Юзер ID',
+    label: 'Email',
   },
   {
-    id: 'phoneNumber',
+    id: 'phone',
     numeric: false,
     disablePadding: false,
-    label: 'Тел',
+    label: 'Телефон',
   },
   {
-    id: 'userComment',
+    id: 'role_id',
     numeric: false,
     disablePadding: false,
-    label: 'Обращение',
+    label: 'Роль',
   },
   {
-    id: 'manager',
+    id: 'propType',
     numeric: false,
     disablePadding: false,
-    label: 'Менеджер',
-  },
-  {
-    id: 'ourComment',
-    numeric: false,
-    disablePadding: false,
-    label: 'Наш комментарий',
-  },
-  {
-    id: 'status',
-    numeric: false,
-    disablePadding: false,
-    label: 'status',
+    label: 'Юр. лицо',
   },
   {
     id: 'actions',
@@ -109,43 +95,113 @@ const getDocsTD = [
     id: 'id',
     numeric: false,
     disablePadding: false,
-    label: 'Id',
-  },
-  {
-    id: 'user_id',
-    numeric: false,
-    disablePadding: false,
-    label: 'User_id',
-  },
-  {
-    id: 'car_id',
-    numeric: false,
-    disablePadding: false,
-    label: 'car_id',
-  },
-  {
-    id: 'manager',
-    numeric: false,
-    disablePadding: false,
-    label: 'manager',
-  },
-  {
-    id: 'status',
-    numeric: false,
-    disablePadding: false,
-    label: 'status',
-  },
-  {
-    id: 'ourComment',
-    numeric: false,
-    disablePadding: false,
-    label: 'ourComment',
+    label: 'Номер документа',
   },
   {
     id: 'dateNow',
     numeric: false,
     disablePadding: false,
-    label: 'dateNow',
+    label: 'Дата',
+  },
+  {
+    id: 'user_id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Пользователь',
+  },
+  {
+    id: 'car_id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Автомобиль',
+  },
+  {
+    id: 'manager',
+    numeric: false,
+    disablePadding: false,
+    label: 'Менеджер',
+  },
+  {
+    id: 'status',
+    numeric: false,
+    disablePadding: false,
+    label: 'Статус',
+  },
+  {
+    id: 'ourComment',
+    numeric: false,
+    disablePadding: false,
+    label: 'Комментарий менеджера',
+  },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: '',
+  },
+];
+
+const getDocsFB = [
+  {
+    id: 'id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Id',
+  },
+  {
+    id: 'dateNow',
+    numeric: false,
+    disablePadding: false,
+    label: 'Дата',
+  },
+  {
+    id: 'userName',
+    numeric: false,
+    disablePadding: false,
+    label: 'Имя',
+  },
+  {
+    id: 'user_id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Пользователь',
+  },
+  {
+    id: 'phoneNumber',
+    numeric: false,
+    disablePadding: false,
+    label: 'Тел',
+  },
+  {
+    id: 'userComment',
+    numeric: false,
+    disablePadding: false,
+    label: 'Комментарий пользователя',
+  },
+  {
+    id: 'manager',
+    numeric: false,
+    disablePadding: false,
+    label: 'Менеджер',
+  },
+  {
+    id: 'status',
+    numeric: false,
+    disablePadding: false,
+    label: 'Статус',
+  },
+  {
+    id: 'ourComment',
+    numeric: false,
+    disablePadding: false,
+    label: 'Комментарий менеджера',
+  },
+
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: '',
   },
 ];
 
@@ -226,14 +282,14 @@ const getDocsCars = [
     id: 'actions',
     numeric: true,
     disablePadding: false,
-    label: 'Управление',
+    label: '',
   },
 ];
 
-export default function managerPage() {
+export default function adminPage() {
   return (
     <>
-      <PageHeader title="Рабочее место менеджера">
+      <PageHeader title="Администрирование">
         <Breadcrumbs
           aria-label="breadcrumb"
           sx={{
@@ -243,42 +299,29 @@ export default function managerPage() {
           <Link underline="hover" href="/">
             Главная
           </Link>
-          <Typography color="text.tertiary">Рабочее место менеджера</Typography>
+          <Typography color="text.tertiary">Администрирование</Typography>
         </Breadcrumbs>
       </PageHeader>
-      <Card
-        type="section"
-        sx={{
-          minHeight: '60vh',
-        }}
-      >
-        <CardHeader title="Заголовок секции рабочее место менеджера" subtitle="Подзаголовок секции">
-          Доп заголовок
-        </CardHeader>
-        <BasicModal />
-        <BasicModal />
-        контент
-      </Card>
-
-      <DataTableDocFB name="Dense" props={{ dense: true }} />
+      <DataTableUsers name="Dense" props={{ dense: true }} />
       <DataTableDocTD name="Dense" props={{ dense: true }} />
       <DataTableDocTO name="Dense" props={{ dense: true }} />
+      <DataTableDocFB name="Dense" props={{ dense: true }} />
       <DataTableCars name="Dense" props={{ dense: true }} />
     </>
   );
 }
 
-function DataTableDocFB({ props }) {
+function DataTableUsers({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
 
-  const docsFB = useAppSelector((store) => store.adminSlice.docsFB);
-  console.log('store usersAll admin', docsFB);
+  const usersAll = useAppSelector((store) => store.adminSlice.users);
+  console.log('store usersAll admin', usersAll);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    void dispatch(fetchManagerDocFB());
+    void dispatch(fetchAdminUsers());
   }, []);
 
   // Функция для открытия модального окна
@@ -289,30 +332,38 @@ function DataTableDocFB({ props }) {
 
   // Функция для закрытия модального окна
   const updateAndClose = () => {
-    dispatch(fetchManagerDocFB()); // Перезапрашиваем данные, обновляя список
+    console.log('dispatch(fetchAdminUsers) before Trying to close modal');
+    dispatch(fetchAdminUsers()); // Перезапрашиваем данные, обновляя список
+    console.log('Trying to close modal');
     setIsModalOpen(false);
+  };
+
+  const delHandler = async (id): Promise<void> => {
+    await dispatch(fetchAdminUserDel(id));
+    dispatch(fetchAdminUsers());
   };
 
   return (
     <>
       <Card component="section" type="section">
-        <CardHeader title="Открытые заявки" subtitle=""></CardHeader>
+        <CardHeader title="Пользователи" subtitle="">
+          {/* <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+            Новый пользователь
+          </Button> */}
+        </CardHeader>
         <DataTable
           {...props}
-          headCells={getDocsFB}
-          rows={docsFB}
+          headCells={getHeadCells}
+          rows={usersAll}
           emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row?.dateNow}</TableCell>
-              <TableCell align="left">{row?.userName}</TableCell>
-              <TableCell align="left">{row.user_id}</TableCell>
-              <TableCell align="left">{row?.phoneNumber}</TableCell>
-              <TableCell align="left">{row?.userComment}</TableCell>
-              <TableCell align="left">{row?.manager}</TableCell>
-              <TableCell align="left">{row?.ourComment}</TableCell>
-              <TableCell align="left">{`${row.status}`}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row?.email}</TableCell>
+              <TableCell align="left">{row?.phone}</TableCell>
+              <TableCell align="left">{row.role_id}</TableCell>
+              <TableCell align="left">{`${row.propType}`}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -322,11 +373,25 @@ function DataTableDocFB({ props }) {
                     sx={{ fontSize: 2 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleEditClick(row); // Передаем данные записи в функцию
-                      console.log('🚀 ~ row:', row);
+                      handleEditClick(row);
                     }}
                   >
                     <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Удалить" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="error"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      delHandler(row.id);
+                    }}
+                  >
+                    <PersonOffOutlinedIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -334,14 +399,13 @@ function DataTableDocFB({ props }) {
           )}
         />
       </Card>
-
       {isModalOpen && (
         <BasicModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           data={currentData}
           updateAndClose={updateAndClose}
-          FormComponent={EditFeedbackForm}
+          FormComponent={EditUserForm}
         />
       )}
     </>
@@ -409,8 +473,8 @@ function DataTableDocTD({ name, props }) {
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
-              <TableCell align="left">{`${row.status}`}</TableCell>
-              <TableCell align="left">{row?.ourComment}</TableCell>
+              <TableCell align="right">{`${row.status}`}</TableCell>
+              <TableCell align="right">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -543,56 +607,199 @@ function DataTableDocTO({ name, props }) {
   );
 }
 
-function DataTableCars({ name, props }) {
-  const docsCars = useAppSelector((store) => store.adminSlice.cars);
-  console.log('store cars admin', docsCars);
+function DataTableDocFB({ props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const docsFB = useAppSelector((store) => store.adminSlice.docsFB);
+  console.log('store usersAll admin', docsFB);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    void dispatch(fetchManagerCars());
+    void dispatch(fetchManagerDocFB());
   }, []);
 
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные заявки
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchManagerDocFB()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
   return (
-    <Card component="section" type="section">
-      <CardHeader title="Cars" subtitle=""></CardHeader>
-      <DataTable
-        {...props}
-        headCells={getDocsCars}
-        rows={docsCars}
-        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
-        render={(row) => (
-          <TableRow hover tabIndex={-1} key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row?.mark}</TableCell>
-            <TableCell align="left">{row?.model}</TableCell>
-            <TableCell align="left">{row.color}</TableCell>
-            <TableCell align="left">{row?.prodYear}</TableCell>
-            <TableCell align="left">{row?.gosNum}</TableCell>
-            <TableCell align="left">{row?.gear}</TableCell>
-            <TableCell align="right">{row?.engine}</TableCell>
-            <TableCell align="right">{row?.vin}</TableCell>
-            <TableCell align="right">{row?.user_id}</TableCell>
-            <TableCell align="right">{`${row.ours}`}</TableCell>
-            <TableCell align="right">{`${row.bu}`}</TableCell>
-            <TableCell align="right">
-              <Tooltip title="Редактировать" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="warning"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        )}
-      />
-    </Card>
+    <>
+      <Card component="section" type="section">
+        <CardHeader title="Заявки на обратную связь" subtitle=""></CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsFB}
+          rows={docsFB}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row?.dateNow}</TableCell>
+              <TableCell align="left">{row?.userName}</TableCell>
+              <TableCell align="left">{row.user_id}</TableCell>
+              <TableCell align="left">{row?.phoneNumber}</TableCell>
+              <TableCell align="left">{row?.userComment}</TableCell>
+              <TableCell align="left">{row?.manager}</TableCell>
+              <TableCell align="right">{row?.ourComment}</TableCell>
+              <TableCell align="right">{`${row.status}`}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); // Передаем данные записи в функцию
+                      console.log('🚀 ~ row:', row);
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+
+      {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditFeedbackForm}
+        />
+      )}
+    </>
+  );
+}
+
+function DataTableCars({ name, props }) {
+  const docsCars = useAppSelector((store) => store.adminSlice.cars);
+  console.log('store cars admin', docsCars);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchAdminCars());
+  }, []);
+
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchAdminCars()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
+  const delHandler = async (carId): Promise<void> => {
+    await dispatch(fetchCarsDel(carId));
+    dispatch(fetchAdminCars());
+  };
+
+  const handleCreateClick = () => {
+    setIsModalOpen(true);
+    // setIsCreatingNewCar(true);
+    setCurrentData(null);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // setIsCreatingNewCar(false);
+  };
+
+  return (
+    <>
+      <Card component="section" type="section">
+        <CardHeader title="Cars" subtitle="">
+          {/* <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+          Новый документ
+        </Button> */}
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsCars}
+          rows={docsCars}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row?.mark}</TableCell>
+              <TableCell align="left">{row?.model}</TableCell>
+              <TableCell align="left">{row.color}</TableCell>
+              <TableCell align="left">{row?.prodYear}</TableCell>
+              <TableCell align="left">{row?.gosNum}</TableCell>
+              <TableCell align="left">{row?.gear}</TableCell>
+              <TableCell align="right">{row?.engine}</TableCell>
+              <TableCell align="right">{row?.vin}</TableCell>
+              <TableCell align="right">{row?.user_id}</TableCell>
+              <TableCell align="right">{`${row.ours}`}</TableCell>
+              <TableCell align="right">{`${row.bu}`}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); //передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Удалить" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="error"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      delHandler(row.id);
+                    }}
+                  >
+                    <PersonOffOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+      {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          data={currentData}
+          isCreatingNewCar={isCreatingNewCar}
+          updateAndClose={updateAndClose}
+          FormComponent={isCreatingNewCar ? CreateCarsForm : EditCarsForm}
+        />
+      )}
+    </>
   );
 }
