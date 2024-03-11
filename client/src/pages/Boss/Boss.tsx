@@ -3,6 +3,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Tooltip from '@mui/material/Tooltip';
+import NotRegistered from '../../components/NotRegistered';
 
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -21,44 +22,53 @@ import managersByDocs from '../../_mocks/managersByDocs';
 import problemDocs from '../../_mocks/problemDocs';
 
 import StatsSection from './statsSection';
+import { useAppSelector } from '../../redux/hooks';
 
 export default function BossPage() {
+  const user = useAppSelector((store) => store.userSlice.user);
+
   return (
-    <Stack>
-      <WelcomeSection />
-      {/* StatsSection на всю ширину и первым элементом с отступом снизу */}
-      <Grid item xs={12} sx={{ mb: 3 }}>
-        {' '}
-        {/* Устанавливаем отступ снизу */}
-        <StatsSection />
-      </Grid>
+    <>
+      {user.role === 'accessBoss' ? (
+        <Stack>
+          <WelcomeSection />
+          {/* StatsSection на всю ширину и первым элементом с отступом снизу */}
+          <Grid item xs={12} sx={{ mb: 3 }}>
+            {' '}
+            {/* Устанавливаем отступ снизу */}
+            <StatsSection />
+          </Grid>
 
-      <Grid container spacing={3}>
-        {/* Колонка для SaleProgressCard */}
-        <Grid
-          item
-          xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
-          sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
-        >
-          <Stack spacing={3} direction="column">
-            <SaleProgressCard />
-          </Stack>
-        </Grid>
+          <Grid container spacing={3}>
+            {/* Колонка для SaleProgressCard */}
+            <Grid
+              item
+              xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
+              sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
+            >
+              <Stack spacing={3} direction="column">
+                <SaleProgressCard />
+              </Stack>
+            </Grid>
 
-        {/* Колонка для CustomerCard */}
-        <Grid
-          item
-          xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
-          sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
-        >
-          <Stack spacing={3} direction="column">
-            <CustomerCard />
-          </Stack>
-        </Grid>
-      </Grid>
-      <ManagersTable />
-      <ProblemsTable />
-    </Stack>
+            {/* Колонка для CustomerCard */}
+            <Grid
+              item
+              xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
+              sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
+            >
+              <Stack spacing={3} direction="column">
+                <CustomerCard />
+              </Stack>
+            </Grid>
+          </Grid>
+          <ManagersTable />
+          <ProblemsTable />
+        </Stack>
+      ) : (
+        <NotRegistered />
+      )}
+    </>
   );
 }
 

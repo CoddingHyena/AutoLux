@@ -2,11 +2,12 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
 
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -18,6 +19,8 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 
 import DataTable from '../../components/dataTable';
+import NotRegistered from '../../components/NotRegistered';
+import { Button, Box, Stack } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 
@@ -290,27 +293,38 @@ const getDocsCars = [
   },
 ];
 
-export default function adminPage() {
+export default function AdminPage() {
+  const user = useAppSelector((store) => store.userSlice.user);
+
   return (
     <>
-      <PageHeader title="Администрирование">
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{
-            textTransform: 'uppercase',
-          }}
-        >
-          <Link underline="hover" href="/">
-            Главная
-          </Link>
-          <Typography color="text.tertiary">Администрирование</Typography>
-        </Breadcrumbs>
-      </PageHeader>
-      <DataTableUsers name="Dense" props={{ dense: true }} />
-      <DataTableDocTD name="Dense" props={{ dense: true }} />
-      <DataTableDocTO name="Dense" props={{ dense: true }} />
-      <DataTableDocFB name="Dense" props={{ dense: true }} />
-      <DataTableCars name="Dense" props={{ dense: true }} />
+      {user.role === 'accessAdmin' || user.role === 'accessBoss' ? (
+        <>
+          <div className="listTodo"></div>
+          <PageHeader title="Администрирование">
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              sx={{
+                textTransform: 'uppercase',
+              }}
+            >
+              <Link underline="hover" href="/">
+                Главная
+              </Link>
+              <Typography color="text.tertiary">Администрирование</Typography>
+            </Breadcrumbs>
+          </PageHeader>
+          <Stack spacing={7.5}>
+            <DataTableUsers name="Dense" props={{ dense: true }} />
+            <DataTableDocTD name="Dense" props={{ dense: true }} />
+            <DataTableDocTO name="Dense" props={{ dense: true }} />
+            <DataTableDocFB name="Dense" props={{ dense: true }} />
+            <DataTableCars name="Dense" props={{ dense: true }} />
+          </Stack>
+        </>
+      ) : (
+        <NotRegistered />
+      )}
     </>
   );
 }
@@ -780,7 +794,7 @@ function DataTableCars({ name, props }) {
   return (
     <>
       <Card component="section" type="section">
-        <CardHeader title="Cars" subtitle="">
+        <CardHeader title="Справочник автомобилей" subtitle="">
           {/* <Button variant="contained" disableElevation endIcon={<AddIcon />}>
           Новый документ
         </Button> */}

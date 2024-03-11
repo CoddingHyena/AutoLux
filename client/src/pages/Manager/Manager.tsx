@@ -35,11 +35,13 @@ import { useState, useEffect } from 'react';
 // import Modal from '../../components/modal';
 // import ModalOptions from './modalOptions';
 import BasicModal from '../../components/BasicModal/BasicModal';
+import NotRegistered from '../../components/NotRegistered';
 import EditFeedbackForm from './EditFeedbackForm';
 import EditTDForm from './EditTDForm';
 import EditTOForm from './EditTOForm';
 import NewDocTDForm from './NewDocTDForm';
 import NewDocTOForm from './NewDocTOForm';
+import { Stack } from '@mui/material';
 
 const getDocsFB = [
   {
@@ -231,39 +233,35 @@ const getDocsCars = [
 ];
 
 export default function managerPage() {
+  const user = useAppSelector((store) => store.userSlice.user);
+
   return (
     <>
-      <PageHeader title="Рабочее место менеджера">
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{
-            textTransform: 'uppercase',
-          }}
-        >
-          <Link underline="hover" href="/">
-            Главная
-          </Link>
-          <Typography color="text.tertiary">Рабочее место менеджера</Typography>
-        </Breadcrumbs>
-      </PageHeader>
-      <Card
-        type="section"
-        sx={{
-          minHeight: '60vh',
-        }}
-      >
-        <CardHeader title="Заголовок секции рабочее место менеджера" subtitle="Подзаголовок секции">
-          Доп заголовок
-        </CardHeader>
-        <BasicModal />
-        <BasicModal />
-        контент
-      </Card>
-
-      <DataTableDocFB name="Dense" props={{ dense: true }} />
-      <DataTableDocTD name="Dense" props={{ dense: true }} />
-      <DataTableDocTO name="Dense" props={{ dense: true }} />
-      <DataTableCars name="Dense" props={{ dense: true }} />
+      {user.role === 'accessManager' || user.role === 'accessBoss' ? (
+        <>
+          <PageHeader title="Рабочее место менеджера">
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              sx={{
+                textTransform: 'uppercase',
+              }}
+            >
+              <Link underline="hover" href="/">
+                Главная
+              </Link>
+              <Typography color="text.tertiary">Рабочее место менеджера</Typography>
+            </Breadcrumbs>
+          </PageHeader>
+          <Stack spacing={7.5}>
+            <DataTableDocFB name="Dense" props={{ dense: true }} />
+            <DataTableDocTD name="Dense" props={{ dense: true }} />
+            <DataTableDocTO name="Dense" props={{ dense: true }} />
+            <DataTableCars name="Dense" props={{ dense: true }} />
+          </Stack>
+        </>
+      ) : (
+        <NotRegistered />
+      )}
     </>
   );
 }
@@ -507,8 +505,8 @@ function DataTableDocTO({ name, props }) {
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
-              <TableCell align="right">{`${row.status}`}</TableCell>
-              <TableCell align="right">{row?.ourComment}</TableCell>
+              <TableCell align="left">{`${row.status}`}</TableCell>
+              <TableCell align="left">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -570,11 +568,11 @@ function DataTableCars({ name, props }) {
             <TableCell align="left">{row?.prodYear}</TableCell>
             <TableCell align="left">{row?.gosNum}</TableCell>
             <TableCell align="left">{row?.gear}</TableCell>
-            <TableCell align="right">{row?.engine}</TableCell>
-            <TableCell align="right">{row?.vin}</TableCell>
-            <TableCell align="right">{row?.user_id}</TableCell>
-            <TableCell align="right">{`${row.ours}`}</TableCell>
-            <TableCell align="right">{`${row.bu}`}</TableCell>
+            <TableCell align="left">{row?.engine}</TableCell>
+            <TableCell align="left">{row?.vin}</TableCell>
+            <TableCell align="left">{row?.user_id}</TableCell>
+            <TableCell align="left">{`${row.ours}`}</TableCell>
+            <TableCell align="left">{`${row.bu}`}</TableCell>
             <TableCell align="right">
               <Tooltip title="Редактировать" arrow>
                 <IconButton

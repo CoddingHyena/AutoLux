@@ -38,6 +38,7 @@ import {
 import { useEffect, useState } from 'react';
 import TestDrive from '../../components/testDrive';
 import BasicModal from '../../components/BasicModal/BasicModal';
+import NotRegistered from '../../components/NotRegistered';
 import EditTOForm from './EditTOForm';
 import EditTDForm from './EditTDForm';
 import EditCarsForm from './EditCarsForm';
@@ -134,40 +135,45 @@ const getHeadCellsUserAuto = [
 ];
 
 export default function Account() {
+  const user = useAppSelector((store) => store.userSlice.user);
+
   return (
-    <Stack spacing={6} sx={{ marginTop: 4 }}>
-      <GeneralSettingsSection />
-      <UserDocsToTable />
-      <UserDocsTestDriveTable />
-      <UserAutoTable />
-      <TestDrive/>
-    </Stack>
+    <>
+      {user.id > 0 ? (
+        <Stack spacing={6} sx={{ marginTop: 4 }}>
+          <GeneralSettingsSection />
+          <UserDocsToTable />
+          <UserDocsTestDriveTable />
+          <UserAutoTable />
+          <TestDrive />
+        </Stack>
+      ) : (
+        <NotRegistered />
+      )}
+    </>
   );
 }
 
 function GeneralSettingsSection() {
-
   const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
 
   const user = useAppSelector((store) => store.lkSlice.user);
   const dispatch = useAppDispatch();
-  
+
   const [inputsName, setInputsName] = useState<string>(user?.name || 'Введите имя');
   const [inputsPhone, setInputsPhone] = useState<string>(user?.phone || 'Введите телефон');
-
 
   useEffect(() => {
     void dispatch(fetchLkUsers());
   }, []); // Пустой массив зависимостей, чтобы вызвать эффект только при монтировании
-  
-  useEffect(() => {
-    if(user?.name !== inputsName || user?.phone !== inputsPhone){
-      setInputsName(user?.name || 'Введите имя')
-      setInputsPhone(user?.phone || 'Введите телефон')
-    }
-  }, [user])
-  console.log('userUpdate LK', user);
 
+  useEffect(() => {
+    if (user?.name !== inputsName || user?.phone !== inputsPhone) {
+      setInputsName(user?.name || 'Введите имя');
+      setInputsPhone(user?.phone || 'Введите телефон');
+    }
+  }, [user]);
+  console.log('userUpdate LK', user);
 
   const handleTitleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputsName(event.target.value);
@@ -227,7 +233,6 @@ function GeneralSettingsSection() {
   }
 }
 
-
 function UserDocsToTable({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
@@ -241,14 +246,13 @@ function UserDocsToTable({ name, props }) {
     void dispatch(fetchDocTO());
   }, []);
 
-    // Функция для открытия модального окна
-    const handleEditClick = (row) => {
-      setCurrentData(row); // Установить текущие данные документа
-      setIsModalOpen(true); // Открывает модальное окно
-    };
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
 
-
-      // Функция для закрытия модального окна
+  // Функция для закрытия модального окна
   const updateAndClose = () => {
     dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
@@ -256,52 +260,52 @@ function UserDocsToTable({ name, props }) {
 
   return (
     <>
-    <Card component="section" type="section">
-      <CardHeader title="Документы на Техобслуживание" subtitle=""></CardHeader>
-      <DataTable
-        {...props}
-        headCells={getHeadCellsTO}
-        rows={docsTO}
-        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
-        render={(row) => (
-          <TableRow hover tabIndex={-1} key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row.dateNow}</TableCell>
-            <TableCell align="left">{row?.car_id}</TableCell>
-            <TableCell align="left">{row?.userScore}</TableCell>
-            <TableCell align="left">{row?.userComment}</TableCell>
-            {/* <TableCell align="right">${row.salary.toLocaleString()}</TableCell> */}
-            <TableCell align="right">
-              <Tooltip title="Редактировать" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="warning"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(row); //передаем данные записи в функцию
-                    // console.log('🚀 ~ LK docsTO row:', row);
-                  }}
-                >
-                  <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        )}
-      />
-    </Card>
+      <Card component="section" type="section">
+        <CardHeader title="Документы на Техобслуживание" subtitle=""></CardHeader>
+        <DataTable
+          {...props}
+          headCells={getHeadCellsTO}
+          rows={docsTO}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.dateNow}</TableCell>
+              <TableCell align="left">{row?.car_id}</TableCell>
+              <TableCell align="left">{row?.userScore}</TableCell>
+              <TableCell align="left">{row?.userComment}</TableCell>
+              {/* <TableCell align="right">${row.salary.toLocaleString()}</TableCell> */}
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); //передаем данные записи в функцию
+                      // console.log('🚀 ~ LK docsTO row:', row);
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
 
-    {isModalOpen && (
-      <BasicModal
-      isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      data={currentData}
-      updateAndClose={updateAndClose}
-      FormComponent={EditTOForm}
-      />
-    )}
+      {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditTOForm}
+        />
+      )}
     </>
   );
 }
@@ -319,13 +323,13 @@ function UserDocsTestDriveTable({ name, props }) {
     void dispatch(fetchDocTD());
   }, []);
 
-     // Функция для открытия модального окна
-     const handleEditClick = (row) => {
-      setCurrentData(row); // Установить текущие данные документа
-      setIsModalOpen(true); // Открывает модальное окно
-    };
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
 
-         // Функция для закрытия модального окна
+  // Функция для закрытия модального окна
   const updateAndClose = () => {
     dispatch(fetchDocTD()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
@@ -333,57 +337,56 @@ function UserDocsTestDriveTable({ name, props }) {
 
   return (
     <>
-    <Card component="section" type="section">
-      <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
-      <DataTable
-        {...props}
-        headCells={getHeadCellsTO}
-        rows={docsTD}
-        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
-        render={(row) => (
-          <TableRow hover tabIndex={-1} key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row.dateNow}</TableCell>
-            <TableCell align="left">{row?.car_id}</TableCell>
-            <TableCell align="left">{row?.userScore}</TableCell>
-            <TableCell align="left">{row?.userComment}</TableCell>
-            {/* <TableCell align="right">${row.salary.toLocaleString()}</TableCell> */}
-            <TableCell align="right">
-              <Tooltip title="Редактировать" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="warning"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(row);
-                    console.log('🚀 ~ LK docsTD row:', row)
-                  }}
-                >
-                  <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        )}
-      />
-    </Card>
-       {isModalOpen && (
+      <Card component="section" type="section">
+        <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
+        <DataTable
+          {...props}
+          headCells={getHeadCellsTO}
+          rows={docsTD}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.dateNow}</TableCell>
+              <TableCell align="left">{row?.car_id}</TableCell>
+              <TableCell align="left">{row?.userScore}</TableCell>
+              <TableCell align="left">{row?.userComment}</TableCell>
+              {/* <TableCell align="right">${row.salary.toLocaleString()}</TableCell> */}
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row);
+                      console.log('🚀 ~ LK docsTD row:', row);
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+      {isModalOpen && (
         <BasicModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        data={currentData}
-        updateAndClose={updateAndClose}
-        FormComponent={EditTDForm}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditTDForm}
         />
       )}
-      </>
+    </>
   );
 }
 
 function UserAutoTable({ name, props }) {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
 
@@ -397,105 +400,109 @@ function UserAutoTable({ name, props }) {
     void dispatch(fetchCars());
   }, []);
 
-   // Функция для открытия модального окна
-   const handleEditClick = (row) => {
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
     setCurrentData(row); // Установить текущие данные документа
     setIsModalOpen(true); // Открывает модальное окно
   };
 
-        // Функция для закрытия модального окна
-        const updateAndClose = () => {
-          dispatch(fetchCars()); // Перезапрашиваем данные, обновляя список
-          setIsModalOpen(false);
-        };
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchCars()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
 
-        const delHandler = async (carId) : Promise<void> => {
-          await dispatch(fetchCarsDel(carId));
-          dispatch(fetchCars())
-        }
+  const delHandler = async (carId): Promise<void> => {
+    await dispatch(fetchCarsDel(carId));
+    dispatch(fetchCars());
+  };
 
-        const handleCreateClick = () => {
-          setIsModalOpen(true);
-          setIsCreatingNewCar(true);
-          setCurrentData(null);
-        }
+  const handleCreateClick = () => {
+    setIsModalOpen(true);
+    setIsCreatingNewCar(true);
+    setCurrentData(null);
+  };
 
-        const handleCloseModal = () => {
-          setIsModalOpen(false);
-          setIsCreatingNewCar(false); // Возвращаемся к дефолтному состоянию
-        };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setIsCreatingNewCar(false); // Возвращаемся к дефолтному состоянию
+  };
 
   return (
     <>
-    <Card component="section" type="section">
-      <CardHeader title="Мои автомобили" subtitle="">
-      <Button onClick={handleCreateClick} variant="contained" disableElevation endIcon={<AddIcon />}>
-          Добавить авто
-        </Button>
-      </CardHeader>
-      <DataTable
-        {...props}
-        headCells={getHeadCellsUserAuto}
-        rows={myCars}
-        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
-        render={(row) => (
-          <TableRow hover tabIndex={-1} key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row.mark}</TableCell>
-            <TableCell align="left">{row?.model}</TableCell>
-            <TableCell align="left">{row?.color}</TableCell>
-            <TableCell align="left">{row?.prodYear}</TableCell>
-            <TableCell align="left">{row.gosNum}</TableCell>
-            <TableCell align="left">{row?.gear}</TableCell>
-            <TableCell align="left">{row?.engine}</TableCell>
-            <TableCell align="left">{row?.vin}</TableCell>
-            {/* <TableCell align="right">${row.salary.toLocaleString()}</TableCell> */}
-            <TableCell align="right">
-              <Tooltip title="Редактировать" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="warning"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(row); //передаем данные записи в функцию
-                  }}
-                >
-                  <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
+      <Card component="section" type="section">
+        <CardHeader title="Мои автомобили" subtitle="">
+          <Button
+            onClick={handleCreateClick}
+            variant="contained"
+            disableElevation
+            endIcon={<AddIcon />}
+          >
+            Добавить авто
+          </Button>
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getHeadCellsUserAuto}
+          rows={myCars}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.mark}</TableCell>
+              <TableCell align="left">{row?.model}</TableCell>
+              <TableCell align="left">{row?.color}</TableCell>
+              <TableCell align="left">{row?.prodYear}</TableCell>
+              <TableCell align="left">{row.gosNum}</TableCell>
+              <TableCell align="left">{row?.gear}</TableCell>
+              <TableCell align="left">{row?.engine}</TableCell>
+              <TableCell align="left">{row?.vin}</TableCell>
+              {/* <TableCell align="right">${row.salary.toLocaleString()}</TableCell> */}
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); //передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
 
-              <Tooltip title="Удалить" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="error"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    delHandler(row.id);
-                  }}
-                >
-                  <PersonOffOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        )}
-      />
-    </Card>
-       {isModalOpen && (
+                <Tooltip title="Удалить" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="error"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      delHandler(row.id);
+                    }}
+                  >
+                    <PersonOffOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+      {isModalOpen && (
         <BasicModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        data={currentData}
-        isCreatingNewCar={isCreatingNewCar}
-        updateAndClose={updateAndClose}
-        FormComponent={ isCreatingNewCar ?  CreateCarsForm :  EditCarsForm}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          data={currentData}
+          isCreatingNewCar={isCreatingNewCar}
+          updateAndClose={updateAndClose}
+          FormComponent={isCreatingNewCar ? CreateCarsForm : EditCarsForm}
         />
       )}
-      </>
+    </>
   );
 }
-
