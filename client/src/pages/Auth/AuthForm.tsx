@@ -76,7 +76,7 @@ export default function AuthForm(): JSX.Element {
       className="authContainer"
     >
       {msg && (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity={msg.includes("Привет") ? "success" : "error"}>
           {msg}
         </Alert>
       )}
