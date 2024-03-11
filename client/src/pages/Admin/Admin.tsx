@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import PageHeader from '../../components/pageHeader';
@@ -44,13 +44,10 @@ import EditFeedbackForm from './EditFeedbackForm';
 import EditTDForm from './EditTDForm';
 import EditTOForm from './EditTOForm';
 
-import {
-  fetchManagerCars,
-  fetchManagerDocFB,
-  fetchManagerDocTD,
-  fetchManagerDocTO,
-} from '../../redux/manager/managerThunkActions';
+
 import EditCarsForm from './EditDocsCarsForm';
+import axios from 'axios';
+import logo from '../../assets/images/logo/png/Color_logotext2_nob222g.png'
 
 const getHeadCells = [
   {
@@ -321,6 +318,7 @@ export default function AdminPage() {
             <DataTableDocFB name="Dense" props={{ dense: true }} />
             <DataTableCars name="Dense" props={{ dense: true }} />
           </Stack>
+          <MulterLoading/>
         </>
       ) : (
         <NotRegistered />
@@ -864,4 +862,42 @@ function DataTableCars({ name, props }) {
       )}
     </>
   );
+}
+
+function MulterLoading(){
+  const [img, setImg] = useState<File | null>(null);
+  const [avatar, setAvatar] = useState(null);
+
+  const sendFile = useCallback(async () => {
+    console.log("Trying to send file...", img);
+    if(img){
+      try {
+        const data = new FormData();
+        data.append('IMG', img)
+
+        await axios.post(`${import.meta.env.VITE_URL}/multer`, data)
+
+        .then((res) => {
+          console.log("Server response:", res);
+          setAvatar(res.data.path)
+        })
+      } catch (error) {
+        console.log(error, 'Ошибка в фиче малтер')
+      }
+    }
+  }, [img])
+
+  return (
+    <div className='multer'>
+      <div className='avatar'>
+        {
+          avatar
+          ? <img className='logo' src={`${avatar}`} alt='avatar'/>
+          : <img className='logo' src={`${logo}`} alt='avatar'/>
+        }
+      </div>
+      <input type='file' onChange={e => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}/>
+      <button className='btn' onClick={sendFile}>Посмотреть</button>
+    </div>
+  )
 }
