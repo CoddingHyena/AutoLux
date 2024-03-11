@@ -16,17 +16,15 @@ const ZoomTransition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />)
 //     </>
 //   );
 // }
-function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent, isCreatingNewCar, }) {
-  // Изменено с currentData на data
+function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent, isCreatingNewCar }) {
   console.log('🚀 ~ BasicModal ~ data:', data);
-  
-  let title; 
-  if (data !== null) {
-  title = `Редактирование документа id${data?.id || ''}`
-} else {
-  title = 'Создание элемента'
-}
 
+  let title;
+  if (data !== null) {
+    title = `Редактирование документа id${data?.id || ''}`;
+  } else {
+    title = 'Создание элемента';
+  }
 
   return (
     <Modal
@@ -38,12 +36,14 @@ function BasicModal({ isOpen, onClose, data, updateAndClose, FormComponent, isCr
       padding={true}
     >
       <Box height="50vh" sx={{ marginBottom: '120px' }}>
-        <FormComponent formData={data} onSuccess={updateAndClose} isCreatingNewCar={isCreatingNewCar}/>
+        <FormComponent
+          formData={data}
+          onSuccess={updateAndClose}
+          isCreatingNewCar={isCreatingNewCar}
+        />
       </Box>
     </Modal>
   );
 }
 
-
 export default BasicModal;
-
