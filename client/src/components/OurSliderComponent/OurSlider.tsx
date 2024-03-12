@@ -1,45 +1,4 @@
-// import React from 'react';
-// import Slider from 'react-slick';
-// import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
 
-// const SliderComponent = () => {
-//   const settings = {
-//     dots: true,
-//     infinite: true,
-//     autoplay: true,
-//     autoplaySpeed: 5000,
-//     speed: 500,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     customPaging: function(i) {
-//       return (
-//         <div>
-//           <p>{slides[i].upperDescription}</p>
-//         </div>
-//       );
-//     }
-//   };
-
-//   const slides = [
-//     { image: 'gruz1.png', upperDescription: 'Верхнее описание 1', lowerDescription: 'Нижнее описание 1' },
-//     { image: 'gruz2.png', upperDescription: 'Верхнее описание 2', lowerDescription: 'Нижнее описание 2' },
-//     { image: 'gruz3.png', upperDescription: 'Верхнее описание 3', lowerDescription: 'Нижнее описание 3' },
-//   ];
-
-//   return (
-//     <Slider {...settings}>
-//       {slides.map((slide, index) => (
-//         <div key={index}>
-//           <img src={`/${slide.image}`} alt={`Slide ${index + 1}`} />
-//           <p>{slide.lowerDescription}</p>
-//         </div>
-//       ))}
-//     </Slider>
-//   );
-// }
-
-// export default SliderComponent;
 
 import React from 'react';
 import Slider from 'react-slick';
