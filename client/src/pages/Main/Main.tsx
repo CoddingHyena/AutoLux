@@ -53,18 +53,32 @@ export default function mainPage() {
 	const [activeIndex, setActiveIndex] = useState(1);
 	return (
 		<>
-		<LargeAutoSlider />
-		
-			<Card
+
+
+<Card
 				type="section"
 				sx={{
 					minHeight: '60vh',
 				}}
 			>
-				<CardHeader title="Заголовок секции на главной">
-					Доп заголовок
+				<CardHeader title="Добро пожаловать!">
+					
 				</CardHeader>
-                <img src="banners/bannerMain.jpg" />
+                <img src="banners/bannerMain.jpg" style={{ width: '100%', height: 'auto' }}/>
+			</Card>
+
+		<LargeAutoSlider />
+		
+		<Card
+				type="section"
+				sx={{
+					minHeight: '60vh',
+				}}
+			>
+				<CardHeader title="Выгодные условия гарантии!">
+					
+				</CardHeader>
+                <img src="banners/12years.png" style={{ width: '100%', height: 'auto' }}/>
 			</Card>
 
 
@@ -109,6 +123,8 @@ export default function mainPage() {
 					{activeIndex === 4 && <Section text={activeIndex} />}
 				</Grid>
 			</Grid>
+
+
 
 
 			<TestDrive />

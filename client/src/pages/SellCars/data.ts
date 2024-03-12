@@ -1,7 +1,9 @@
 export const data1 = [
 	{
         imgPath: '/banners/banner1.jpg',
-    },
+        label: 'Label 1',
+        url: '/admin'
+	},
 	{
 		imgPath: '/banners/banner2.jpg',
 	},
