@@ -6,6 +6,11 @@ import Card from '@mui/material/Card';
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
 import SliderComponent from '../../components/OurSliderComponent/OurSlider';
+import CarCard1 from '../../components/SellCars/SellCars1';
+import CarCard2 from '../../components/SellCars/SellCars2';
+import CarCard3 from '../../components/SellCars/SellCars3';
+import CarCard4 from '../../components/SellCars/SellCars4';
+import CarCard5 from '../../components/SellCars/SellCars5';
 
 export default function SellCars() {
 	return (
@@ -94,6 +99,7 @@ export default function SellCars() {
     
 			</Card>
 
+
 			<Card
 				type="section"
 				sx={{
@@ -101,6 +107,16 @@ export default function SellCars() {
 				}}
 			>
 <SliderComponent/>
+
+
+
+
+<CarCard1/>
+<CarCard2/>
+<CarCard3/>
+<CarCard4/>
+<CarCard5/>
+
 
 
 			</Card>
