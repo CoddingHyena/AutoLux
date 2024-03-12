@@ -866,38 +866,254 @@ function DataTableCars({ name, props }) {
 
 function MulterLoading(){
   const [img, setImg] = useState<File | null>(null);
-  const [avatar, setAvatar] = useState(null);
+  const [modelName, setModelName] = useState('');
+  const [price, setPrice] = useState('');
+  const [adress, setAdress] = useState('');
+  const [uploadStatus, setUploadStatus] = useState({status: '', message: ''});
 
-  const sendFile = useCallback(async () => {
-    console.log("Trying to send file...", img);
+
+  const [modelId, setModelId] = useState('');
+  const [complectName, setComplectName] = useState('');
+  const [priceC, setPriceC] = useState('');
+  const [adressComplect, setAdressComplect] = useState('');
+  const [uploadStatusComplect, setUploadStatusComplect] = useState({status: '', message: ''});
+
+
+  const [modId, setModId] = useState('');
+  const [colorName, setColorName] = useState('');
+  const [priceColor, setPriceColor] = useState('');
+  const [adressColor, setAdressColor] = useState('');
+  const [statusColor, setStatusColor] = useState({status: '', message: ''});
+
+
+
+  const sendFileAvtoOptions = useCallback(async () => {
+    console.log("Trying to send file...", img, modelName, price);
     if(img){
       try {
         const data = new FormData();
-        data.append('IMG', img)
+        data.append('IMG', img);
+        data.append('modelName', modelName);
+        data.append('price', price);
 
-        await axios.post(`${import.meta.env.VITE_URL}/multer`, data)
-
+        await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsComlect`, data)
         .then((res) => {
           console.log("Server response:", res);
-          setAvatar(res.data.path)
+          setAdress(res.data.path)
+          setImg(null)
+          setModelName('')
+          setPrice('')
+          setUploadStatus({status: 'success', message: 'Модель успешно создана'})
+          setTimeout(() => {
+            setUploadStatus({status: '', message: ''})
+          }, 1000)
+         
         })
       } catch (error) {
         console.log(error, 'Ошибка в фиче малтер')
+        setUploadStatus({status: 'error', message: 'Ошибка при загрузке файла!'})
+        setTimeout(() => {
+          setUploadStatus({status: '', message: ''})
+        }, 1000)
       }
     }
-  }, [img])
+  }, [img, modelName, price])
+
+
+
+
+
+
+  const sendFileAvtoOptionsComplect = useCallback(async () => {
+    console.log("Trying to send file...", img, complectName, priceC, modelId);
+    if(img){
+      try {
+        const data = new FormData();
+        data.append('IMG', img);
+        data.append('complectName', complectName);
+        data.append('price', priceC);
+        data.append('modelId', modelId)
+
+        await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsComplect`, data)
+        .then((res) => {
+          console.log("Server response:", res);
+          setAdressComplect(res.data.path)
+          setImg(null)
+          setModelId('');
+          setComplectName('')
+          setPriceC('')
+          setUploadStatusComplect({status: 'success', message: 'Комплектация успешно создана'})
+         
+          setTimeout(() => {
+            setUploadStatusComplect({status: '', message: ''})
+          }, 1000)
+         
+        })
+      } catch (error) {
+        console.log(error, 'Ошибка в фиче малтер')
+        setUploadStatusComplect({status: 'error', message: 'Ошибка при загрузке файла!'})
+        
+        setTimeout(() => {
+          setUploadStatusComplect({status: '', message: ''})
+        }, 1000)
+      }
+    }
+  }, [img, complectName, priceC, modelId])
+
+
+
+  // const [modId, setModId] = useState('');
+  // const [colorName, setColorName] = useState('');
+  // const [priceColor, setPriceColor] = useState('');
+  // const [adressColor, setAdressColor] = useState('');
+  // const [StatusColor, setStatusColor] = useState({status: '', message: ''});
+
+
+  const sendFileAvtoOptionsColor = useCallback(async () => {
+    console.log("Trying to send file...", img, colorName, priceColor, modelId);
+    if(img){
+      try {
+        const data = new FormData();
+        data.append('IMG', img);
+        data.append('colorName', colorName);
+        data.append('price', priceColor);
+        data.append('modId', modId)
+
+        await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsColor`, data)
+        .then((res) => {
+          console.log("Server response:", res);
+          setAdressColor(res.data.path)
+          setImg(null)
+          setModId('');
+          setColorName('')
+          setPriceColor('')
+          setStatusColor({status: 'success', message: 'Комплектация успешно создана'})
+         
+          setTimeout(() => {
+            setStatusColor({status: '', message: ''})
+          }, 1000)
+         
+        })
+      } catch (error) {
+        console.log(error, 'Ошибка в фиче малтер')
+        setStatusColor({status: 'error', message: 'Ошибка при загрузке файла!'})
+        
+        setTimeout(() => {
+          setStatusColor({status: '', message: ''})
+        }, 1000)
+      }
+    }
+  }, [img, colorName, priceColor, modId])
+
+
 
   return (
+    
     <div className='multer'>
-      <div className='avatar'>
-        {
-          avatar
-          ? <img className='logo' src={`${avatar}`} alt='avatar'/>
-          : <img className='logo' src={`${logo}`} alt='avatar'/>
-        }
-      </div>
-      <input type='file' onChange={e => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}/>
-      <button className='btn' onClick={sendFile}>Посмотреть</button>
+      <div className='AvtoOptionsModel'>
+          <h3>Avto options</h3>
+          <input 
+            type='text'
+            placeholder='Наименование модели'
+            value={modelName}
+            onChange={(e) => setModelName(e.target.value)}
+          />
+          <input 
+            type='text'
+            placeholder='Цена'
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+      
+          <input type='file' onChange={e => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}/>
+          <button className='btn' onClick={sendFileAvtoOptions}>Загрузить</button>
+          {adress && (
+            <div className='adress'>
+              {adress}
+            </div>
+          )}
+          {uploadStatus.status && (
+            <div className={`upload-status ${uploadStatus.status}`}>
+              {uploadStatus.message}
+              </div>
+          )}
+        </div>
+
+
+
+        <div className='AvtoOptionsComplect'>
+          <h3>Avto options complect</h3>
+          <input 
+            type='text'
+            placeholder='ID модели'
+            value={modelId}
+            onChange={(e) => setModelId(e.target.value)}
+          />
+          <input 
+            type='text'
+            placeholder='Наименование комплектации'
+            value={complectName}
+            onChange={(e) => setComplectName(e.target.value)}
+          />
+          <input 
+            type='text'
+            placeholder='Цена'
+            value={priceC}
+            onChange={(e) => setPriceC(e.target.value)}
+          />
+      
+          <input type='file' onChange={e => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}/>
+          <button className='btn' onClick={sendFileAvtoOptionsComplect}>Загрузить</button>
+          {adressComplect && (
+            <div className='adress'>
+              {adressComplect}
+            </div>
+          )}
+          {uploadStatusComplect.status && (
+            <div className={`upload-status ${uploadStatusComplect.status}`}>
+              {uploadStatusComplect.message}
+              </div>
+          )}
+        </div>
+
+
+
+
+        <div className='AvtoOptionsColor'>
+          <h3>Avto options color</h3>
+          <input 
+            type='text'
+            placeholder='ID модели'
+            value={modId}
+            onChange={(e) => setModId(e.target.value)}
+          />
+          <input 
+            type='text'
+            placeholder='Цвет'
+            value={colorName}
+            onChange={(e) => setColorName(e.target.value)}
+          />
+          <input 
+            type='text'
+            placeholder='Цена'
+            value={priceColor}
+            onChange={(e) => setPriceColor(e.target.value)}
+          />
+      
+          <input type='file' onChange={e => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}/>
+          <button className='btn' onClick={sendFileAvtoOptionsColor}>Загрузить</button>
+          {adressColor && (
+            <div className='adress'>
+              {adressColor}
+            </div>
+          )}
+          {statusColor.status && (
+            <div className={`upload-status ${statusColor.status}`}>
+              {statusColor.message}
+              </div>
+          )}
+        </div>
+    
     </div>
   )
 }
