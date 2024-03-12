@@ -31,7 +31,7 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
       ourComment,
       status,
     };
-    console.log('======formData docTO LK USER', formData);
+    console.log('======formData docTD ADNIN', formData);
     await dispatch(fetchAdminDocTDUpdate({ formData }));
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
