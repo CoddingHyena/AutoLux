@@ -65,79 +65,90 @@ const menuOptions = [
 ];
 
 export default function mainPage() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(1);
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
-  return (
-    <>
-      <LargeAutoSlider />
-      <Card
-        type="section"
-        sx={{
-          minHeight: '60vh',
-        }}
-      >
-        <CardHeader title="Заголовок секции на главной">Доп заголовок</CardHeader>
-        <img src="banners/bannerMain.jpg" />
-      </Card>
-      <Grid container spacing={4}>
-        <Grid item xs={12} sm={4} md={3}>
-          <Card
-            sx={{
-              position: 'sticky',
-              top: `${calcHeaderHeight('nav', false) + 30}px`,
-            }}
-            component="aside"
-          >
-            <MenuList
-              sx={{
-                '& .MuiMenuItem-root': {
-                  borderRadius: 2,
-                },
-              }}
-            >
-              {menuOptions.map(({ id, Icon, text }) => (
-                <MenuListItem
-                  key={id}
-                  text={text}
-                  Icon={Icon}
-                  onClick={() => setActiveIndex(id)}
-                  selected={activeIndex === id}
-                />
-              ))}
-              <MenuItem component={Link} href="#!">
-                <ListItemIcon>
-                  <Person2OutlinedIcon fontSize="medium" />
-                </ListItemIcon>
-                Link
-              </MenuItem>
-            </MenuList>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={8} md={9}>
-          {activeIndex === 1 && <Section text={activeIndex} />}
-          {activeIndex === 2 && <Section text={activeIndex} />}
-          {activeIndex === 3 && <Section text={activeIndex} />}
-          {activeIndex === 4 && <Section text={activeIndex} />}
-        </Grid>
-      </Grid>
 
-      <TestDrive />
-      <Stack>
-        <Button variant="contained" onClick={handleOpenModal}>
-          Открыть модальное окно
-        </Button>
+	const [activeIndex, setActiveIndex] = useState(1);
+	return (
+		<>
 
-        <BasicModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          FormComponent={TDForm}
-          // Передайте любые другие необходимые props для TDForm
-        />
-      </Stack>
-    </>
-  );
+
+<Card
+				type="section"
+				sx={{
+					minHeight: '60vh',
+				}}
+			>
+				<CardHeader title="Добро пожаловать!">
+					
+				</CardHeader>
+                <img src="banners/bannerMain.jpg" style={{ width: '100%', height: 'auto' }}/>
+			</Card>
+
+		<LargeAutoSlider />
+		
+		<Card
+				type="section"
+				sx={{
+					minHeight: '60vh',
+				}}
+			>
+				<CardHeader title="Выгодные условия гарантии!">
+					
+				</CardHeader>
+                <img src="banners/12years.png" style={{ width: '100%', height: 'auto' }}/>
+			</Card>
+
+
+			<Grid container spacing={4}>
+				<Grid item xs={12} sm={4} md={3}>
+					<Card
+						sx={{
+							position: 'sticky',
+							top: `${calcHeaderHeight('nav', false) + 30}px`,
+						}}
+						component="aside"
+					>
+						<MenuList
+							sx={{
+								'& .MuiMenuItem-root': {
+									borderRadius: 2,
+								},
+							}}
+						>
+							{menuOptions.map(({ id, Icon, text }) => (
+								<MenuListItem
+									key={id}
+									text={text}
+									Icon={Icon}
+									onClick={() => setActiveIndex(id)}
+									selected={activeIndex === id}
+								/>
+							))}
+							<MenuItem component={Link} href="#!">
+								<ListItemIcon>
+									<Person2OutlinedIcon fontSize="medium" />
+								</ListItemIcon>
+								Link
+							</MenuItem>
+						</MenuList>
+					</Card>
+				</Grid>
+				<Grid item xs={12} sm={8} md={9}>
+					{activeIndex === 1 && <Section text={activeIndex} />}
+					{activeIndex === 2 && <Section text={activeIndex} />}
+					{activeIndex === 3 && <Section text={activeIndex} />}
+					{activeIndex === 4 && <Section text={activeIndex} />}
+				</Grid>
+			</Grid>
+
+
+
+
+			<TestDrive />
+
+
+		</>
+	);
+
 }
 
 function MenuListItem({ Icon, text, ...props }) {
