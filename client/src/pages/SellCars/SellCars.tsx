@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
+import SliderComponent from '../../components/OurSliderComponent/OurSlider';
 
 export default function SellCars() {
 	return (
@@ -99,19 +100,12 @@ export default function SellCars() {
 					minHeight: '60vh',
 				}}
 			>
-<div style={{ flex: 1, marginBottom: '20px', backgroundColor: '#f2f2f2' }}>
-    <img src="./banners/YellowFeramont.jpg" alt="Картинка" style={{ width: '100%', height: 'auto' }} />
-</div>
-<br/>
-<div style={{ flex: 1, textAlign: 'left', backgroundColor: '#f2f2f2', padding: '20px' }}>
-    <h2 style={{ fontSize: '4em', fontWeight: 'bold' }}>FolksFagen Ferramont</h2>
-    <p style={{ fontSize: '2em', lineHeight: '1.5' }}>
-	Может похвастаться неплохим функционалом. У него стильный и сдержанный дизайн, отлично подчеркивающий характер и индивидуальность своего владельца. Такой автомобиль будет неплохо смотреться как на скоростной магистрали, так и на грунтовых дорогах вдали от цивилизации. Салон- это царство приятных материалов отделки, практичности, продуманной эргономики и бескомпромиссного комфорта. Даже дальняя поездка или плотный затор не смогут доставить владельцу лишних неудобств. Производитель прекрасно понимает, что современный автомобиль, в первую очередь, должен дарить удовольствие от управления. Именно поэтому, кроссовер оснащается потрясающей линейкой силовых агрегатов, представляющих из себя сплав современных технологий и легендарного немецкого качества
-    </p>
-</div>
+<SliderComponent/>
+
+
 			</Card>
 
-			{/* <SliderComponent/> */}
+			
 
 
 			
