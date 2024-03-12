@@ -2,6 +2,9 @@ const adminRoute = require('express').Router();
 
 const { DocTestDrive, DocTO, DocFeedback, PhoneNum, Cars, User } = require('../db/models');
 
+
+
+
 adminRoute.get('/docTD', async (req, res) => {
   try {
     const docsTD = await DocTestDrive.findAll();
@@ -57,7 +60,7 @@ adminRoute.put('/docTO', async (req, res) => {
   console.log(req.body, 'req.body docTO put');
   try {
     const queryDocTO = await DocTO.findByPk(formData.id);
-    queryDocTO.manager = formData.manager;
+    queryDocTO.manager = formData.managerId;
     queryDocTO.status = formData.status;
     queryDocTO.ourComment = formData.ourComment;
     queryDocTO.save();
@@ -95,7 +98,7 @@ adminRoute.put('/docFB', async (req, res) => {
   console.log(req.body, 'req.body docFB put');
   try {
     const queryDocFB = await DocFeedback.findByPk(formData.id);
-    queryDocFB.manager = formData.manager;
+    queryDocFB.manager = formData.managerId;
     queryDocFB.status = formData.status;
     queryDocFB.ourComment = formData.ourComment;
     queryDocFB.save();
@@ -151,40 +154,7 @@ adminRoute.delete('/user/:id', async (req, res) => {
   }
 });
 
-adminRoute.get('/phone', async (req, res) => {
-  try {
-    const phoneAll = await PhoneNum.findAll();
-    const getPhones = phoneAll.map((el) => el.get({ plain: true }));
-    res.json(getPhones);
-  } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ GET_PHONE ADMIN');
-    res.sendStatus(500);
-  }
-});
 
-adminRoute.put('phone/:id', async (req, res) => {
-  const { id } = req.params;
-  const { phoneNumber } = req.body;
-  try {
-    const queryPhone = await PhoneNum.findByPk(id);
-    queryPhone.phoneNumber = phoneNumber;
-    queryPhone.save();
-    res.json(queryPhone);
-  } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ PUT_PHONE ADMIN');
-  }
-});
-
-adminRoute.delete('/phone/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await PhoneNum.destroy({ where: { id } });
-    res.json(id);
-  } catch (error) {
-    console.log(error, 'ОШИБКА В РУЧКЕ DELETE_phoneNum ADMIN');
-    res.sendStatus(500);
-  }
-});
 
 adminRoute.get('/car', async (req, res) => {
   try {

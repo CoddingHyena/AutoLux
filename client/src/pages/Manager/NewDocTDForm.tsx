@@ -36,7 +36,6 @@ export default function NewDocTDForm({ currentUserId, onSuccess }) {
     console.log('======NEWformData TD', formData);
 
     await dispatch(fetchManagerCreateDocTD({formData}));
-
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 

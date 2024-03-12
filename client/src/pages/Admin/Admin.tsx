@@ -40,6 +40,7 @@ import {
   fetchAdminDocTODel,
   fetchAdminModel,
   fetchAdminModelDel,
+  fetchAdminTDDel,
   fetchAdminUserDel,
   fetchAdminUsers,
 } from '../../redux/admin/adminThunkActions';
@@ -536,10 +537,10 @@ function DataTableUsers({ name, props }) {
 function DataTableDocTD({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
-  // const [createDocTD, setCreateDocTD] = useState(false);
+  
 
   const docsTD = useAppSelector((store) => store.adminSlice.docsTD);
-  // console.log('store usersAll admin', docsTD);
+  console.log('store docsTD admin', docsTD);
 
   const dispatch = useAppDispatch();
 
@@ -559,11 +560,6 @@ function DataTableDocTD({ name, props }) {
     setIsModalOpen(false);
   };
 
-  // const handleCreateTDClick = () => {
-  //   setCreateDocTD(true);
-  //   setIsModalOpen(true);
-  //   setCurrentData(null);
-  // };
 
   const handlerCloseModal = () => {
     setIsModalOpen(false);
@@ -571,8 +567,8 @@ function DataTableDocTD({ name, props }) {
   };
 
   const delHandler = async (id): Promise<void> => {
-    await dispatch(fetchAdminUserDel(id));
-    dispatch(fetchAdminUsers());
+    await dispatch(fetchAdminTDDel(id));
+    dispatch(fetchAdminDocTD());
   };
 
   return (
@@ -765,7 +761,7 @@ function DataTableDocFB({ props }) {
   const [currentData, setCurrentData] = useState(null);
 
   const docsFB = useAppSelector((store) => store.adminSlice.docsFB);
-  console.log('store usersAll admin', docsFB);
+  console.log('store docsFB admin', docsFB);
 
   const dispatch = useAppDispatch();
 
@@ -782,6 +778,7 @@ function DataTableDocFB({ props }) {
   // Функция для закрытия модального окна
   const updateAndClose = () => {
     dispatch(fetchAdminDocFB()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
   };
 
   const delHandler = async (id): Promise<void> => {
