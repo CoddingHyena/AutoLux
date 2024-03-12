@@ -1,6 +1,22 @@
 import { useState } from 'react';
+import BasicModal from '../../components/BasicModal/BasicModal';
+import TDForm from './TDForm';
+import TOForm from './TOForm';
+
 import { Link } from 'react-router-dom';
-import { Box, Card, Button, useTheme, Breadcrumbs, Typography, Grid, MenuList, MenuItem, ListItemIcon } from '@mui/material';
+import {
+  Box,
+  Card,
+  Button,
+  useTheme,
+  Breadcrumbs,
+  Typography,
+  Grid,
+  MenuList,
+  MenuItem,
+  ListItemIcon,
+  Stack,
+} from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import useIntervalCounter from '../../utils/hooks/useIntervalCounter'; // Убедитесь, что путь правильный
@@ -16,40 +32,40 @@ import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 
 const menuOptions = [
-	{
-		id: 1,
-		Icon: Person2OutlinedIcon,
-		text: 'Модели',
-	},
-	{
-		id: 2,
-		Icon: AccountBoxOutlinedIcon,
-		text: 'Конфигуратор',
-	},
-	{
-		id: 3,
-		Icon: VpnKeyOutlinedIcon,
-		text: 'Запись на тест-драйв',
-	},
-	{
-		id: 4,
-		Icon: HandshakeOutlinedIcon,
-		text: 'Спецпредложения',
-	},
-	{
-		id: 5,
-		Icon: HandshakeOutlinedIcon,
-		text: 'Сервис',
-	},
-	{
-		id: 6,
-		Icon: HandshakeOutlinedIcon,
-		text: 'Контакты',
-	},
+  {
+    id: 1,
+    Icon: Person2OutlinedIcon,
+    text: 'Модели',
+  },
+  {
+    id: 2,
+    Icon: AccountBoxOutlinedIcon,
+    text: 'Конфигуратор',
+  },
+  {
+    id: 3,
+    Icon: VpnKeyOutlinedIcon,
+    text: 'Запись на тест-драйв',
+  },
+  {
+    id: 4,
+    Icon: HandshakeOutlinedIcon,
+    text: 'Спецпредложения',
+  },
+  {
+    id: 5,
+    Icon: HandshakeOutlinedIcon,
+    text: 'Сервис',
+  },
+  {
+    id: 6,
+    Icon: HandshakeOutlinedIcon,
+    text: 'Контакты',
+  },
 ];
 
-
 export default function mainPage() {
+
 	const [activeIndex, setActiveIndex] = useState(1);
 	return (
 		<>
@@ -132,38 +148,35 @@ export default function mainPage() {
 
 		</>
 	);
+
 }
 
-
 function MenuListItem({ Icon, text, ...props }) {
-	return (
-		<MenuItem {...props}>
-			<ListItemIcon>
-				<Icon fontSize="medium" />
-			</ListItemIcon>
-			{text}
-		</MenuItem>
-	);
+  return (
+    <MenuItem {...props}>
+      <ListItemIcon>
+        <Icon fontSize="medium" />
+      </ListItemIcon>
+      {text}
+    </MenuItem>
+  );
 }
 
 function Section({ text }) {
-	return (
-		<Card
-			sx={{
-				minHeight: '100vh',
-			}}
-			type="section"
-		>
-			<CardHeader title={`Заголовок секции ${text}`} subtitle="Доп текст">
-				Optional Action
-			</CardHeader>
-			{text}
-		</Card>
-	);
+  return (
+    <Card
+      sx={{
+        minHeight: '100vh',
+      }}
+      type="section"
+    >
+      <CardHeader title={`Заголовок секции ${text}`} subtitle="Доп текст">
+        Optional Action
+      </CardHeader>
+      {text}
+    </Card>
+  );
 }
-
-
-
 
 function LargeAutoSlider() {
   const { count: activeSlideIndex, setCounter } = useIntervalCounter({
@@ -188,16 +201,21 @@ function LargeAutoSlider() {
   return (
     <Box sx={{ position: 'relative', width: '100%' }}>
       <Card sx={{ position: 'relative', width: '100%', p: 0, boxShadow: 'none' }}>
-	  <Slider activeSlideIndex={activeSlideIndex} dataLength={data.length}>
-  {data.map((item, i) => (
-    <Slider.Slide index={i} key={i}>
-      {/* Используем компонент Link из react-router-dom для навигации */}
-      <Link to={item.url} style={{ display: 'block' }}>
-        <Box component="img" sx={{ width: '100%', objectFit: 'cover', display: 'block' }} src={item.imgPath} alt={item.label} />
-      </Link>
-    </Slider.Slide>
-  ))}
-</Slider>
+        <Slider activeSlideIndex={activeSlideIndex} dataLength={data.length}>
+          {data.map((item, i) => (
+            <Slider.Slide index={i} key={i}>
+              {/* Используем компонент Link из react-router-dom для навигации */}
+              <Link to={item.url} style={{ display: 'block' }}>
+                <Box
+                  component="img"
+                  sx={{ width: '100%', objectFit: 'cover', display: 'block' }}
+                  src={item.imgPath}
+                  alt={item.label}
+                />
+              </Link>
+            </Slider.Slide>
+          ))}
+        </Slider>
       </Card>
       <Button
         onClick={handlePrev}

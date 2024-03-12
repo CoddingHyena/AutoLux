@@ -29,6 +29,9 @@ module.exports = {
       dateNow: {
         type: Sequelize.DATE,
       },
+      dateSelected: {
+        type: Sequelize.DATE,
+      },
       manager: {
         type: Sequelize.INTEGER,
         references: {

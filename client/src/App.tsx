@@ -18,23 +18,20 @@ import MUITheme from './utils/theme';
 import Router from './utils/routes';
 import CustomizationLayout from './components/layouts/customization';
 function App() {
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    void dispatch(fetchCheckUser())
-    console.log('useEEffect отрабатывает')
+    void dispatch(fetchCheckUser());
+    console.log('useEEffect отрабатывает');
   }, []);
 
   return (
-
-      <MUITheme>
-        <SnackbarProvider>
-          <CustomizationLayout />
-          <Router />
-        </SnackbarProvider>
-      </MUITheme>
-
+    <MUITheme>
+      <SnackbarProvider>
+        {/* <CustomizationLayout /> */}
+        <Router />
+      </SnackbarProvider>
+    </MUITheme>
   );
 }
 
