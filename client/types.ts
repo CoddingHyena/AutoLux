@@ -121,3 +121,39 @@ export type InputsFBType = {
     phoneNumber: string;
     userComment: string;
 }
+
+export type AutoOptionModelType = {
+    id: number;
+    modelName: string;
+    price: string;
+    photo: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export type AutoOptionModelSType = AutoOptionModelType[];
+
+
+export type AutoOptionComplectType = {
+    id: number;
+    model_id: number;
+    complectationName: string;
+    price: string;
+    photo: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export type AutoOptionComplectSType = AutoOptionComplectType[];
+
+export type AutoOptionColorType = {
+    id: number;
+    model_id: number;
+    colorName: string;
+    price: string;
+    photo: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export type AutoOptionColorSType[];
