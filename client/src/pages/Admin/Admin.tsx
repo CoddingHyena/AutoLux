@@ -29,11 +29,17 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   fetchAdminCars,
   fetchAdminCarsDel,
+  fetchAdminColor,
+  fetchAdminColorDel,
+  fetchAdminComplect,
+  fetchAdminComplectDel,
   fetchAdminDocFB,
   fetchAdminDocFBDel,
   fetchAdminDocTD,
   fetchAdminDocTO,
   fetchAdminDocTODel,
+  fetchAdminModel,
+  fetchAdminModelDel,
   fetchAdminUserDel,
   fetchAdminUsers,
 } from '../../redux/admin/adminThunkActions';
@@ -43,11 +49,14 @@ import EditUserForm from './EditUserForm';
 import EditFeedbackForm from './EditFeedbackForm';
 import EditTDForm from './EditTDForm';
 import EditTOForm from './EditTOForm';
-
+import EditDocModel from './EditDocModel';
+import EditDocComplect from './EditDocComplect';
+import EditDocColor from './EditDocColor';
 
 import EditCarsForm from './EditDocsCarsForm';
 import axios from 'axios';
 import logo from '../../assets/images/logo/png/Color_logotext2_nob222g.png'
+
 
 const getHeadCells = [
   {
@@ -290,6 +299,99 @@ const getDocsCars = [
   },
 ];
 
+const getDocsModel = [
+  {
+    id: 'id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Id',
+  },
+  {
+    id: 'modelName',
+    numeric: false,
+    disablePadding: false,
+    label: 'Название модели',
+  },
+  {
+    id: 'price',
+    numeric: false,
+    disablePadding: false,
+    label: 'Цена',
+  },
+  {
+    id: 'photo',
+    numeric: false,
+    disablePadding: false,
+    label: 'Фото',
+  },
+];
+
+const getDocsComplect = [
+  {
+    id: 'id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Id',
+  },
+  {
+    id: 'model_id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Модель',
+  },
+  {
+    id: 'complectationName',
+    numeric: false,
+    disablePadding: false,
+    label: 'Название комплектации',
+  },
+  {
+    id: 'price',
+    numeric: false,
+    disablePadding: false,
+    label: 'Цена',
+  },
+  {
+    id: 'photo',
+    numeric: false,
+    disablePadding: false,
+    label: 'Фото',
+  },
+];
+
+const getDocsColor = [
+  {
+    id: 'id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Id',
+  },
+  {
+    id: 'model_id',
+    numeric: false,
+    disablePadding: false,
+    label: 'Модель',
+  },
+  {
+    id: 'colorName',
+    numeric: false,
+    disablePadding: false,
+    label: 'Название цвета',
+  },
+  {
+    id: 'price',
+    numeric: false,
+    disablePadding: false,
+    label: 'Цена',
+  },
+  {
+    id: 'photo',
+    numeric: false,
+    disablePadding: false,
+    label: 'Фото',
+  },
+];
+
 export default function AdminPage() {
   const user = useAppSelector((store) => store.userSlice.user);
 
@@ -317,6 +419,9 @@ export default function AdminPage() {
             <DataTableDocTO name="Dense" props={{ dense: true }} />
             <DataTableDocFB name="Dense" props={{ dense: true }} />
             <DataTableCars name="Dense" props={{ dense: true }} />
+            <DataTableAutoOptionModels name="Dense" props={{ dense: true }}/>
+            <DataTableAutoOptionComplects name="Dense" props={{ dense: true }}/> 
+            <DataTableAutoOptionColors name="Dense" props={{ dense: true }}/>  
           </Stack>
           <MulterLoading/>
         </>
@@ -864,6 +969,316 @@ function DataTableCars({ name, props }) {
   );
 }
 
+function DataTableAutoOptionModels({ name, props }) {
+
+  const docsModels = useAppSelector((store) => store.adminSlice.models);
+  console.log('store models admin', docsModels);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchAdminModel());
+  }, []);
+
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchAdminModel()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
+  const delHandler = async (id): Promise<void> => {
+    await dispatch(fetchAdminModelDel(id));
+    dispatch(fetchAdminModel());
+    dispatch(fetchAdminComplect());
+    dispatch(fetchAdminColor());
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <Card component="section" type="section">
+        <CardHeader title="Модели для конфигуратора (Avto options)" subtitle="">
+          {/* <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+          Новый документ
+        </Button> */}
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsModel}
+          rows={docsModels}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.modelName}</TableCell>
+              <TableCell align="left">{row.price}</TableCell>
+              <TableCell align="left">{row.photo}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); //передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Удалить" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="error"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      delHandler(row.id);
+                    }}
+                  >
+                    <PersonOffOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+      {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditDocModel}
+        />
+      )}
+    </>
+  );
+}
+
+function DataTableAutoOptionComplects({ name, props }) {
+
+  const docsComplects = useAppSelector((store) => store.adminSlice.complects);
+  console.log('store complects admin', docsComplects);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchAdminComplect());
+  }, []);
+
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchAdminComplect()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
+  const delHandler = async (id): Promise<void> => {
+    await dispatch(fetchAdminComplectDel(id));
+    dispatch(fetchAdminComplect());
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <Card component="section" type="section">
+        <CardHeader title="Комплекты к моделям для конфигуратора (Avto options complect)" subtitle="">
+          {/* <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+          Новый документ
+        </Button> */}
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsComplect}
+          rows={docsComplects}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.model_id}</TableCell>
+              <TableCell align="left">{row.complectationName}</TableCell>
+              <TableCell align="left">{row.price}</TableCell>
+              <TableCell align="left">{row.photo}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); //передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Удалить" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="error"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      delHandler(row.id);
+                    }}
+                  >
+                    <PersonOffOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+      {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditDocComplect}
+        />
+      )}
+    </>
+  );
+}
+
+function DataTableAutoOptionColors({ name, props }) {
+
+  const docsColors = useAppSelector((store) => store.adminSlice.colors);
+  console.log('store colors admin', docsColors);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchAdminColor());
+  }, []);
+
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCurrentData(row); // Установить текущие данные документа
+    setIsModalOpen(true); // Открывает модальное окно
+  };
+
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchAdminColor()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+  };
+
+  const delHandler = async (id): Promise<void> => {
+    await dispatch(fetchAdminColorDel(id));
+    dispatch(fetchAdminColor());
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <Card component="section" type="section">
+        <CardHeader title="Комплекты к моделям для конфигуратора (Avto options complect)" subtitle="">
+          {/* <Button variant="contained" disableElevation endIcon={<AddIcon />}>
+          Новый документ
+        </Button> */}
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsColor}
+          rows={docsColors}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.model_id}</TableCell>
+              <TableCell align="left">{row.colorName}</TableCell>
+              <TableCell align="left">{row.price}</TableCell>
+              <TableCell align="left">{row.photo}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); //передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Удалить" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="error"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      delHandler(row.id);
+                    }}
+                  >
+                    <PersonOffOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
+      {isModalOpen && (
+        <BasicModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          data={currentData}
+          updateAndClose={updateAndClose}
+          FormComponent={EditDocColor}
+        />
+      )}
+    </>
+  );
+}
+
 function MulterLoading(){
   const [img, setImg] = useState<File | null>(null);
   const [modelName, setModelName] = useState('');
@@ -885,6 +1300,7 @@ function MulterLoading(){
   const [adressColor, setAdressColor] = useState('');
   const [statusColor, setStatusColor] = useState({status: '', message: ''});
 
+    const dispatch = useAppDispatch();
 
 
   const sendFileAvtoOptions = useCallback(async () => {
@@ -896,17 +1312,19 @@ function MulterLoading(){
         data.append('modelName', modelName);
         data.append('price', price);
 
-        await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsComlect`, data)
+        await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsModel`, data)
         .then((res) => {
           console.log("Server response:", res);
-          setAdress(res.data.path)
+          // setAdress(res.data.path)
+          dispatch(fetchAdminModel())
+          
           setImg(null)
           setModelName('')
           setPrice('')
           setUploadStatus({status: 'success', message: 'Модель успешно создана'})
           setTimeout(() => {
             setUploadStatus({status: '', message: ''})
-          }, 1000)
+          }, 2000)
          
         })
       } catch (error) {
@@ -937,7 +1355,8 @@ function MulterLoading(){
         await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsComplect`, data)
         .then((res) => {
           console.log("Server response:", res);
-          setAdressComplect(res.data.path)
+          // setAdressComplect(res.data.path)
+          dispatch(fetchAdminComplect());
           setImg(null)
           setModelId('');
           setComplectName('')
@@ -946,7 +1365,7 @@ function MulterLoading(){
          
           setTimeout(() => {
             setUploadStatusComplect({status: '', message: ''})
-          }, 1000)
+          }, 2000)
          
         })
       } catch (error) {
@@ -962,12 +1381,6 @@ function MulterLoading(){
 
 
 
-  // const [modId, setModId] = useState('');
-  // const [colorName, setColorName] = useState('');
-  // const [priceColor, setPriceColor] = useState('');
-  // const [adressColor, setAdressColor] = useState('');
-  // const [StatusColor, setStatusColor] = useState({status: '', message: ''});
-
 
   const sendFileAvtoOptionsColor = useCallback(async () => {
     console.log("Trying to send file...", img, colorName, priceColor, modelId);
@@ -982,7 +1395,8 @@ function MulterLoading(){
         await axios.post(`${import.meta.env.VITE_URL}/multer/avtoOptionsColor`, data)
         .then((res) => {
           console.log("Server response:", res);
-          setAdressColor(res.data.path)
+          // setAdressColor(res.data.path)
+          dispatch(fetchAdminColor());
           setImg(null)
           setModId('');
           setColorName('')
@@ -991,7 +1405,7 @@ function MulterLoading(){
          
           setTimeout(() => {
             setStatusColor({status: '', message: ''})
-          }, 1000)
+          }, 2000)
          
         })
       } catch (error) {

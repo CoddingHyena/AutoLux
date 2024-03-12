@@ -49,4 +49,7 @@ app.use('/api/admin', adminRoute);
 app.use('/api/manager', managerRoute);
 app.use('/api/boss', bossRoute);
 app.use('/api/multer', require('./routes/multerRoutes'));
+app.use('/api/configurator', require('./routes/configuratorRoutes'));
+
+
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

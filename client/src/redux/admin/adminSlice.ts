@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { UserCarsType, UserDocsTDType, UserFBSType, UserSType } from '../../../types';
+import { AutoOptionColorSType, AutoOptionComplectSType, AutoOptionModelSType, UserCarsType, UserDocsTDType, UserFBSType, UserSType } from '../../../types';
 import {
   fetchAdminCars,
   fetchAdminCarsDel,
   fetchAdminCarsUpdate,
+  fetchAdminColor,
+  fetchAdminColorDel,
+  fetchAdminColorUpdate,
+  fetchAdminComplect,
+  fetchAdminComplectDel,
+  fetchAdminComplectUpdate,
   fetchAdminDocFB,
   fetchAdminDocFBDel,
   fetchAdminDocFBUpdate,
@@ -12,6 +18,9 @@ import {
   fetchAdminDocTO,
   fetchAdminDocTODel,
   fetchAdminDocTOUpdate,
+  fetchAdminModel,
+  fetchAdminModelDel,
+  fetchAdminModelUpdate,
   fetchAdminTDDel,
   fetchAdminUserDel,
   fetchAdminUserUpdate,
@@ -24,6 +33,9 @@ export type SliceState = {
   docsTO?: UserDocsTDType;
   docsFB?: UserFBSType;
   cars?: UserCarsType;
+  models?: AutoOptionModelSType;
+  complects?: AutoOptionComplectSType;
+  colors?: AutoOptionColorSType;
 };
 
 const initialState: SliceState = {
@@ -32,6 +44,9 @@ const initialState: SliceState = {
   docsTO: [],
   docsFB: [],
   cars: [],
+  models: [],
+  complects: [],
+  colors: [],
 };
 
 const adminSlice = createSlice({
@@ -113,6 +128,52 @@ const adminSlice = createSlice({
     builder.addCase(fetchAdminCarsDel.fulfilled, (state, { payload }) => {
       state.cars = state.cars?.filter((el) => el.id !== payload);
     });
+
+    builder.addCase(fetchAdminModel.fulfilled, (state, { payload }) => {
+      state.models = payload;
+    });
+
+    builder.addCase(fetchAdminModelUpdate.fulfilled, (state, action) => {
+      const index = state.models?.findIndex((doc) => doc.id === action.payload.id);
+      if (index !== -1 && state.models) {
+        state.models[index] = action.payload; // Обновляем документ на новый из payload
+      }
+    });
+
+    builder.addCase(fetchAdminModelDel.fulfilled, (state, { payload }) => {
+      state.models = state.models?.filter((el) => el.id !== payload);
+    });
+
+    builder.addCase(fetchAdminComplect.fulfilled, (state, { payload }) => {
+      state.complects = payload;
+    });
+
+    builder.addCase(fetchAdminComplectUpdate.fulfilled, (state, action) => {
+      const index = state.complects?.findIndex((doc) => doc.id === action.payload.id);
+      if (index !== -1 && state.complects) {
+        state.complects[index] = action.payload; // Обновляем документ на новый из payload
+      }
+    });
+
+    builder.addCase(fetchAdminComplectDel.fulfilled, (state, { payload }) => {
+      state.complects = state.complects?.filter((el) => el.id !== payload);
+    });
+
+    builder.addCase(fetchAdminColor.fulfilled, (state, { payload }) => {
+      state.colors = payload;
+    });
+
+    builder.addCase(fetchAdminColorUpdate.fulfilled, (state, action) => {
+      const index = state.colors?.findIndex((doc) => doc.id === action.payload.id);
+      if (index !== -1 && state.colors) {
+        state.colors[index] = action.payload; // Обновляем документ на новый из payload
+      }
+    });
+
+    builder.addCase(fetchAdminColorDel.fulfilled, (state, { payload }) => {
+      state.colors = state.colors?.filter((el) => el.id !== payload);
+    });
+
   },
 });
 
