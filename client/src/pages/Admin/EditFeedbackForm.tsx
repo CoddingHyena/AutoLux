@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
-import { fetchManagerDocFBUpdate } from '../../redux/manager/managerThunkActions';
+import { fetchAdminDocFBUpdate } from '../../redux/admin/adminThunkActions';
 
 export default function EditFeedbackForm({ formData, currentUserId, onSuccess }) {
   // Локальное состояние для каждого поля формы
@@ -13,21 +13,12 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
   const [userId, setUserId] = useState(formData.user_id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');
   const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || '');
-  const [managerId, setManagerId] = useState(formData.manager || currentUserId);
+  const [managerId, setManagerId] = useState(formData.manager || '');
   const [ourComment, setOurComment] = useState(formData.ourComment || '');
   const [userComment, setUserComment] = useState(formData.userComment || '');
   const [status, setStatus] = useState(Boolean(formData.status));
 
-  // Получение данных менеджера из Redux store
-  const manager = useAppSelector((store) => store.userSlice.user);
   const dispatch = useAppDispatch();
-
-  // Обновление локального состояния при изменении данных менеджера
-  useEffect(() => {
-    if (manager?.id || currentUserId) {
-      setManagerId(manager?.id || currentUserId);
-    }
-  }, [manager, currentUserId]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -37,12 +28,12 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
       user_id: userId,
       dateNow,
       phoneNumber,
-      manager: managerId,
+      managerId,
       ourComment,
       userComment,
       status,
     };
-    console.log('======formData FB', formData);
+    console.log('======formData docFB admin', formData);
 
     await dispatch(fetchAdminDocFBUpdate({ formData }));
 
@@ -96,18 +87,14 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         InputProps={{ readOnly: true }}
         className="readOnly"
       />
-
-      {managerId && (
-        <Box component={Paper} p={2} my={2}>
-          <Typography variant="h6" gutterBottom>
-            Менеджер (ответственный)
-          </Typography>
-          <Typography variant="body1">
-            {manager?.name} (ID: {managerId})
-          </Typography>
-        </Box>
-      )}
-
+      <TextField
+        label="Менеджер"
+        value={managerId}
+        onChange={(e) => setManagerId(e.target.value)}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+      />
       <TextField
         label="Комментарий менеджера"
         value={ourComment}

@@ -45,7 +45,6 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
     console.log('======formData TD', formData);
 
     await dispatch(fetchManagerDocTDUpdate({formData}));
-
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 

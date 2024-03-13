@@ -14,21 +14,15 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
   const [userId, setUserId] = useState(formData.user_id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');
   const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || '');
-  const [managerId, setManagerId] = useState(formData.manager || currentUserId);
+  const [managerId, setManagerId] = useState(formData.manager || '');
   const [ourComment, setOurComment] = useState(formData.ourComment || '');
   const [userComment, setUserComment] = useState(formData.userComment || '');
   const [status, setStatus] = useState(Boolean(formData.status));
 
   // Получение данных менеджера из Redux store
-  const manager = useAppSelector((store) => store.userSlice.user);
+  
   const dispatch = useAppDispatch();
 
-  // Обновление локального состояния при изменении данных менеджера
-  useEffect(() => {
-    if (manager?.id || currentUserId) {
-      setManagerId(manager?.id || currentUserId);
-    }
-  }, [manager, currentUserId]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -38,12 +32,12 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
       user_id: userId,
       dateNow,
       phoneNumber,
-      manager: managerId,
+      managerId,
       ourComment,
       userComment,
       status,
     };
-    console.log('======formData TO', formData);
+    console.log('======formData TO ADMIN', formData);
 
     await dispatch(fetchAdminDocTOUpdate({ formData }));
 
@@ -97,18 +91,15 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         InputProps={{ readOnly: true }}
         className="readOnly"
       />
-
-      {managerId && (
-        <Box component={Paper} p={2} my={2}>
-          <Typography variant="h6" gutterBottom>
-            Менеджер (ответственный)
-          </Typography>
-          <Typography variant="body1">
-            {manager?.name} (ID: {managerId})
-          </Typography>
-        </Box>
-      )}
-
+      
+      <TextField
+        label="Mенеджер"
+        value={managerId}
+        onChange={(e) => setManagerId(e.target.value)}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+      />
       <TextField
         label="Комментарий менеджера"
         value={ourComment}

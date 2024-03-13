@@ -377,6 +377,7 @@ function DataTableDocTD({ name, props }) {
 
   // Функция для открытия модального окна
   const handleEditClick = (row) => {
+    setCreateDocTD(false); // Сбрасываем флаг создания нового документа
     setCurrentData(row); // Установить текущие данные заявки
     setIsModalOpen(true); // Открывает модальное окно
   };
@@ -385,12 +386,13 @@ function DataTableDocTD({ name, props }) {
   const updateAndClose = () => {
     dispatch(fetchManagerDocTD()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
+    setCreateDocTD(false); // Сбрасываем флаг создания нового документа
   };
 
   const handleCreateTDClick = () => {
     setCreateDocTD(true);
-    setIsModalOpen(true);
     setCurrentData(null);
+    setIsModalOpen(true);
   };
 
   const handlerCloseModal = () => {
@@ -483,22 +485,22 @@ function DataTableDocTO({ name, props }) {
 
   // Функция для открытия модального окна
   const handleEditClick = (row) => {
+    setCreateDocTO(false)
     setCurrentData(row); // Установить текущие данные заявки
     setIsModalOpen(true); // Открывает модальное окно
   };
 
   // Функция для закрытия модального окна
   const updateAndClose = () => {
-    console.log('dispatch(fetchManagerDocTO) before Trying to close modal');
     dispatch(fetchManagerDocTO()); // Перезапрашиваем данные, обновляя список
-    console.log('Trying to close modal');
     setIsModalOpen(false);
+    setCreateDocTO(false)
   };
 
   const handleCreateTOClick = () => {
     setCreateDocTO(true);
-    setIsModalOpen(true);
     setCurrentData(null);
+    setIsModalOpen(true);
   };
 
   const handlerCloseModalTO = () => {
