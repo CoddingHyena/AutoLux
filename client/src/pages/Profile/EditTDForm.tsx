@@ -10,6 +10,7 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
   // Локальное состояние для каждого поля формы
   const [id, setId] = useState(formData.id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');
+  const [dateSelected, setDatSelected] = useState(formData.dateSelected || '');
   const [car_id, setCar_id] = useState(formData.car_id || '');
   const [userScore, setUserScore] = useState(formData.userScore || '');
   const [userComment, setUserComment] = useState(formData.userComment || '');
@@ -22,6 +23,7 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
     const formData = {
       id,
       dateNow,
+      dateSelected,
       car_id,
       userScore,
       userComment,
@@ -45,6 +47,15 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
       <TextField
         label="Дата создания документа"
         value={dateNow}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        InputProps={{ readOnly: true }}
+        className="readOnly"
+      />
+          <TextField
+        label="Дата оказания услуги"
+        value={dateSelected}
         variant="outlined"
         margin="normal"
         fullWidth

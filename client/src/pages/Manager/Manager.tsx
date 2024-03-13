@@ -152,7 +152,13 @@ const getDocsTD = [
     id: 'dateNow',
     numeric: false,
     disablePadding: false,
-    label: 'Дата',
+    label: 'Дата создания документа',
+  },
+  {
+    id: 'dateSelected',
+    numeric: false,
+    disablePadding: false,
+    label: 'Дата оказания услуги',
   },
 ];
 
@@ -229,12 +235,12 @@ const getDocsCars = [
     disablePadding: false,
     label: 'Машина с пробегом',
   },
-  {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: 'Управление',
-  },
+  // {
+  //   id: 'actions',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'Управление',
+  // },
 ];
 
 export default function managerPage() {
@@ -296,6 +302,11 @@ function DataTableDocFB({ props }) {
     setIsModalOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+
   return (
     <>
       <Card component="section" type="section">
@@ -308,7 +319,7 @@ function DataTableDocFB({ props }) {
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row?.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row?.dateNow)}</TableCell>
               <TableCell align="left">{row?.userName}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.phoneNumber}</TableCell>
@@ -400,6 +411,12 @@ function DataTableDocTD({ name, props }) {
     setCreateDocTD(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+  
+
   return (
     <>
       <Card component="section" type="section">
@@ -436,6 +453,8 @@ function DataTableDocTD({ name, props }) {
                 )}
               </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -508,6 +527,11 @@ function DataTableDocTO({ name, props }) {
     setCreateDocTO(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+
   return (
     <>
       <Card component="section" type="section">
@@ -544,6 +568,8 @@ function DataTableDocTO({ name, props }) {
                 )}
               </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -632,7 +658,7 @@ function DataTableCars({ name, props }) {
             </TableCell>
             <TableCell align="right">
               <Tooltip title="Редактировать" arrow>
-                <IconButton
+                {/* <IconButton
                   aria-label="edit"
                   color="warning"
                   size="small"
@@ -642,7 +668,7 @@ function DataTableCars({ name, props }) {
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
+                </IconButton> */}
               </Tooltip>
             </TableCell>
           </TableRow>

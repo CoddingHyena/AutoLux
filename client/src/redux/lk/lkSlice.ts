@@ -7,7 +7,6 @@ export type SliceState = {
     docsTD?: UserDocsTDType;
     docsTO?: UserDocsTDType;
     cars?: UserCarsType;
-    isLoading: boolean;
 };
 
 const initialState: SliceState = {
@@ -24,7 +23,6 @@ const initialState: SliceState = {
     docsTD: [],
     docsTO: [],
     cars: [],
-    isLoading: true,
 
 };
 
@@ -35,15 +33,15 @@ const lkSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchLkUsers.fulfilled, (state, {payload}) => {
             state.user = payload;
-            state.isLoading = false;
+            
         })
         builder.addCase(fetchUpdatUser.fulfilled, (state, {payload}) => {
             state.user = payload;
-            state.isLoading = false;
+           
         })
         builder.addCase(fetchDocTD.fulfilled, (state, {payload}) => {
             state.docsTD = payload;
-            state.isLoading = false;
+           
         })
         builder.addCase(fetchLKDocTDUpdate.fulfilled, (state, {payload}) => {
             const index = state.docsTD?.findIndex((el) => el.id === payload.id);
@@ -53,7 +51,7 @@ const lkSlice = createSlice({
         });
         builder.addCase(fetchDocTO.fulfilled, (state, {payload}) => {
             state.docsTO = payload;
-            state.isLoading = false;
+            
         })
         builder.addCase(fetchLKDocTOUpdate.fulfilled, (state, {payload}) => {
             const index = state.docsTO?.findIndex((el) => el.id === payload.id);
@@ -63,7 +61,7 @@ const lkSlice = createSlice({
         });
         builder.addCase(fetchCars.fulfilled, (state, {payload}) => {
             state.cars = payload;
-            state.isLoading = false;
+            
         })
         builder.addCase(fetchCarsUpdate.fulfilled, (state, {payload}) => {
             const index = state.cars?.findIndex((el) => el.id === payload.id);

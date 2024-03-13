@@ -10,13 +10,13 @@ import { fetchAdminDocTOUpdate } from '../../redux/admin/adminThunkActions';
 export default function EditFeedbackForm({ formData, currentUserId, onSuccess }) {
   // Локальное состояние для каждого поля формы
   const [id, setId] = useState(formData.id || '');
-  const [userName, setUserName] = useState(formData.userName || '');
-  const [userId, setUserId] = useState(formData.user_id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');
-  const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || '');
+  const [dateSelected, setDatSelected] = useState(formData.dateSelected || '');
+  const [userId, setUserId] = useState(formData.user_id || '');
+  const [car_id, setCar_id] = useState(formData.car_id || '');
+  const [probegKm, setProbegKm] = useState(formData.probegKm || '');
   const [managerId, setManagerId] = useState(formData.manager || '');
   const [ourComment, setOurComment] = useState(formData.ourComment || '');
-  const [userComment, setUserComment] = useState(formData.userComment || '');
   const [status, setStatus] = useState(Boolean(formData.status));
 
   // Получение данных менеджера из Redux store
@@ -28,13 +28,13 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
     event.preventDefault();
     const formData = {
       id,
-      userName,
-      user_id: userId,
       dateNow,
-      phoneNumber,
+      dateSelected,
+      userId,
+      car_id,
+      probegKm,
       managerId,
       ourComment,
-      userComment,
       status,
     };
     console.log('======formData TO ADMIN', formData);
@@ -43,11 +43,12 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
 
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
+  const dateSelectedFormatted = dateSelected ? dateSelected.split('T')[0] : '';
 
   return (
     <form onSubmit={onSubmit}>
       <TextField
-        label="Номер заявки обратной связи"
+        label="Номер документа TO"
         value={id}
         variant="outlined"
         margin="normal"
@@ -55,43 +56,51 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         InputProps={{ readOnly: true }}
         className="readOnly"
       />
-      <TextField
-        label="Имя пользователя"
-        value={userName}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
-      />
+        <TextField
+          label="Дата создания"
+          value={dateNow}
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          InputProps={{ readOnly: true }}
+          className="readOnly"
+        />
+            <TextField
+          label="Дата оказания услуги"
+          type="date"
+          value={dateSelectedFormatted}
+          onChange={(e) => setDatSelected(e.target.value)}
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />   
       <TextField
         label="ID пользователя"
         value={userId}
+        onChange={(e) => setUserId(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
       />
-      <TextField
-        label="Дата создания"
-        value={dateNow}
+        <TextField
+        label="Автомобиль"
+        value={car_id}
+        onChange={(e) => setCar_id(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
       />
-      <TextField
-        label="Телефон"
-        value={phoneNumber}
+       <TextField
+        label="Пробег КМ"
+        value={probegKm}
+        onChange={(e) => setProbegKm(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
       />
-      
       <TextField
         label="Mенеджер"
         value={managerId}
@@ -107,15 +116,6 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         variant="outlined"
         margin="normal"
         fullWidth
-      />
-      <TextField
-        label="Комментарий пользователя"
-        value={userComment}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
       />
       <FormControlLabel
         control={<Checkbox checked={status} onChange={(e) => setStatus(e.target.checked)} />}

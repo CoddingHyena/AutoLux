@@ -47,7 +47,9 @@ import EditTDForm from './EditTDForm';
 import EditCarsForm from './EditCarsForm';
 import CreateCarsForm from './CreateCarsForm';
 
-const getHeadCellsTO = [
+
+
+const getHeadCellsTD = [
   {
     id: 'id',
     numeric: false,
@@ -55,10 +57,16 @@ const getHeadCellsTO = [
     label: 'Id',
   },
   {
-    id: 'date',
+    id: 'dateNow',
     numeric: false,
     disablePadding: false,
-    label: 'Дата',
+    label: 'Дата создания документа',
+  },
+  {
+    id: 'dateSelected',
+    numeric: false,
+    disablePadding: false,
+    label: 'Дата оказания услуги',
   },
   {
     id: 'carId',
@@ -170,7 +178,7 @@ export default function Account() {
 }
 
 function GeneralSettingsSection() {
-  const isLoading = useAppSelector((store) => store.lkSlice.isLoading);
+ 
 
   const user = useAppSelector((store) => store.lkSlice.user);
   const dispatch = useAppDispatch();
@@ -200,7 +208,7 @@ function GeneralSettingsSection() {
   const handleSaveUser = async (): Promise<void> => {
     void dispatch(fetchUpdatUser({ inputsName, inputsPhone }));
   };
-  if (!isLoading) {
+  
     return (
       <Card type="section">
         <CardHeader title="Ваш профиль" />
@@ -246,7 +254,6 @@ function GeneralSettingsSection() {
       </Card>
     );
   }
-}
 
 function UserDocsToTable({ name, props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -272,6 +279,10 @@ function UserDocsToTable({ name, props }) {
     dispatch(fetchDocTO()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
   };
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
 
   return (
     <>
@@ -279,13 +290,14 @@ function UserDocsToTable({ name, props }) {
         <CardHeader title="Документы на Техобслуживание" subtitle=""></CardHeader>
         <DataTable
           {...props}
-          headCells={getHeadCellsTO}
+          headCells={getHeadCellsTD}
           rows={docsTO}
           emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.userScore}</TableCell>
               <TableCell align="left">{row?.userComment}</TableCell>
@@ -350,19 +362,25 @@ function UserDocsTestDriveTable({ name, props }) {
     setIsModalOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+
   return (
     <>
       <Card component="section" type="section">
         <CardHeader title="Тестдрайв" subtitle=""></CardHeader>
         <DataTable
           {...props}
-          headCells={getHeadCellsTO}
+          headCells={getHeadCellsTD}
           rows={docsTD}
           emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.userScore}</TableCell>
               <TableCell align="left">{row?.userComment}</TableCell>
