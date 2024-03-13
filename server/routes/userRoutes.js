@@ -1,5 +1,6 @@
 const userRoute = require('express').Router();
 const bcrypt = require('bcrypt');
+const MailService = require('../mailService');
 
 const { User, Role } = require('../db/models');
 
@@ -20,10 +21,14 @@ function getRoleName2(roleId) {
 }
 
 userRoute.get('/checkSession', async (req, res) => {
-  const { userId, name, email, roleId, phone } = req.session;
+  const {
+    userId, name, email, roleId, phone,
+  } = req.session;
   const role = getRoleName2(roleId);
 
-  res.json({ id: userId, name, email, role, phone });
+  res.json({
+    id: userId, name, email, role, phone,
+  });
 });
 
 function getRoleName(role) {
@@ -44,10 +49,10 @@ function getRoleName(role) {
 
 userRoute.post('/reg', async (req, res) => {
   try {
-    const { name, email, password, persDataAgrBool } = req.body;
-
-    console.log(req.body);
-
+    const {
+      name, email, password, persDataAgrBool,
+    } = req.body;
+    // console.log(req.body);
     const user = await User.findOne({ where: { email } });
     if (user) {
       res.sendStatus(403);
@@ -55,6 +60,7 @@ userRoute.post('/reg', async (req, res) => {
     if (!email.includes('@')) {
       res.sendStatus(405);
     } else {
+      
       const hash = await bcrypt.hash(password, 10);
       const newUser = await User.create({
         name,
@@ -64,6 +70,7 @@ userRoute.post('/reg', async (req, res) => {
         propType: true,
         persDataAgr: persDataAgrBool,
       });
+      await MailService.sendWelcomeMail(newUser.email);
       req.session.name = newUser.name;
       req.session.email = newUser.email;
       req.session.userId = newUser.id;
@@ -73,6 +80,7 @@ userRoute.post('/reg', async (req, res) => {
       req.session.save(() => {
         console.log('Зарегистрировался!');
       });
+
       const userWithRole = await User.findOne({
         where: { email },
         include: [

@@ -1,2 +1,6 @@
 // PORT=nubmer
 // DB=[dialect]://[username]:[password]@[host]/[db name]
+// MAIL_HOST=smtp.gmail.com
+// MAIL_PORT=587
+// MAIL_USER=
+// MAIL_PASSWORD=
