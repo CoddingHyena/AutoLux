@@ -2,6 +2,7 @@ import { useState } from 'react';
 import BasicModal from '../../components/BasicModal/BasicModal';
 import TDForm from './TDForm';
 import TOForm from './TOForm';
+import Configurator from '../../components/Configurator/Configurator';
 
 import { Link } from 'react-router-dom';
 import {
@@ -101,7 +102,7 @@ export default function mainPage() {
          
         /> */}
         </Card>
-
+        <Configurator />
         <Card>
           <TestDrive />
         </Card>
