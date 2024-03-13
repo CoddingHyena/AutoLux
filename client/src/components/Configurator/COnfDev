@@ -168,20 +168,6 @@ const CarConfigurator = () => {
           </Grid>
         </Container>
       );
-    case 5:
-      return (
-        <Container component="main" maxWidth="md">
-          <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item xs={12} md={12}>
-              <Card raised sx={{ mt: 4, p: 3 }}>
-                <CardContent>
-                  <Typography variant="h5">Ваша заявка отправлена. Спасибо!</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Container>
-      );
   }
 };
 

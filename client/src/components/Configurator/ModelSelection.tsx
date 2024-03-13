@@ -1,14 +1,7 @@
 import React from 'react';
+import { colors, complectations, models } from './mocs';
 
 const ModelSelection = ({ onSelect }) => {
-  // Предположим, что модели были загружены с сервера и переданы в компонент как пропс,
-  // для примера создадим фиктивный список моделей прямо здесь.
-  const models = [
-    { id: 1, modelName: 'Folo', price: 1600000, photo: 'FOLOCONF.jpg' },
-    { id: 2, modelName: 'Feramont', price: 3600000, photo: 'FERAMONTCONF.png' },
-    { id: 3, modelName: 'Figuan', price: 2600000, photo: 'FIGUANCONF.jpg' },
-  ];
-
   return (
     <div className="model-selection">
       <h2>Выберите модель Volkswagen</h2>
@@ -16,7 +9,7 @@ const ModelSelection = ({ onSelect }) => {
         {models.map((model) => (
           <div key={model.id} className="model-item" onClick={() => onSelect(model)}>
             <img
-              src={`car-icons/${model.photo}`}
+              src={`feramontSlide/${model.photo}`}
               alt={model.modelName}
               style={{ width: '100px', height: 'auto' }}
             />
