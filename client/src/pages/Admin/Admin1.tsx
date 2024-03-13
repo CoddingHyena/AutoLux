@@ -17,15 +17,15 @@ import TableRow from '@mui/material/TableRow';
 import AddIcon from '@mui/icons-material/Add';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
+
+import DataTable from '../../components/dataTable';
+import NotRegistered from '../../components/NotRegistered';
+import { Button, Box, Stack } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-import DataTable from '../../components/dataTable';
-import NotRegistered from '../../components/NotRegistered';
-import { Button, Box, Stack } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 
@@ -428,7 +428,6 @@ export default function AdminPage() {
             <DataTableAutoOptionComplects name="Dense" props={{ dense: true }} />
             <DataTableAutoOptionColors name="Dense" props={{ dense: true }} />
           </Stack>
-          <MulterLoading />
         </>
       ) : (
         <NotRegistered />
@@ -518,7 +517,7 @@ function DataTableUsers({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -527,7 +526,7 @@ function DataTableUsers({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -751,18 +750,18 @@ function DataTableDocTO({ name, props }) {
                     <ModeEditOutlineOutlinedIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Редактировать" arrow>
+                <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
-                    color="warning"
+                    aria-label="delete"
+                    color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleEditClick(row); // Передаем данные записи в функцию
+                      delHandler(row.id);
                     }}
                   >
-                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -952,29 +951,8 @@ function DataTableCars({ name, props }) {
               <TableCell align="left">{row?.engine}</TableCell>
               <TableCell align="left">{row?.vin}</TableCell>
               <TableCell align="left">{row?.user_id}</TableCell>
-              <TableCell align="left">
-                {row.ours ? (
-                  <Tooltip title="Наша" arrow>
-                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Не наша" arrow>
-                    <HighlightOffIcon sx={{ color: 'grey' }} />
-                  </Tooltip>
-                )}
-              </TableCell>
-              <TableCell align="left">
-                {row.bu ? (
-                  <Tooltip title="С пробегом" arrow>
-                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Без пробега" arrow>
-                    <HighlightOffIcon sx={{ color: 'grey' }} />
-                  </Tooltip>
-                )}
-              </TableCell>
-
+              <TableCell align="left">{row.ours ? 'Наша' : 'Не наша'}</TableCell>{' '}
+              <TableCell align="left">{`${row.bu}`}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -993,7 +971,7 @@ function DataTableCars({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -1002,7 +980,7 @@ function DataTableCars({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -1333,237 +1311,5 @@ function DataTableAutoOptionColors({ name, props }) {
         />
       )}
     </>
-  );
-}
-
-function MulterLoading() {
-  const [img, setImg] = useState<File | null>(null);
-  const [modelName, setModelName] = useState('');
-  const [price, setPrice] = useState('');
-  const [adress, setAdress] = useState('');
-  const [uploadStatus, setUploadStatus] = useState({ status: '', message: '' });
-
-  const [modelId, setModelId] = useState('');
-  const [complectName, setComplectName] = useState('');
-  const [priceC, setPriceC] = useState('');
-  const [adressComplect, setAdressComplect] = useState('');
-  const [uploadStatusComplect, setUploadStatusComplect] = useState({ status: '', message: '' });
-
-  const [modId, setModId] = useState('');
-  const [colorName, setColorName] = useState('');
-  const [priceColor, setPriceColor] = useState('');
-  const [adressColor, setAdressColor] = useState('');
-  const [statusColor, setStatusColor] = useState({ status: '', message: '' });
-
-  const dispatch = useAppDispatch();
-
-  const sendFileAvtoOptions = useCallback(async () => {
-    console.log('Trying to send file...', img, modelName, price);
-    if (img) {
-      try {
-        const data = new FormData();
-        data.append('IMG', img);
-        data.append('modelName', modelName);
-        data.append('price', price);
-
-        await axios
-          .post(`${import.meta.env.VITE_URL}/multer/avtoOptionsModel`, data)
-          .then((res) => {
-            console.log('Server response:', res);
-            // setAdress(res.data.path)
-            dispatch(fetchAdminModel());
-
-            setImg(null);
-            setModelName('');
-            setPrice('');
-            setUploadStatus({ status: 'success', message: 'Модель успешно создана' });
-            setTimeout(() => {
-              setUploadStatus({ status: '', message: '' });
-            }, 2000);
-          });
-      } catch (error) {
-        console.log(error, 'Ошибка в фиче малтер');
-        setUploadStatus({ status: 'error', message: 'Ошибка при загрузке файла!' });
-        setTimeout(() => {
-          setUploadStatus({ status: '', message: '' });
-        }, 1000);
-      }
-    }
-  }, [img, modelName, price]);
-
-  const sendFileAvtoOptionsComplect = useCallback(async () => {
-    console.log('Trying to send file...', img, complectName, priceC, modelId);
-    if (img) {
-      try {
-        const data = new FormData();
-        data.append('IMG', img);
-        data.append('complectName', complectName);
-        data.append('price', priceC);
-        data.append('modelId', modelId);
-
-        await axios
-          .post(`${import.meta.env.VITE_URL}/multer/avtoOptionsComplect`, data)
-          .then((res) => {
-            console.log('Server response:', res);
-            // setAdressComplect(res.data.path)
-            dispatch(fetchAdminComplect());
-            setImg(null);
-            setModelId('');
-            setComplectName('');
-            setPriceC('');
-            setUploadStatusComplect({ status: 'success', message: 'Комплектация успешно создана' });
-
-            setTimeout(() => {
-              setUploadStatusComplect({ status: '', message: '' });
-            }, 2000);
-          });
-      } catch (error) {
-        console.log(error, 'Ошибка в фиче малтер');
-        setUploadStatusComplect({ status: 'error', message: 'Ошибка при загрузке файла!' });
-
-        setTimeout(() => {
-          setUploadStatusComplect({ status: '', message: '' });
-        }, 1000);
-      }
-    }
-  }, [img, complectName, priceC, modelId]);
-
-  const sendFileAvtoOptionsColor = useCallback(async () => {
-    console.log('Trying to send file...', img, colorName, priceColor, modelId);
-    if (img) {
-      try {
-        const data = new FormData();
-        data.append('IMG', img);
-        data.append('colorName', colorName);
-        data.append('price', priceColor);
-        data.append('modId', modId);
-
-        await axios
-          .post(`${import.meta.env.VITE_URL}/multer/avtoOptionsColor`, data)
-          .then((res) => {
-            console.log('Server response:', res);
-            // setAdressColor(res.data.path)
-            dispatch(fetchAdminColor());
-            setImg(null);
-            setModId('');
-            setColorName('');
-            setPriceColor('');
-            setStatusColor({ status: 'success', message: 'Комплектация успешно создана' });
-
-            setTimeout(() => {
-              setStatusColor({ status: '', message: '' });
-            }, 2000);
-          });
-      } catch (error) {
-        console.log(error, 'Ошибка в фиче малтер');
-        setStatusColor({ status: 'error', message: 'Ошибка при загрузке файла!' });
-
-        setTimeout(() => {
-          setStatusColor({ status: '', message: '' });
-        }, 1000);
-      }
-    }
-  }, [img, colorName, priceColor, modId]);
-
-  return (
-    <div className="multer">
-      <div className="AvtoOptionsModel">
-        <h3>Avto options</h3>
-        <input
-          type="text"
-          placeholder="Наименование модели"
-          value={modelName}
-          onChange={(e) => setModelName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цена"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-
-        <input
-          type="file"
-          onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
-        />
-        <button className="btn" onClick={sendFileAvtoOptions}>
-          Загрузить
-        </button>
-        {adress && <div className="adress">{adress}</div>}
-        {uploadStatus.status && (
-          <div className={`upload-status ${uploadStatus.status}`}>{uploadStatus.message}</div>
-        )}
-      </div>
-
-      <div className="AvtoOptionsComplect">
-        <h3>Avto options complect</h3>
-        <input
-          type="text"
-          placeholder="ID модели"
-          value={modelId}
-          onChange={(e) => setModelId(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Наименование комплектации"
-          value={complectName}
-          onChange={(e) => setComplectName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цена"
-          value={priceC}
-          onChange={(e) => setPriceC(e.target.value)}
-        />
-
-        <input
-          type="file"
-          onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
-        />
-        <button className="btn" onClick={sendFileAvtoOptionsComplect}>
-          Загрузить
-        </button>
-        {adressComplect && <div className="adress">{adressComplect}</div>}
-        {uploadStatusComplect.status && (
-          <div className={`upload-status ${uploadStatusComplect.status}`}>
-            {uploadStatusComplect.message}
-          </div>
-        )}
-      </div>
-
-      <div className="AvtoOptionsColor">
-        <h3>Avto options color</h3>
-        <input
-          type="text"
-          placeholder="ID модели"
-          value={modId}
-          onChange={(e) => setModId(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цвет"
-          value={colorName}
-          onChange={(e) => setColorName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цена"
-          value={priceColor}
-          onChange={(e) => setPriceColor(e.target.value)}
-        />
-
-        <input
-          type="file"
-          onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
-        />
-        <button className="btn" onClick={sendFileAvtoOptionsColor}>
-          Загрузить
-        </button>
-        {adressColor && <div className="adress">{adressColor}</div>}
-        {statusColor.status && (
-          <div className={`upload-status ${statusColor.status}`}>{statusColor.message}</div>
-        )}
-      </div>
-    </div>
   );
 }
