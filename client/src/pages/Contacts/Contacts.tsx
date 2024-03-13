@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
+import YandexMap from './Maps';
 
 export default function contactsPage() {
 	return (
@@ -31,8 +32,10 @@ export default function contactsPage() {
 				<CardHeader title="Заголовок секции контакты" subtitle="Подзаголовок секции">
 					Доп заголовок
 				</CardHeader>
-                Контент
+                <YandexMap/>
 			</Card>
+
+			
 
 		</>
 	);
