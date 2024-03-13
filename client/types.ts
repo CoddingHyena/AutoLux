@@ -7,11 +7,11 @@ export type InputsAuthType = {
 }
 
 export interface User {
-    phone: string;
     id: number;
     name: string;
     email: string;
-    role: string
+    role: string;
+    phone: string;
 }
 
 export type AuthType {
