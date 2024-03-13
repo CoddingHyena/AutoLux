@@ -19,11 +19,16 @@ adminRoute.get('/docTD', async (req, res) => {
 adminRoute.put('/docTD', async (req, res) => {
   const { formData } = req.body;
   console.log(req.body, 'req.body docTD put');
-
+const probeg = formData.probegKm;
   try {
     const queryDocTD = await DocTestDrive.findByPk(formData.id);
+    queryDocTD.user_id = formData.user_id;
+    queryDocTD.car_id = formData.car_id;
+    queryDocTD.dateNow = formData.dateNow;
+    queryDocTD.dateSelected = formData.dateSelected;
     queryDocTD.manager = formData.manager;
     queryDocTD.status = formData.status;
+    queryDocTD.probegKm = +probeg;
     queryDocTD.ourComment = formData.ourComment;
     queryDocTD.save();
     res.json(queryDocTD);
@@ -57,11 +62,15 @@ adminRoute.get('/docTO', async (req, res) => {
 
 adminRoute.put('/docTO', async (req, res) => {
   const { formData } = req.body;
-  console.log(req.body, 'req.body docTO put');
+const probeg = formData.probegKm;
   try {
     const queryDocTO = await DocTO.findByPk(formData.id);
+    queryDocTO.car_id = formData.car_id;
+    queryDocTO.dateNow = formData.dateNow;
+    queryDocTO.dateSelected = formData.dateSelected;
     queryDocTO.manager = formData.managerId;
     queryDocTO.status = formData.status;
+    queryDocTO.probegKm = +probeg;
     queryDocTO.ourComment = formData.ourComment;
     queryDocTO.save();
     res.json(queryDocTO);

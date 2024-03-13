@@ -7,11 +7,11 @@ export type InputsAuthType = {
 }
 
 export interface User {
-    phone: string;
     id: number;
     name: string;
     email: string;
-    role: string
+    role: string;
+    phone: string;
 }
 
 export type AuthType {
@@ -24,6 +24,7 @@ export type UserDocTDType = {
     user_id?: number;
     car_id: number;
     dateNow: string;
+    dateSelected?: string;
     manager?: string;
     status?: boolean;
     probegKm?: number;

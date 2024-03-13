@@ -192,24 +192,14 @@ function UserMenu({ handleClose }) {
         Мои обращения <ListBadge color="warning.main" count={11} />
       </MenuItem> */}
 
-      <MenuItem onClick={handleClose} component={RouterLink} to="/">
+      <MenuItem onClick={() => {
+        logoutHandler();
+        handleClose();
+      }} component={RouterLink} to="/">
         <ListItemIcon>
           <ExitToAppIcon fontSize="small" />
         </ListItemIcon>
-        <button
-          onClick={logoutHandler}
-          style={{
-            background: 'none',
-            color: 'inherit',
-            border: 'none',
-            padding: 0,
-            font: 'inherit',
-            cursor: 'pointer',
-            outline: 'inherit',
-          }}
-        >
-          Выйти
-        </button>{' '}
+        Выйти
       </MenuItem>
     </MenuList>
   );

@@ -11,8 +11,10 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
   // Локальное состояние для каждого поля формы
   const [id, setId] = useState(formData.id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');
+  const [dateSelected, setDatSelected] = useState(formData.dateSelected || '');
   const [user_id, setUser_id] = useState(formData.user_id || '');
   const [car_id, setCar_id] = useState(formData.car_id || '');
+  const [probegKm, setProbegKm] = useState(formData.probegKm || '');
   const [manager, setManager] = useState(formData.manager || '');
   const [ourComment, setOurComment] = useState(formData.ourComment || '');
   const [status, setStatus] = useState(formData.status || false);
@@ -25,8 +27,10 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
     const formData = {
       id,
       dateNow,
+      dateSelected,
       user_id,
       car_id,
+      probegKm,
       manager,
       ourComment,
       status,
@@ -35,11 +39,12 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
     await dispatch(fetchAdminDocTDUpdate({ formData }));
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
+  const dateSelectedFormatted = dateSelected ? dateSelected.split('T')[0] : '';
 
   return (
     <form onSubmit={onSubmit}>
       <TextField
-        label="Номер документа TO"
+        label="Номер документа TD"
         value={id}
         variant="outlined"
         margin="normal"
@@ -56,23 +61,41 @@ export default function EditTDForm({ formData, onSuccess, isCreatingNewCar }) {
         InputProps={{ readOnly: true }}
         className="readOnly"
       />
-      <TextField
-        label="ID пользователя"
-        value={user_id}
+       <TextField
+        label="Дата оказания услуги"
+        type="date"
+        value={dateSelectedFormatted}
+        onChange={(e) => setDatSelected(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <TextField
+        label="ID пользователя"
+        value={user_id}
+        onChange={(e) => setUser_id(e.target.value)}
+        variant="outlined"
+        margin="normal"
+        fullWidth
       />
       <TextField
         label="Автомобиль"
         value={car_id}
+        onChange={(e) => setCar_id(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
+      />
+       <TextField
+        label="Пробег КМ"
+        value={probegKm}
+        onChange={(e) => setProbegKm(e.target.value)}
+        variant="outlined"
+        margin="normal"
+        fullWidth
       />
       <TextField
         label="Менеджер"

@@ -15,6 +15,7 @@ const initialState: SliceUserType = {
     name: '',
     email: '',
     role: 'none',
+    phone: '',
   },
   msg: '',
 };

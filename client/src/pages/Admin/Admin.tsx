@@ -104,7 +104,7 @@ const getHeadCells = [
     id: 'actions',
     numeric: true,
     disablePadding: false,
-    label: '',
+    label: 'Управление',
   },
 ];
 
@@ -119,19 +119,31 @@ const getDocsTD = [
     id: 'dateNow',
     numeric: false,
     disablePadding: false,
-    label: 'Дата',
+    label: 'Дата создания документа',
+  },
+  {
+    id: 'dateSelected',
+    numeric: false,
+    disablePadding: false,
+    label: 'Дата оказания услуги',
   },
   {
     id: 'user_id',
     numeric: false,
     disablePadding: false,
-    label: 'Пользователь',
+    label: 'ID клиента',
   },
   {
     id: 'car_id',
     numeric: false,
     disablePadding: false,
     label: 'Автомобиль',
+  },
+  {
+    id: 'probegKm',
+    numeric: false,
+    disablePadding: false,
+    label: 'Пробег км',
   },
   {
     id: 'manager',
@@ -145,6 +157,7 @@ const getDocsTD = [
     disablePadding: false,
     label: 'Статус',
   },
+
   {
     id: 'ourComment',
     numeric: false,
@@ -155,7 +168,7 @@ const getDocsTD = [
     id: 'actions',
     numeric: true,
     disablePadding: false,
-    label: '',
+    label: 'Управление',
   },
 ];
 
@@ -219,7 +232,7 @@ const getDocsFB = [
     id: 'actions',
     numeric: true,
     disablePadding: false,
-    label: '',
+    label: 'Управление',
   },
 ];
 
@@ -300,8 +313,9 @@ const getDocsCars = [
     id: 'actions',
     numeric: true,
     disablePadding: false,
-    label: '',
+    label: 'Управление',
   },
+  
 ];
 
 const getDocsModel = [
@@ -328,6 +342,12 @@ const getDocsModel = [
     numeric: false,
     disablePadding: false,
     label: 'Фото',
+  },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: 'Управление',
   },
 ];
 
@@ -362,6 +382,12 @@ const getDocsComplect = [
     disablePadding: false,
     label: 'Фото',
   },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: 'Управление',
+  },
 ];
 
 const getDocsColor = [
@@ -394,6 +420,12 @@ const getDocsColor = [
     numeric: false,
     disablePadding: false,
     label: 'Фото',
+  },
+    {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: 'Управление',
   },
 ];
 
@@ -583,6 +615,11 @@ function DataTableDocTD({ name, props }) {
     dispatch(fetchAdminDocTD());
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+  
   return (
     <>
       <Card component="section" type="section">
@@ -604,9 +641,11 @@ function DataTableDocTD({ name, props }) {
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
+              <TableCell align="left">{row?.probegKm}</TableCell> 
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
                 {row.status ? (
@@ -708,6 +747,11 @@ function DataTableDocTO({ name, props }) {
     dispatch(fetchAdminDocTO());
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+  
   return (
     <>
       <Card component="section" type="section">
@@ -720,9 +764,11 @@ function DataTableDocTO({ name, props }) {
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
+              <TableCell align="left">{row?.probegKm}</TableCell> 
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
                 {row.status ? (
@@ -751,18 +797,18 @@ function DataTableDocTO({ name, props }) {
                     <ModeEditOutlineOutlinedIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Редактировать" arrow>
+                <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
-                    color="warning"
+                    aria-label="delete"
+                    color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleEditClick(row); // Передаем данные записи в функцию
+                      delHandler(row.id);
                     }}
                   >
-                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -814,6 +860,11 @@ function DataTableDocFB({ props }) {
     dispatch(fetchAdminDocFB());
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+
   return (
     <>
       <Card component="section" type="section">
@@ -826,7 +877,7 @@ function DataTableDocFB({ props }) {
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row?.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row?.dateNow)}</TableCell>
               <TableCell align="left">{row?.userName}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.phoneNumber}</TableCell>
@@ -993,7 +1044,7 @@ function DataTableCars({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -1002,7 +1053,7 @@ function DataTableCars({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -1096,7 +1147,7 @@ function DataTableAutoOptionModels({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -1105,7 +1156,7 @@ function DataTableAutoOptionModels({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -1201,7 +1252,7 @@ function DataTableAutoOptionComplects({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -1210,7 +1261,7 @@ function DataTableAutoOptionComplects({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -1306,7 +1357,7 @@ function DataTableAutoOptionColors({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -1315,7 +1366,7 @@ function DataTableAutoOptionColors({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>

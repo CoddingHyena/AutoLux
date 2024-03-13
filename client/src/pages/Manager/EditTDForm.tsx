@@ -12,6 +12,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
   const [userName, setUserName] = useState(formData.userName || '');
   const [userId, setUserId] = useState(formData.user_id || '');
   const [dateNow, setDateNow] = useState(formData.dateNow || '');
+  const [dateSelected, setDatSelected] = useState(formData.dateSelected || '');
   const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || '');
   const [managerId, setManagerId] = useState(formData.manager || currentUserId);
   const [ourComment, setOurComment] = useState(formData.ourComment || '');
@@ -36,6 +37,7 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
       userName,
       user_id: userId,
       dateNow,
+      dateSelected,
       phoneNumber,
       manager: managerId,
       ourComment,
@@ -48,20 +50,15 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 
+  
+  const dateSelectedFormatted = dateSelected ? dateSelected.split('T')[0] : '';
+
+
   return (
     <form onSubmit={onSubmit}>
       <TextField
         label="Номер заявки обратной связи"
         value={id}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
-      />
-      <TextField
-        label="Имя пользователя"
-        value={userName}
         variant="outlined"
         margin="normal"
         fullWidth
@@ -87,13 +84,16 @@ export default function EditFeedbackForm({ formData, currentUserId, onSuccess })
         className="readOnly"
       />
       <TextField
-        label="Телефон"
-        value={phoneNumber}
+        label="Дата оказания услуги"
+        type="date"
+        value={dateSelectedFormatted}
+        onChange={(e) => setDatSelected(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
-        InputProps={{ readOnly: true }}
-        className="readOnly"
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
 
       {managerId && (
