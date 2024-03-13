@@ -22,7 +22,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import useIntervalCounter from '../../utils/hooks/useIntervalCounter'; // Убедитесь, что путь правильный
 import Slider from '../../components/slider'; // Убедитесь, что путь правильный
 import { data1 as data } from './data'; // Убедитесь, что данные загружаются правильно
-import TestDrive from '../../components/testDrive';
+import TestDrive from '../../components/testDriveForm';
 import CardHeader from '../../components/cardHeader';
 import calcHeaderHeight from '../../utils/helpers/layoutHeight';
 
@@ -93,10 +93,6 @@ export default function mainPage() {
         >
           <CardHeader title="Выгодные условия гарантии!"></CardHeader>
           <img src="banners/12years.png" style={{ width: '100%', height: 'auto' }} />
-
-          <Button variant="contained" onClick={handleOpenModal}>
-            Записаться на тест-драйв
-          </Button>
 
           {/* <BasicModal
           isOpen={isModalOpen}

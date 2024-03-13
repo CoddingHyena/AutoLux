@@ -63,3 +63,13 @@
 .readOnly {
   background-color: rgba(0, 0, 0, 0.09);
 }
+
+.carsTestDriveWrapper .card {
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (min-width: 1536px) {
+  .carsTestDriveWrapper .card {
+    transform: scale(1); /* или другой коэффициент, подходящий для вашего дизайна */
+  }
+}

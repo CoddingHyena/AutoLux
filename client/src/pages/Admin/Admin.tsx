@@ -21,6 +21,11 @@ import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import DataTable from '../../components/dataTable';
 import NotRegistered from '../../components/NotRegistered';
 import { Button, Box, Stack } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import PersonIcon from '@mui/icons-material/Person';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useEffect, useState } from 'react';
 
@@ -44,10 +49,9 @@ import EditFeedbackForm from './EditFeedbackForm';
 import EditTDForm from './EditTDForm';
 import EditTOForm from './EditTOForm';
 
-
 import EditCarsForm from './EditDocsCarsForm';
 import axios from 'axios';
-import logo from '../../assets/images/logo/png/Color_logotext2_nob222g.png'
+import logo from '../../assets/images/logo/png/Color_logotext2_nob222g.png';
 
 const getHeadCells = [
   {
@@ -84,7 +88,7 @@ const getHeadCells = [
     id: 'propType',
     numeric: false,
     disablePadding: false,
-    label: 'Юр. лицо',
+    label: 'Юр. или Физ лицо',
   },
   {
     id: 'actions',
@@ -150,7 +154,7 @@ const getDocsFB = [
     id: 'id',
     numeric: false,
     disablePadding: false,
-    label: 'Id',
+    label: 'Номер',
   },
   {
     id: 'dateNow',
@@ -318,7 +322,7 @@ export default function AdminPage() {
             <DataTableDocFB name="Dense" props={{ dense: true }} />
             <DataTableCars name="Dense" props={{ dense: true }} />
           </Stack>
-          <MulterLoading/>
+          <MulterLoading />
         </>
       ) : (
         <NotRegistered />
@@ -379,7 +383,17 @@ function DataTableUsers({ name, props }) {
               <TableCell align="left">{row?.email}</TableCell>
               <TableCell align="left">{row?.phone}</TableCell>
               <TableCell align="left">{row.role_id}</TableCell>
-              <TableCell align="left">{`${row.propType}`}</TableCell>
+              <TableCell align="left">
+                {row.propType ? (
+                  <Tooltip title="Юридическое лицо" arrow>
+                    <BusinessCenterIcon sx={{ color: 'primary.main' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Физическое лицо" arrow>
+                    <PersonIcon sx={{ color: 'secondary.main' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -398,7 +412,7 @@ function DataTableUsers({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -407,7 +421,7 @@ function DataTableUsers({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -496,8 +510,16 @@ function DataTableDocTD({ name, props }) {
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
-                {row.status ? 'Подтверждено' : 'Не подтверждено'}
-              </TableCell>{' '}
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
@@ -516,7 +538,7 @@ function DataTableDocTD({ name, props }) {
                 </Tooltip>
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -525,7 +547,7 @@ function DataTableDocTD({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -604,8 +626,16 @@ function DataTableDocTO({ name, props }) {
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
-                {row.status ? 'Подтверждено' : 'Не подтверждено'}
-              </TableCell>{' '}
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
@@ -624,7 +654,7 @@ function DataTableDocTO({ name, props }) {
                 </Tooltip>
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -633,7 +663,7 @@ function DataTableDocTO({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -703,8 +733,16 @@ function DataTableDocFB({ props }) {
               <TableCell align="left">{row?.userComment}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
-                {row.status ? 'Подтверждено' : 'Не подтверждено'}
-              </TableCell>{' '}
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
@@ -724,7 +762,7 @@ function DataTableDocFB({ props }) {
                 </Tooltip>
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -733,7 +771,7 @@ function DataTableDocFB({ props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -834,7 +872,7 @@ function DataTableCars({ name, props }) {
 
                 <Tooltip title="Удалить" arrow>
                   <IconButton
-                    aria-label="edit"
+                    aria-label="delete"
                     color="error"
                     size="small"
                     sx={{ fontSize: 2 }}
@@ -843,7 +881,7 @@ function DataTableCars({ name, props }) {
                       delHandler(row.id);
                     }}
                   >
-                    <PersonOffOutlinedIcon fontSize="medium" />
+                    <DeleteIcon fontSize="medium" />
                   </IconButton>
                 </Tooltip>
               </TableCell>
@@ -864,40 +902,46 @@ function DataTableCars({ name, props }) {
   );
 }
 
-function MulterLoading(){
+function MulterLoading() {
   const [img, setImg] = useState<File | null>(null);
   const [avatar, setAvatar] = useState(null);
 
   const sendFile = useCallback(async () => {
-    console.log("Trying to send file...", img);
-    if(img){
+    console.log('Trying to send file...', img);
+    if (img) {
       try {
         const data = new FormData();
-        data.append('IMG', img)
+        data.append('IMG', img);
 
-        await axios.post(`${import.meta.env.VITE_URL}/multer`, data)
+        await axios
+          .post(`${import.meta.env.VITE_URL}/multer`, data)
 
-        .then((res) => {
-          console.log("Server response:", res);
-          setAvatar(res.data.path)
-        })
+          .then((res) => {
+            console.log('Server response:', res);
+            setAvatar(res.data.path);
+          });
       } catch (error) {
-        console.log(error, 'Ошибка в фиче малтер')
+        console.log(error, 'Ошибка в фиче малтер');
       }
     }
-  }, [img])
+  }, [img]);
 
   return (
-    <div className='multer'>
-      <div className='avatar'>
-        {
-          avatar
-          ? <img className='logo' src={`${avatar}`} alt='avatar'/>
-          : <img className='logo' src={`${logo}`} alt='avatar'/>
-        }
+    <div className="multer">
+      <div className="avatar">
+        {avatar ? (
+          <img className="logo" src={`${avatar}`} alt="avatar" />
+        ) : (
+          <img className="logo" src={`${logo}`} alt="avatar" />
+        )}
       </div>
-      <input type='file' onChange={e => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}/>
-      <button className='btn' onClick={sendFile}>Посмотреть</button>
+      <input
+        type="file"
+        onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
+      />
+      <button className="btn" onClick={sendFile}>
+        Посмотреть
+      </button>
     </div>
-  )
+  );
 }

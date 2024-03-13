@@ -6,33 +6,37 @@ const { User, Role } = require('../db/models');
 function getRoleName2(roleId) {
   if (roleId === 1) {
     return 'accessUser';
-  } if (roleId === 2) {
+  }
+  if (roleId === 2) {
     return 'accessAdmin';
-  } if (roleId === 3) {
+  }
+  if (roleId === 3) {
     return 'accessManager';
-  } if (roleId === 4) {
+  }
+  if (roleId === 4) {
     return 'accessBoss';
   }
   return 'none';
 }
 
 userRoute.get('/checkSession', async (req, res) => {
-  const {
-    userId, name, email, roleId,
-  } = req.session;
+  const { userId, name, email, roleId, phone } = req.session;
   const role = getRoleName2(roleId);
 
-  res.json({ id: userId, name, email, role });
+  res.json({ id: userId, name, email, role, phone });
 });
 
 function getRoleName(role) {
   if (role.accessUser) {
     return 'accessUser';
-  } if (role.accessAdmin) {
+  }
+  if (role.accessAdmin) {
     return 'accessAdmin';
-  } if (role.accessManager) {
+  }
+  if (role.accessManager) {
     return 'accessManager';
-  } if (role.accessBoss) {
+  }
+  if (role.accessBoss) {
     return 'accessBoss';
   }
   return 'Unknown Role';
@@ -40,9 +44,7 @@ function getRoleName(role) {
 
 userRoute.post('/reg', async (req, res) => {
   try {
-    const {
-      name, email, password, persDataAgrBool,
-    } = req.body;
+    const { name, email, password, persDataAgrBool } = req.body;
 
     console.log(req.body);
 
@@ -55,7 +57,12 @@ userRoute.post('/reg', async (req, res) => {
     } else {
       const hash = await bcrypt.hash(password, 10);
       const newUser = await User.create({
-        name, email, password: hash, role_id: 1, propType: true, persDataAgr: persDataAgrBool,
+        name,
+        email,
+        password: hash,
+        role_id: 1,
+        propType: true,
+        persDataAgr: persDataAgrBool,
       });
       req.session.name = newUser.name;
       req.session.email = newUser.email;
@@ -68,10 +75,12 @@ userRoute.post('/reg', async (req, res) => {
       });
       const userWithRole = await User.findOne({
         where: { email },
-        include: [{
-          model: Role,
-          where: { id: newUser.role_id },
-        }],
+        include: [
+          {
+            model: Role,
+            where: { id: newUser.role_id },
+          },
+        ],
       });
 
       const roleName = getRoleName(userWithRole.Role);
@@ -102,15 +111,18 @@ userRoute.post('/log', async (req, res) => {
         req.session.email = reqUser.email;
         req.session.userId = reqUser.id;
         req.session.roleId = reqUser.role_id;
+        req.session.phone = reqUser.phone;
         req.session.save(() => {
           console.log(reqUser.id, reqUser.name, reqUser.email, 'Зашел!');
         });
         const userWithRole = await User.findOne({
           where: { email },
-          include: [{
-            model: Role,
-            where: { id: reqUser.role_id },
-          }],
+          include: [
+            {
+              model: Role,
+              where: { id: reqUser.role_id },
+            },
+          ],
         });
 
         const roleName = getRoleName(userWithRole.Role);
@@ -120,6 +132,7 @@ userRoute.post('/log', async (req, res) => {
           name: userWithRole.name,
           email: userWithRole.email,
           role: roleName,
+          phone: userWithRole.phone,
         });
       } else {
         res.sendStatus(402);

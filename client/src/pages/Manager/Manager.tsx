@@ -16,6 +16,11 @@ import TableRow from '@mui/material/TableRow';
 import AddIcon from '@mui/icons-material/Add';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import PersonIcon from '@mui/icons-material/Person';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import DataTable from '../../components/dataTable';
 import {
@@ -96,7 +101,7 @@ const getDocsFB = [
     id: 'status',
     numeric: false,
     disablePadding: false,
-    label: 'status',
+    label: 'Статус',
   },
   {
     id: 'actions',
@@ -117,37 +122,37 @@ const getDocsTD = [
     id: 'user_id',
     numeric: false,
     disablePadding: false,
-    label: 'User_id',
+    label: 'ID Пользователя',
   },
   {
     id: 'car_id',
     numeric: false,
     disablePadding: false,
-    label: 'car_id',
+    label: 'ID Авто',
   },
   {
     id: 'manager',
     numeric: false,
     disablePadding: false,
-    label: 'manager',
+    label: 'Менеджер',
   },
   {
     id: 'status',
     numeric: false,
     disablePadding: false,
-    label: 'status',
+    label: 'Статус',
   },
   {
     id: 'ourComment',
     numeric: false,
     disablePadding: false,
-    label: 'ourComment',
+    label: 'Наш комментарий',
   },
   {
     id: 'dateNow',
     numeric: false,
     disablePadding: false,
-    label: 'dateNow',
+    label: 'Дата',
   },
 ];
 
@@ -310,7 +315,17 @@ function DataTableDocFB({ props }) {
               <TableCell align="left">{row?.userComment}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
-              <TableCell align="left">{`${row.status}`}</TableCell>
+              <TableCell align="left">
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -407,7 +422,17 @@ function DataTableDocTD({ name, props }) {
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
-              <TableCell align="left">{`${row.status}`}</TableCell>
+              <TableCell align="left">
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
@@ -505,7 +530,17 @@ function DataTableDocTO({ name, props }) {
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
-              <TableCell align="left">{`${row.status}`}</TableCell>
+              <TableCell align="left">
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="left">{row?.ourComment}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
@@ -571,8 +606,28 @@ function DataTableCars({ name, props }) {
             <TableCell align="left">{row?.engine}</TableCell>
             <TableCell align="left">{row?.vin}</TableCell>
             <TableCell align="left">{row?.user_id}</TableCell>
-            <TableCell align="left">{`${row.ours}`}</TableCell>
-            <TableCell align="left">{`${row.bu}`}</TableCell>
+            <TableCell align="left">
+              {row.ours ? (
+                <Tooltip title="Наша" arrow>
+                  <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Не наша" arrow>
+                  <HighlightOffIcon sx={{ color: 'grey' }} />
+                </Tooltip>
+              )}
+            </TableCell>
+            <TableCell align="left">
+              {row.bu ? (
+                <Tooltip title="С пробегом" arrow>
+                  <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Новая" arrow>
+                  <HighlightOffIcon sx={{ color: 'grey' }} />
+                </Tooltip>
+              )}
+            </TableCell>
             <TableCell align="right">
               <Tooltip title="Редактировать" arrow>
                 <IconButton

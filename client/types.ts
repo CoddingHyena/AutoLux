@@ -7,6 +7,7 @@ export type InputsAuthType = {
 }
 
 export interface User {
+    phone: string;
     id: number;
     name: string;
     email: string;
@@ -120,4 +121,5 @@ export type InputsFBType = {
     userName: string;
     phoneNumber: string;
     userComment: string;
+    dateSelected?: string;
 }

@@ -7,6 +7,7 @@ const zaglushka: User = {
   name: '',
   email: '',
   role: 'none',
+  phone: '',
 };
 
 export const fetchAuth = createAsyncThunk('/users/auth', async ({ authWord, inputs }: AuthType) => {
