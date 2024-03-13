@@ -16,7 +16,7 @@
     "@fontsource/rubik": "^4.5.14",
     "@mui/icons-material": "^5.15.11",
     "@mui/lab": "^5.0.0-alpha.167",
-    "@mui/material": "^5.15.12",
+    "@mui/material": "^5.15.13",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
     "@mui/x-date-pickers": "^6.19.6",
     "@reduxjs/toolkit": "^2.2.1",
@@ -38,6 +38,7 @@
     "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
+    "swiper": "^11.0.7",
     "uuid": "^9.0.0",
     "yup": "^1.0.2"
   },

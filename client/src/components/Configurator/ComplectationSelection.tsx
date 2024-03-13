@@ -1,32 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { colors, complectations, models } from './mocs';
 
 const ComplectationSelection = ({ model, onSelect }) => {
-  // Предположим, что комплектации загружены с сервера и переданы в компонент как пропс,
-  // для примера создадим фиктивный список комплектаций прямо здесь.
-  const complectations = [
-    { id: 1, model_id: 2, complectationName: 'Respect', price: 132500 },
-    { id: 2, model_id: 2, complectationName: 'Exclusive', price: 182500 },
-    { id: 2, model_id: 2, complectationName: 'Red Line', price: 192500 },
-  ];
+  const [selectedComplectation, setSelectedComplectation] = useState(null);
 
-  // Отфильтруем комплектации для выбранной модели
-  const availableComplectations = complectations.filter((c) => c.model_id === model.id);
+  const handleSelectComplectation = (complectation) => {
+    setSelectedComplectation(complectation); // Запоминаем выбранную комплектацию
+  };
+
+  const handleNextClick = () => {
+    if (selectedComplectation) {
+      onSelect(selectedComplectation); // Переходим к следующему шагу
+    }
+  };
 
   return (
     <div className="complectation-selection">
       <h2>Выберите комплектацию для {model.modelName}</h2>
+      <img
+        src={`feramontSlide/${model.photo}`}
+        alt={`Фото ${model.modelName}`}
+        style={{ width: '100%', height: 'auto' }}
+      />
       <div className="complectation-list">
-        {availableComplectations.map((complectation) => (
+        {complectations.map((complectation) => (
           <div
             key={complectation.id}
-            className="complectation-item"
-            onClick={() => onSelect(complectation)}
+            className={`complectation-item ${
+              selectedComplectation === complectation ? 'selected' : ''
+            }`}
+            onClick={() => handleSelectComplectation(complectation)}
           >
             <h3>{complectation.complectationName}</h3>
-            <p>Дополнительная стоимость: {complectation.price.toLocaleString('ru-RU')} ₽</p>
+            <ul>
+              {complectation.features.map((feature, index) => (
+                <li key={index}>{feature}</li>
+              ))}
+            </ul>
+            <p>Цена: {complectation.price.toLocaleString('ru-RU')} ₽</p>
+            <button
+              className={`select-button ${selectedComplectation === complectation ? 'active' : ''}`}
+            >
+              Выбрать
+            </button>
           </div>
         ))}
       </div>
+      <button className="next-button" onClick={handleNextClick} disabled={!selectedComplectation}>
+        Выбрать цвет →
+      </button>
     </div>
   );
 };
