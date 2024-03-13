@@ -15,7 +15,6 @@ module.exports = {
           key: 'id',
         },
         onDelete: 'cascade',
-        allowNull: false,
       },
       car_id: {
         type: Sequelize.INTEGER,
@@ -39,6 +38,9 @@ module.exports = {
           key: 'id',
         },
         onDelete: 'cascade',
+      },
+      phoneNumber: {
+        type: Sequelize.STRING,
       },
       status: {
         type: Sequelize.BOOLEAN,

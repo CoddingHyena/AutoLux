@@ -36,7 +36,10 @@ import {
   fetchUpdatUser,
 } from '../../redux/lk/lkThunkActions';
 import { useEffect, useState } from 'react';
-import TestDrive from '../../components/testDrive';
+import TestDrive from '../../components/testDriveForm';
+import FeedBackForm from '../../components/feedBackForm';
+import TOForm from '../../components/TOForm/TOForm';
+
 import BasicModal from '../../components/BasicModal/BasicModal';
 import NotRegistered from '../../components/NotRegistered';
 import EditTOForm from './EditTOForm';
@@ -74,6 +77,12 @@ const getHeadCellsTO = [
     numeric: false,
     disablePadding: false,
     label: 'Комментарий',
+  },
+  {
+    id: 'buttons',
+    numeric: false,
+    disablePadding: false,
+    label: '',
   },
 ];
 
@@ -132,6 +141,12 @@ const getHeadCellsUserAuto = [
     disablePadding: false,
     label: 'VIN',
   },
+  {
+    id: 'buttons',
+    numeric: false,
+    disablePadding: false,
+    label: '',
+  },
 ];
 
 export default function Account() {
@@ -145,7 +160,7 @@ export default function Account() {
           <UserDocsToTable />
           <UserDocsTestDriveTable />
           <UserAutoTable />
-          <TestDrive />
+          <FeedBackForm />
         </Stack>
       ) : (
         <NotRegistered />
@@ -204,7 +219,7 @@ function GeneralSettingsSection() {
               <Grid item xs={12} sm={6} md={6}>
                 <TextField
                   type="Phone"
-                  label="Phone"
+                  label="Телефон"
                   variant="outlined"
                   value={inputsPhone}
                   fullWidth
@@ -493,6 +508,7 @@ function UserAutoTable({ name, props }) {
           )}
         />
       </Card>
+
       {isModalOpen && (
         <BasicModal
           isOpen={isModalOpen}

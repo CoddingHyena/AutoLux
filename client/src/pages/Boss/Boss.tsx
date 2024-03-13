@@ -14,6 +14,7 @@ import DataTable from '../../components/dataTable';
 
 import CustomerCard from './customerCard';
 import SaleProgressCard from './saleProgressCard';
+import MostVisitedCard from './mostVisitedCard';
 
 import PageHeader from '../../components/pageHeader';
 import CardHeader from '../../components/cardHeader';
@@ -44,10 +45,11 @@ export default function BossPage() {
             <Grid
               item
               xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
-              sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
+              sm={8} // Для планшетов и больше каждая колонка занимает половину ширины
             >
               <Stack spacing={3} direction="column">
-                <SaleProgressCard />
+                <CustomerCard />
+                <CustomerCard />
               </Stack>
             </Grid>
 
@@ -55,13 +57,15 @@ export default function BossPage() {
             <Grid
               item
               xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
-              sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
+              sm={4} // Для планшетов и больше каждая колонка занимает половину ширины
             >
               <Stack spacing={3} direction="column">
-                <CustomerCard />
+                <MostVisitedCard />
               </Stack>
             </Grid>
           </Grid>
+          <SaleProgressCard />
+
           <ManagersTable />
           <ProblemsTable />
         </Stack>

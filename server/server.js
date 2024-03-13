@@ -12,6 +12,7 @@ const feedBackRoute = require('./routes/feedBackRoutes');
 const adminRoute = require('./routes/adminRoutes');
 const managerRoute = require('./routes/managerRoutes');
 const bossRoute = require('./routes/bossRoutes');
+const testDriveRoute = require('./routes/testDriveRoutes');
 
 const app = express();
 const { PORT, SECRET_KEY_SESSION } = process.env;
@@ -40,7 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/users', userRoute);
 app.use('/api/lk', lkRoute);
@@ -48,6 +49,7 @@ app.use('/api/feedBack', feedBackRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/manager', managerRoute);
 app.use('/api/boss', bossRoute);
+app.use('/api/testdrive', testDriveRoute);
 app.use('/api/multer', require('./routes/multerRoutes'));
 app.use('/api/configurator', require('./routes/configuratorRoutes'));
 

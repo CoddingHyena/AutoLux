@@ -126,8 +126,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: 'Иван тест',
-        email: 'iv',
+        name: 'Иван Филипович',
+        email: 'iv@boss.ru',
         phone: '2-15-79',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 4,
