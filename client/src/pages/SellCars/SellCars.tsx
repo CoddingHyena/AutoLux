@@ -11,6 +11,8 @@ import CarCard2 from '../../components/SellCars/SellCars2';
 import CarCard3 from '../../components/SellCars/SellCars3';
 import CarCard4 from '../../components/SellCars/SellCars4';
 import CarCard5 from '../../components/SellCars/SellCars5';
+import CarSlider from '../../components/BUSlider/BUSlider';
+import FeaturesContainer from './TriplComp';
 
 export default function SellCars() {
 	return (
@@ -108,17 +110,25 @@ export default function SellCars() {
 			>
 <SliderComponent/>
 
+			</Card>
 
 
 
-<CarCard1/>
-<CarCard2/>
-<CarCard3/>
-<CarCard4/>
-<CarCard5/>
 
 
+			<Card>
+			<FeaturesContainer/>
 
+			</Card>
+
+			<Card>
+
+			<h2 style={{ fontSize: '4em', fontWeight: 'bold' }}>Подержанные автомобили</h2>
+
+			<div className="slider-container">
+                <CarSlider />
+            </div>
+				
 			</Card>
 
 			
