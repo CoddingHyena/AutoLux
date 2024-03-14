@@ -12,7 +12,9 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import DataTable from '../../components/dataTable';
 
-import CustomerCard from './customerCard';
+import ChartCustomerCard from './ChartCustomerCard';
+import ChartFB from './ChartFB';
+
 import SaleProgressCard from './saleProgressCard';
 import MostVisitedCard from './mostVisitedCard';
 
@@ -45,11 +47,11 @@ export default function BossPage() {
             <Grid
               item
               xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
-              sm={8} // Для планшетов и больше каждая колонка занимает половину ширины
+              sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
             >
               <Stack spacing={3} direction="column">
-                <CustomerCard />
-                <CustomerCard />
+                <ChartCustomerCard />
+                <ChartFB />
               </Stack>
             </Grid>
 
@@ -57,7 +59,7 @@ export default function BossPage() {
             <Grid
               item
               xs={12} // Для мобильных устройств каждая колонка занимает всю ширину
-              sm={4} // Для планшетов и больше каждая колонка занимает половину ширины
+              sm={6} // Для планшетов и больше каждая колонка занимает половину ширины
             >
               <Stack spacing={3} direction="column">
                 <MostVisitedCard />
@@ -126,7 +128,7 @@ function ProblemsTable({ name, props }) {
 
 function WelcomeSection() {
   return (
-    <PageHeader title="Статистика за текущий месяц">
+    <PageHeader title="Статистика">
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{

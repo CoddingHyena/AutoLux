@@ -111,11 +111,10 @@ const NAV_LINKS_CONFIG = [
   // 	],
   // },
 
-
   {
     id: uuid(),
     type: 'item',
-    title: 'Админ',
+    title: 'Администрирование',
     Icon: WebOutlinedIcon,
     href: '/admin',
     role: 'accessAdmin',
@@ -165,7 +164,7 @@ const NAV_LINKS_CONFIG = [
   {
     id: uuid(),
     type: 'item',
-    title: 'Босс',
+    title: 'Статистика',
     Icon: WebOutlinedIcon,
     href: '/boss',
     role: 'accessBoss',
@@ -173,7 +172,7 @@ const NAV_LINKS_CONFIG = [
   {
     id: uuid(),
     type: 'item',
-    title: 'Админ',
+    title: 'Администрирование',
     Icon: WebOutlinedIcon,
     href: '/admin',
     role: 'accessBoss',
