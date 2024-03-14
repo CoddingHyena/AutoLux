@@ -1,23 +1,39 @@
 import React from 'react';
-import { colors, complectations, models } from './mocs';
+import { Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { models } from './mocs'; // Ваши данные о моделях
 
 const ModelSelection = ({ onSelect }) => {
   return (
-    <div className="model-selection">
-      <h2>Выберите модель Volkswagen</h2>
-      <div className="model-list">
+    <div>
+      <Typography
+        variant="h1"
+        gutterBottom
+        component="div"
+        style={{ textAlign: 'center', margin: '20px 0' }}
+      >
+        Конфигуратор Автомобиля
+      </Typography>
+      <Grid container justifyContent="center" spacing={2}>
         {models.map((model) => (
-          <div key={model.id} className="model-item" onClick={() => onSelect(model)}>
-            <img
-              src={`feramontSlide/${model.photo}`}
-              alt={model.modelName}
-              style={{ width: '100px', height: 'auto' }}
-            />
-            <h3>{model.modelName}</h3>
-            <p>Цена от: {model.price.toLocaleString('ru-RU')} ₽</p>
-          </div>
+          <Grid item key={model.id}>
+            <Card sx={{ maxWidth: 500, cursor: 'pointer' }} onClick={() => onSelect(model)}>
+              <CardMedia
+                component="img"
+                image={`feramontSlide/${model.photo}`}
+                alt={model.modelName}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h3" component="div">
+                  {model.modelName}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Цена от: {model.price.toLocaleString('ru-RU')} ₽
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </div>
   );
 };

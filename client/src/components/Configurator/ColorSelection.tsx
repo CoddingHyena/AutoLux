@@ -1,54 +1,87 @@
 import React, { useEffect, useState } from 'react';
-import { colors, complectations, models } from './mocs';
+import { Box, Card, CardActionArea, Typography, Button, Grid } from '@mui/material';
+import { colors } from './mocs'; // Предполагается, что ваши данные о цветах импортируются отсюда
 
 const ColorSelection = ({ model, onSelect }) => {
   const [selectedColor, setSelectedColor] = useState(null);
 
-  // Устанавливаем цвет по умолчанию при загрузке компонента
   useEffect(() => {
-    // Находим цвет Warpfiend Grey в списке
-    const defaultColor = colors.find((c) => c.colorName === 'Warpfiend Grey');
-    // Устанавливаем его как выбранный цвет, но не вызываем onSelect
+    const defaultColor = colors.find(
+      (c) => c.colorName === 'Corvus Black' && c.model_id === model.id
+    );
     setSelectedColor(defaultColor);
-  }, [colors]);
+  }, [model.id]);
 
   const handleColorClick = (color) => {
-    setSelectedColor(color); // Только обновляем выбранный цвет
+    setSelectedColor(color);
   };
 
   const handleNextClick = () => {
     if (selectedColor) {
-      onSelect(selectedColor); // Вызываем onSelect только при клике на кнопку
+      onSelect(selectedColor);
     }
   };
 
   const availableColors = colors.filter((c) => c.model_id === model.id);
 
   return (
-    <div className="color-selection">
-      <h2>Выберите цвет для {model.modelName}</h2>
-
-      <div className="color-list">
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, my: 4 }}>
+      <Typography variant="h1" gutterBottom>
+        Выберите цвет для {model.modelName}
+      </Typography>
+      {selectedColor && (
+        <Box
+          component="img"
+          sx={{ maxWidth: 600, width: '100%', height: 'auto' }}
+          src={`feramontSlide/${selectedColor.photo}`}
+          alt={`Выбранный цвет: ${selectedColor.colorName}`}
+        />
+      )}
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
         {availableColors.map((color) => (
-          <div
+          <Card
             key={color.id}
-            className={`color-item ${selectedColor === color ? 'selected' : ''}`}
+            sx={{
+              maxWidth: 200,
+              border: selectedColor === color ? '2px solid blue' : '1px solid grey',
+            }}
             onClick={() => handleColorClick(color)}
           >
-            <img
-              src={`feramontSlide/${color.photo}`}
-              alt={color.colorName}
-              style={{ maxWidth: '200px' }}
-            />
-            <h3>{color.colorName}</h3>
-            <p>Цена: {color.price.toLocaleString('ru-RU')} ₽</p>
-          </div>
+            <CardActionArea
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  width: 140,
+                  height: 140,
+                  backgroundColor: color.colorCode,
+                  border: '1px solid rgba(0, 0, 0, 0.1)', // Еле заметный границу
+                }}
+              />
+              <Typography gutterBottom variant="h6" component="div" sx={{ mt: 1 }}>
+                {color.colorName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Цена: {color.price.toLocaleString('ru-RU')} ₽
+              </Typography>
+            </CardActionArea>
+          </Card>
         ))}
-      </div>
-      <button onClick={handleNextClick} disabled={!selectedColor}>
-        Расчитать цену
-      </button>
-    </div>
+      </Box>
+      <Button
+        variant="contained"
+        onClick={handleNextClick}
+        disabled={!selectedColor}
+        sx={{ mt: 2 }}
+      >
+        Рассчитать цену
+      </Button>
+    </Box>
   );
 };
 

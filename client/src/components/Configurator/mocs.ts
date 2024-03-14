@@ -1,11 +1,19 @@
 const colors = [
-  { id: 1, model_id: 2, colorName: 'Alaitoc Blue', photo: 'Alaitoc Blue.png', price: 10000 },
+  {
+    id: 1,
+    model_id: 2,
+    colorName: 'Alaitoc Blue',
+    photo: 'Alaitoc Blue.png',
+    price: 10000,
+    colorCode: 'rgb(0, 51, 102)', // Темно-синий
+  },
   {
     id: 2,
     model_id: 2,
     colorName: 'Brass Scorpion',
     photo: 'Brass Scorpion.png',
     price: 17000,
+    colorCode: 'rgb(184, 115, 51)', // Медный
   },
   {
     id: 3,
@@ -13,6 +21,7 @@ const colors = [
     colorName: 'Lothern Blue',
     photo: 'Lothern Blue.png',
     price: 25500,
+    colorCode: 'rgb(41, 173, 255)', // Светло-голубой
   },
   {
     id: 4,
@@ -20,6 +29,7 @@ const colors = [
     colorName: 'Corvus Black',
     photo: 'Corvus Black.png',
     price: 29000,
+    colorCode: 'rgb(19, 21, 22)', // Черный
   },
   {
     id: 5,
@@ -27,6 +37,7 @@ const colors = [
     colorName: 'Grey Knights Steel',
     photo: 'Grey Knights Steel.png',
     price: 19000,
+    colorCode: 'rgb(95, 101, 115)', // Стальной серый
   },
   {
     id: 6,
@@ -34,14 +45,23 @@ const colors = [
     colorName: 'Warpfiend Grey',
     photo: 'Warpfiend Grey.png',
     price: 13000,
+    colorCode: 'rgb(128, 128, 128)', // Средний серый
   },
-  { id: 7, model_id: 2, colorName: 'White Scar', photo: 'White Scar.png', price: 16500 },
+  {
+    id: 7,
+    model_id: 2,
+    colorName: 'White Scar',
+    photo: 'White Scar.png',
+    price: 16500,
+    colorCode: 'rgb(255, 255, 255)', // Белый
+  },
   {
     id: 8,
     model_id: 2,
     colorName: 'Wild Rider Red',
     photo: 'Wild Rider Red.png',
     price: 30000,
+    colorCode: 'rgb(255, 26, 26)', // Ярко-красный
   },
 ];
 
