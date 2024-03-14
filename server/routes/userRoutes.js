@@ -57,10 +57,10 @@ userRoute.post('/reg', async (req, res) => {
     if (user) {
       res.sendStatus(403);
     }
-    if (!email.includes('@')) {
-      res.sendStatus(405);
-    } else {
-      
+    // if (!email.includes('@')) {
+    //   res.sendStatus(405);
+    // }
+     else {
       const hash = await bcrypt.hash(password, 10);
       const newUser = await User.create({
         name,
@@ -70,35 +70,39 @@ userRoute.post('/reg', async (req, res) => {
         propType: true,
         persDataAgr: persDataAgrBool,
       });
-      await MailService.sendWelcomeMail(newUser.email);
-      req.session.name = newUser.name;
-      req.session.email = newUser.email;
-      req.session.userId = newUser.id;
-      req.session.roleId = newUser.role_id;
-      console.log('req.sessions====>', req.session);
 
-      req.session.save(() => {
-        console.log('Зарегистрировался!');
-      });
+      try {
+        await MailService.sendWelcomeMail(newUser.email);
 
-      const userWithRole = await User.findOne({
-        where: { email },
-        include: [
-          {
-            model: Role,
-            where: { id: newUser.role_id },
-          },
-        ],
-      });
+        req.session.name = newUser.name;
+        req.session.email = newUser.email;
+        req.session.userId = newUser.id;
+        req.session.roleId = newUser.role_id;
+        req.session.save(() => {
+          console.log('Зарегистрировался!');
+        });
 
-      const roleName = getRoleName(userWithRole.Role);
+        const userWithRole = await User.findOne({
+          where: { email },
+          include: [
+            {
+              model: Role,
+              where: { id: newUser.role_id },
+            },
+          ],
+        });
+        const roleName = getRoleName(userWithRole.Role);
 
-      res.status(201).json({
-        id: userWithRole.id,
-        name: userWithRole.name,
-        email: userWithRole.email,
-        role: roleName,
-      });
+        res.status(201).json({
+          id: userWithRole.id,
+          name: userWithRole.name,
+          email: userWithRole.email,
+          role: roleName,
+        });
+      } catch (error) {
+        res.sendStatus(406);
+        console.log(error, 'Не удалось отправить приветствие на почту при регистрации!');
+      }
     }
   } catch (error) {
     console.log('Ошибка registr!', error);

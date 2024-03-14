@@ -5,7 +5,7 @@ class MailService {
     this.transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST, // SMTP-сервер отправителя
       port: process.env.MAIL_PORT, // Порт SMTP-сервера
-      secure: false, // true для 465 порта, false для других портов
+      secure: true, // true для 465 порта, false для других портов
       auth: {
         user: process.env.MAIL_USER, // Имя пользователя для входа на SMTP-сервер
         pass: process.env.MAIL_PASSWORD, // Пароль пользователя для входа на SMTP-сервер
@@ -14,6 +14,7 @@ class MailService {
   }
 
   async sendWelcomeMail(to) {
+    console.log('=======',process.env.MAIL_HOST,  process.env.MAIL_PORT, process.env.MAIL_USER, process.env.MAIL_PASSWORD)
     await this.transporter.sendMail({
       from: process.env.MAIL_USER,
       to,
@@ -21,7 +22,7 @@ class MailService {
       text: '',
       html: `
           <div>
-            <h1>Поздравляем, вы успешно зарегистрировались!</h1>
+            <h1> AVTO LUX поздравляет вас с успешной регистрацией!</h1>
             <p>И теперь мы будем захламлять вашу почту всякой шнягой )</p>
           </div>
         `,
