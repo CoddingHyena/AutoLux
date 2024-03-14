@@ -1,7 +1,7 @@
 export const data1 = [
-  {
-    imgPath: '/banners/banner01.jpg',
-  },
+  //   {
+  //     imgPath: '/banners/banner01.jpg',
+  //   },
   {
     imgPath: '/banners/12years.jpg',
   },
@@ -12,6 +12,9 @@ export const data1 = [
   {
     imgPath: '/banners/banner3.jpg',
   },
+  //   {
+  //     imgPath: '/banners/banner01.jpg',
+  //   },
   {
     imgPath: '/banners/12years.jpg',
   },
@@ -21,6 +24,9 @@ export const data1 = [
   {
     imgPath: '/banners/banner3.jpg',
   },
+  //   {
+  //     imgPath: '/banners/banner01.jpg',
+  //   },
   {
     imgPath: '/banners/12years.jpg',
   },
@@ -39,6 +45,9 @@ export const data1 = [
   {
     imgPath: '/banners/12years.jpg',
   },
+  //   {
+  //     imgPath: '/banners/banner01.jpg',
+  //   },
   {
     imgPath: '/banners/banner2.jpg',
   },
