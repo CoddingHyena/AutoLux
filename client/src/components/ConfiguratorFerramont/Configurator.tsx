@@ -15,9 +15,8 @@ import ComplectationSelection from './ComplectationSelection';
 import ModelSelection from './ModelSelection';
 import { useAppSelector } from '../../redux/hooks';
 import axios from 'axios';
-import { models } from './mocs';
 
-const CarConfigurator = ({ configModelId }) => {
+const CarConfigurator = () => {
   const user = useAppSelector((state) => state.userSlice.user);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedModel, setSelectedModel] = useState(null);
@@ -34,17 +33,6 @@ const CarConfigurator = ({ configModelId }) => {
     console.log(userName, 'userName');
     console.log(phoneNumber, 'phoneNumber');
   }, [user]);
-
-  useEffect(() => {
-    if (configModelId) {
-      // Ищем модель по ID среди моковых данных
-      const model = models.find((m) => m.id === configModelId);
-      if (model) {
-        setSelectedModel(model); // Устанавливаем найденную модель
-        setCurrentStep(2); // Переходим к выбору комплектации
-      }
-    }
-  }, [configModelId]);
 
   const handleModelSelect = (model) => {
     setSelectedModel(model);

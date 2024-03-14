@@ -315,7 +315,6 @@ const getDocsCars = [
     disablePadding: false,
     label: 'Управление',
   },
-  
 ];
 
 const getDocsModel = [
@@ -421,7 +420,7 @@ const getDocsColor = [
     disablePadding: false,
     label: 'Фото',
   },
-    {
+  {
     id: 'actions',
     numeric: true,
     disablePadding: false,
@@ -619,7 +618,7 @@ function DataTableDocTD({ name, props }) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
   };
-  
+
   return (
     <>
       <Card component="section" type="section">
@@ -645,7 +644,7 @@ function DataTableDocTD({ name, props }) {
               <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
-              <TableCell align="left">{row?.probegKm}</TableCell> 
+              <TableCell align="left">{row?.probegKm}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
                 {row.status ? (
@@ -751,7 +750,7 @@ function DataTableDocTO({ name, props }) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
   };
-  
+
   return (
     <>
       <Card component="section" type="section">
@@ -768,7 +767,7 @@ function DataTableDocTO({ name, props }) {
               <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.car_id}</TableCell>
-              <TableCell align="left">{row?.probegKm}</TableCell> 
+              <TableCell align="left">{row?.probegKm}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
               <TableCell align="left">
                 {row.status ? (
@@ -1517,104 +1516,106 @@ function MulterLoading() {
   }, [img, colorName, priceColor, modId]);
 
   return (
-    <div className="multer">
-      <div className="AvtoOptionsModel">
-        <h3>Avto options</h3>
-        <input
-          type="text"
-          placeholder="Наименование модели"
-          value={modelName}
-          onChange={(e) => setModelName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цена"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
+    <Card>
+      <div className="multer">
+        <div className="AvtoOptionsModel">
+          <h3>Добавить модель авто</h3>
+          <input
+            type="text"
+            placeholder="Наименование модели"
+            value={modelName}
+            onChange={(e) => setModelName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Цена"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
 
-        <input
-          type="file"
-          onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
-        />
-        <button className="btn" onClick={sendFileAvtoOptions}>
-          Загрузить
-        </button>
-        {adress && <div className="adress">{adress}</div>}
-        {uploadStatus.status && (
-          <div className={`upload-status ${uploadStatus.status}`}>{uploadStatus.message}</div>
-        )}
+          <input
+            type="file"
+            onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
+          />
+          <button className="btn" onClick={sendFileAvtoOptions}>
+            Загрузить
+          </button>
+          {adress && <div className="adress">{adress}</div>}
+          {uploadStatus.status && (
+            <div className={`upload-status ${uploadStatus.status}`}>{uploadStatus.message}</div>
+          )}
+        </div>
+
+        <div className="AvtoOptionsComplect">
+          <h3>Добавить комплектацию авто</h3>
+          <input
+            type="text"
+            placeholder="ID модели"
+            value={modelId}
+            onChange={(e) => setModelId(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Наименование комплектации"
+            value={complectName}
+            onChange={(e) => setComplectName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Цена"
+            value={priceC}
+            onChange={(e) => setPriceC(e.target.value)}
+          />
+
+          <input
+            type="file"
+            onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
+          />
+          <button className="btn" onClick={sendFileAvtoOptionsComplect}>
+            Загрузить
+          </button>
+          {adressComplect && <div className="adress">{adressComplect}</div>}
+          {uploadStatusComplect.status && (
+            <div className={`upload-status ${uploadStatusComplect.status}`}>
+              {uploadStatusComplect.message}
+            </div>
+          )}
+        </div>
+
+        <div className="AvtoOptionsColor">
+          <h3>Добавить цвет модели авто</h3>
+          <input
+            type="text"
+            placeholder="ID модели"
+            value={modId}
+            onChange={(e) => setModId(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Цвет"
+            value={colorName}
+            onChange={(e) => setColorName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Цена"
+            value={priceColor}
+            onChange={(e) => setPriceColor(e.target.value)}
+          />
+
+          <input
+            type="file"
+            onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
+          />
+          <button className="btn" onClick={sendFileAvtoOptionsColor}>
+            Загрузить
+          </button>
+          {adressColor && <div className="adress">{adressColor}</div>}
+          {statusColor.status && (
+            <div className={`upload-status ${statusColor.status}`}>{statusColor.message}</div>
+          )}
+        </div>
       </div>
-
-      <div className="AvtoOptionsComplect">
-        <h3>Avto options complect</h3>
-        <input
-          type="text"
-          placeholder="ID модели"
-          value={modelId}
-          onChange={(e) => setModelId(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Наименование комплектации"
-          value={complectName}
-          onChange={(e) => setComplectName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цена"
-          value={priceC}
-          onChange={(e) => setPriceC(e.target.value)}
-        />
-
-        <input
-          type="file"
-          onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
-        />
-        <button className="btn" onClick={sendFileAvtoOptionsComplect}>
-          Загрузить
-        </button>
-        {adressComplect && <div className="adress">{adressComplect}</div>}
-        {uploadStatusComplect.status && (
-          <div className={`upload-status ${uploadStatusComplect.status}`}>
-            {uploadStatusComplect.message}
-          </div>
-        )}
-      </div>
-
-      <div className="AvtoOptionsColor">
-        <h3>Avto options color</h3>
-        <input
-          type="text"
-          placeholder="ID модели"
-          value={modId}
-          onChange={(e) => setModId(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цвет"
-          value={colorName}
-          onChange={(e) => setColorName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Цена"
-          value={priceColor}
-          onChange={(e) => setPriceColor(e.target.value)}
-        />
-
-        <input
-          type="file"
-          onChange={(e) => setImg(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
-        />
-        <button className="btn" onClick={sendFileAvtoOptionsColor}>
-          Загрузить
-        </button>
-        {adressColor && <div className="adress">{adressColor}</div>}
-        {statusColor.status && (
-          <div className={`upload-status ${statusColor.status}`}>{statusColor.message}</div>
-        )}
-      </div>
-    </div>
+    </Card>
   );
 }

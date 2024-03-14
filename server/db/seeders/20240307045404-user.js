@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         name: 'Администратор',
-        email: '1@4.ru',
+        email: 'adm',
         phone: '+7 961 1112',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 2,
@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         name: 'Менеджер Анна',
-        email: '1@5.ru',
+        email: 'manag',
         phone: '+7 961 1113',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 3,
@@ -83,7 +83,7 @@ module.exports = {
       },
       {
         name: 'Чернова Инна',
-        email: '1@2.ru',
+        email: 'client',
         phone: '+7 965 6871',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
@@ -127,7 +127,7 @@ module.exports = {
       },
       {
         name: 'Иван Филипович',
-        email: 'iv@boss.ru',
+        email: 'b@b.ru',
         phone: '2-15-79',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 4,
@@ -138,7 +138,7 @@ module.exports = {
       },
       {
         name: 'Boss Филипович',
-        email: 'boss@boss',
+        email: 'boss',
         phone: '2-15-79',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 4,

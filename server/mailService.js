@@ -14,7 +14,13 @@ class MailService {
   }
 
   async sendWelcomeMail(to) {
-    console.log('=======',process.env.MAIL_HOST,  process.env.MAIL_PORT, process.env.MAIL_USER, process.env.MAIL_PASSWORD)
+    console.log(
+      '=======',
+      process.env.MAIL_HOST,
+      process.env.MAIL_PORT,
+      process.env.MAIL_USER,
+      process.env.MAIL_PASSWORD
+    );
     await this.transporter.sendMail({
       from: process.env.MAIL_USER,
       to,
@@ -23,7 +29,6 @@ class MailService {
       html: `
           <div>
             <h1> AVTO LUX поздравляет вас с успешной регистрацией!</h1>
-            <p>И теперь мы будем захламлять вашу почту всякой шнягой )</p>
           </div>
         `,
     });

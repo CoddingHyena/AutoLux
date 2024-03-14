@@ -17,6 +17,7 @@ import {
   MenuItem,
   ListItemIcon,
   Stack,
+  Container,
 } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -31,152 +32,50 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
+import PageHeader from '../../components/pageHeader';
+import CarSlider from '../../components/BUSlider/BUSlider';
 
-const menuOptions = [
-  {
-    id: 1,
-    Icon: Person2OutlinedIcon,
-    text: 'Модели',
-  },
-  {
-    id: 2,
-    Icon: AccountBoxOutlinedIcon,
-    text: 'Конфигуратор',
-  },
-  {
-    id: 3,
-    Icon: VpnKeyOutlinedIcon,
-    text: 'Запись на тест-драйв',
-  },
-  {
-    id: 4,
-    Icon: HandshakeOutlinedIcon,
-    text: 'Спецпредложения',
-  },
-  {
-    id: 5,
-    Icon: HandshakeOutlinedIcon,
-    text: 'Сервис',
-  },
-  {
-    id: 6,
-    Icon: HandshakeOutlinedIcon,
-    text: 'Контакты',
-  },
-];
+// type="section"
+// sx={{
+//   mt: 5, // Add bottom margin
+// }}
 
 export default function mainPage() {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
-
   const [activeIndex, setActiveIndex] = useState(1);
   return (
-    <>
-      <Card
-        type="section"
-        sx={{
-          minHeight: '60vh',
-        }}
-      >
-        <CardHeader title="Добро пожаловать!"></CardHeader>
-        <img src="banners/bannerMain.jpg" style={{ width: '100%', height: 'auto' }} />
-      </Card>
+    <Stack
+      spacing={5}
+      sx={{
+        mt: 5, // отступ сверху для всего стека
+      }}
+    >
+      <PageHeader title="Добро пожаловать!"></PageHeader>
 
       <LargeAutoSlider />
-      <Stack spacing={5}>
-        <Card
-          type="section"
-          sx={{
-            minHeight: '60vh',
-          }}
+      <div className="confWrapper">
+        <Configurator configModelId />
+      </div>
+
+      <Card>
+        <TestDrive />
+      </Card>
+
+      <Box sx={{ paddingTop: '70px', paddingBottom: '70px' }}>
+        <Typography
+          variant="h2"
+          component="h2"
+          gutterBottom
+          textAlign="center"
+          sx={{ fontSize: '2.5rem', marginBottom: '2rem' }}
         >
-          <CardHeader title="Выгодные условия гарантии!"></CardHeader>
-          <img src="banners/12years.png" style={{ width: '100%', height: 'auto' }} />
+          Автомобили с пробегом
+        </Typography>
 
-          {/* <BasicModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          FormComponent={TestDrive}
-         
-        /> */}
-        </Card>
-        <Configurator />
-        <Card>
-          <TestDrive />
-        </Card>
-      </Stack>
-
-      {/* <Grid container spacing={4}>
-        <Grid item xs={12} sm={4} md={3}>
-          <Card
-            sx={{
-              position: 'sticky',
-              top: `${calcHeaderHeight('nav', false) + 30}px`,
-            }}
-            component="aside"
-          >
-            <MenuList
-              sx={{
-                '& .MuiMenuItem-root': {
-                  borderRadius: 2,
-                },
-              }}
-            >
-              {menuOptions.map(({ id, Icon, text }) => (
-                <MenuListItem
-                  key={id}
-                  text={text}
-                  Icon={Icon}
-                  onClick={() => setActiveIndex(id)}
-                  selected={activeIndex === id}
-                />
-              ))}
-              <MenuItem component={Link} href="#!">
-                <ListItemIcon>
-                  <Person2OutlinedIcon fontSize="medium" />
-                </ListItemIcon>
-                Link
-              </MenuItem>
-            </MenuList>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={8} md={9}>
-          {activeIndex === 1 && <Section text={activeIndex} />}
-          {activeIndex === 2 && <Section text={activeIndex} />}
-          {activeIndex === 3 && <Section text={activeIndex} />}
-          {activeIndex === 4 && <Section text={activeIndex} />}
-        </Grid>
-      </Grid> */}
-    </>
-  );
-}
-
-function MenuListItem({ Icon, text, ...props }) {
-  return (
-    <MenuItem {...props}>
-      <ListItemIcon>
-        <Icon fontSize="medium" />
-      </ListItemIcon>
-      {text}
-    </MenuItem>
-  );
-}
-
-function Section({ text }) {
-  return (
-    <Card
-      sx={{
-        minHeight: '100vh',
-      }}
-      type="section"
-    >
-      <CardHeader title={`Заголовок секции ${text}`} subtitle="Доп текст">
-        Optional Action
-      </CardHeader>
-      {text}
-    </Card>
+        <div className="slider-container">
+          <CarSlider />
+        </div>
+      </Box>
+    </Stack>
   );
 }
 

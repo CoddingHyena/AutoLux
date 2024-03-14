@@ -31,6 +31,15 @@ const NAV_LINKS_CONFIG = [
     href: '',
     role: 'none',
   },
+
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Ferramont 2024',
+    Icon: WebOutlinedIcon,
+    href: '/sellCars',
+    role: 'none',
+  },
   {
     id: uuid(),
     type: 'item',
@@ -75,18 +84,10 @@ const NAV_LINKS_CONFIG = [
   {
     id: uuid(),
     type: 'item',
-    title: 'Автомобили в наличии',
+    title: 'Ferramont 2024',
     Icon: WebOutlinedIcon,
     href: '/sellCars',
     role: 'accessUser',
-  },
-  {
-    id: uuid(),
-    type: 'item',
-    title: 'Автомобили в наличии',
-    Icon: WebOutlinedIcon,
-    href: '/sellCars',
-    role: 'none',
   },
 
   //  {
