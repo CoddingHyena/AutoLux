@@ -18,6 +18,7 @@ import {
   ListItemIcon,
   Stack,
   Container,
+  Paper,
 } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -49,7 +50,41 @@ export default function mainPage() {
         mt: 5, // отступ сверху для всего стека
       }}
     >
-      <PageHeader title="Добро пожаловать!"></PageHeader>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={4}>
+          <Typography variant="h2" component="h1" gutterBottom sx={{ fontSize: 42, marginTop: 20 }}>
+            Официальный диллер FolksFagen
+          </Typography>
+          <Typography
+            variant="h6" // Makes the subtitle larger but still clearly a subtitle
+            component="p" // Use paragraph for the subtitle for semantic HTML
+            sx={{ fontSize: 32 }} // Adds margin-top for spacing, adjust as needed
+          >
+            <br />
+            Полный ассортиментный ряд FolksFagen, качественное ТО и поддержка 24/7
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Paper
+            sx={{
+              borderRadius: 2, // Adjust as needed, 2 in MUI system corresponds to 16px
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              src="/banners/banner01.jpg"
+              alt="FolksFagen Banner"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+              }}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+
+      {/* <PageHeader title="Добро пожаловать!"></PageHeader> */}
 
       <LargeAutoSlider />
       <div className="confWrapper">

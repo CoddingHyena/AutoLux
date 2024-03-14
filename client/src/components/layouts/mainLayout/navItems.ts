@@ -64,29 +64,20 @@ const NAV_LINKS_CONFIG = [
     href: '',
     role: 'accessUser',
   },
-
-  {
-    id: uuid(),
-    type: 'item',
-    title: 'Контакты',
-    Icon: WebOutlinedIcon,
-    href: '/contacts',
-    role: 'accessUser',
-  },
-  {
-    id: uuid(),
-    type: 'item',
-    title: 'Главная',
-    Icon: WebOutlinedIcon,
-    href: '',
-    role: 'accessAdmin',
-  },
   {
     id: uuid(),
     type: 'item',
     title: 'Ferramont 2024',
     Icon: WebOutlinedIcon,
     href: '/sellCars',
+    role: 'accessUser',
+  },
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Контакты',
+    Icon: WebOutlinedIcon,
+    href: '/contacts',
     role: 'accessUser',
   },
 
@@ -111,7 +102,14 @@ const NAV_LINKS_CONFIG = [
 
   // 	],
   // },
-
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Главная',
+    Icon: WebOutlinedIcon,
+    href: '',
+    role: 'accessAdmin',
+  },
   {
     id: uuid(),
     type: 'item',
