@@ -9,6 +9,7 @@ const FeatureCard = ({ image, title, description }) => {
     maxWidth: '350px',
     width: '150%',
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+    minHeight: '450px',
   };
 
   const imageStyle = {
@@ -19,13 +20,13 @@ const FeatureCard = ({ image, title, description }) => {
 
   const titleStyle = {
     fontWeight: 'bold',
-   
+
     marginTop: '20px',
   };
 
   const descriptionStyle = {
     textAlign: 'center',
-   
+
     padding: '0 20px 20px 20px',
   };
 
@@ -40,11 +41,9 @@ const FeatureCard = ({ image, title, description }) => {
 
 const FeaturesContainer = () => {
   const containerStyle = {
-    
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'flex-start',
-    
   };
 
   return (
@@ -52,15 +51,15 @@ const FeaturesContainer = () => {
       <FeatureCard
         image="/Optics.jpg" // Измените на ваше изображение
         title="ФУНКЦИОНАЛЬНАЯ ОПТИКА"
-        description="Оптика состоит из двух рядов светодиодных ламп. Нижний ряд отвечает за ближний свет, обеспечивая яркое и ровное освещение дороги перед автомобилем, а верхний ряд отвечает за дальний свет, обеспечивая широкий и яркий световой поток, способный охватывать большие расстояния."
+        description="Cостоит из двух рядов светодиодных ламп. Нижний ряд отвечает за ближний свет, обеспечивая яркое и ровное освещение дороги перед автомобилем, а верхний  отвечает за дальний, обеспечивая широкий и яркий световой поток."
       />
-           <FeatureCard
+      <FeatureCard
         image="/Face.jpg" // Измените на ваше изображение
         title="ВНЕШНИЙ ВИД"
         description="Внешний вид, привлекающий внимание Светодиодная полоса с подсветкой логотипа подчеркивает брутальный и выразительный внешний вид автомобиля."
       />
 
-         <FeatureCard
+      <FeatureCard
         image="/Wheel.jpg" // Измените на ваше изображение
         title="БРУТАЛЬНЫЙ И СТИЛЬНЫЙ"
         description="21-дюймовые колесные диски с массивными расширителями арок не только создают впечатляющий внешний вид, но и придают автомобилю устойчивость и непревзойденную мощь на дороге."

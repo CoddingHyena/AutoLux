@@ -1,58 +1,58 @@
 .car-card {
-    width: 332px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin: 16px;
-    background-color: #fff;
-    font-family: Arial, sans-serif;
-  }
-  
-  .car-card-header {
-    background-color: red;
-    color: white;
-    padding: 4px 8px;
-    text-align: left;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-  
-  .car-card img {
-    width: 100%;
-    display: block;
-  }
-  
-  .car-card-info {
-    padding: 16px;
-  }
-  
-  .car-card-info h2 {
-    margin: 0;
-    color: #333;
-    font-size: 1.2rem;
-  }
-  
-  .car-card-info p {
-    margin: 4px 0;
-    color: #666;
-    font-size: 0.9rem;
-  }
-  
-  .car-card-price {
-    font-size: 1.4rem;
-    color: #333;
-    margin: 8px 0;
-  }
-  
-  .car-card-button {
-    background-color: #007bff;
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 4px;
-    font-size: 1rem;
-    margin-top: 8px;
-  }
+  width: 332px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.car-card-header {
+  background-color: #f79300;
+  color: white;
+  padding: 4px 8px;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.car-card img {
+  width: 100%;
+  display: block;
+}
+
+.car-card-info {
+  padding: 16px;
+}
+
+.car-card-info h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.car-card-info p {
+  margin: 4px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.car-card-price {
+  font-size: 1.4rem;
+  color: #333;
+  margin: 8px 0;
+}
+
+.car-card-button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-top: 8px;
+}

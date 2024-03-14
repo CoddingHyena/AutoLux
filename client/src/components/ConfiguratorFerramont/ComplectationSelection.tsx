@@ -18,7 +18,7 @@ const ComplectationSelection = ({ model, onSelect }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
       <Typography variant="h1" component="h2" gutterBottom>
-        Выберите комплектацию {model.modelName}
+        Выберите комплектацию для {model.modelName}
       </Typography>
       <Box
         component="img"
