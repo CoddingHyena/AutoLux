@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Alert, Button } from '@mui/material';
+import { Alert, Button, Grid } from '@mui/material';
 import './AuthForm.css';
 import CheckIcon from '@mui/icons-material/Check';
 import {  useAppSelector } from '../../redux/hooks';
@@ -31,6 +31,8 @@ export default function ResetPWDemail(): JSX.Element {
   }
 
   return (
+    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '100vh' }}>
+  <Grid item xs={12} sm={8} md={6} lg={4}>
     <Box
       sx={{
         display: 'flex',
@@ -65,5 +67,7 @@ export default function ResetPWDemail(): JSX.Element {
       </Button>
       </form>
     </Box>
+    </Grid>
+</Grid>
   );
 }
