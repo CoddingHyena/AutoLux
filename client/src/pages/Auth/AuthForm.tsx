@@ -130,7 +130,7 @@ export default function AuthForm(): JSX.Element {
           />
         </>
       )}
-
+        <a href='/reset-password-email'>Забыли пароль?</a>
       <Button variant="contained" color="success" onClick={() => void handlerAuth()}>
         {statusAuth ? 'Войти' : 'Зарегистрироваться'}
       </Button>

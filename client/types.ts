@@ -160,3 +160,12 @@ export type AutoOptionColorType = {
 }
 
 export type AutoOptionColorSType[];
+
+export type emailType = {
+    email: string;
+}
+
+export type passwordType = {
+    token: string;
+    newPassword: string;
+}

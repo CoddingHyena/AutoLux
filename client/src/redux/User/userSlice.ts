@@ -1,7 +1,7 @@
 import { create } from '@mui/material/styles/createTransitions';
 import { User } from '../../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAuth, fetchCheckUser, fetchLogout } from './userThunkAction';
+import { fetchAuth, fetchCheckUser, fetchLogout, fetchResetPWDemail, resetPassword } from './userThunkAction';
 import { AcUnitTwoTone } from '@mui/icons-material';
 
 export type SliceUserType = {
@@ -64,6 +64,20 @@ const userSlice = createSlice({
     builder.addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
       state.user = payload;
     });
+
+    builder.addCase(fetchResetPWDemail.fulfilled, (state) => {
+      state.msg = 'Ссылка для сброса пароля (активна 15мин) отправлена на вашу почту.';
+    }).addCase(fetchResetPWDemail.rejected, (state) => {
+      state.msg = 'Такой почты не зарегистрировано.';
+    });
+
+    // Обработка подтверждения нового пароля
+    builder.addCase(resetPassword.fulfilled, (state) => {
+      state.msg = 'Ваш пароль успешно обновлен. Авторизуйтесь.';
+    }).addCase(resetPassword.rejected, (state) => {
+      state.msg ='Ошибка при сбросе пароля.';
+    });
+
   },
 });
 export default userSlice.reducer;
