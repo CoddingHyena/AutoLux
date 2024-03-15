@@ -160,6 +160,12 @@ const getDocsTD = [
     disablePadding: false,
     label: 'Дата оказания услуги',
   },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: '',
+  },
 ];
 
 const getDocsCars = [
@@ -415,7 +421,6 @@ function DataTableDocTD({ name, props }) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
   };
-  
 
   return (
     <>
@@ -504,7 +509,7 @@ function DataTableDocTO({ name, props }) {
 
   // Функция для открытия модального окна
   const handleEditClick = (row) => {
-    setCreateDocTO(false)
+    setCreateDocTO(false);
     setCurrentData(row); // Установить текущие данные заявки
     setIsModalOpen(true); // Открывает модальное окно
   };
@@ -513,7 +518,7 @@ function DataTableDocTO({ name, props }) {
   const updateAndClose = () => {
     dispatch(fetchManagerDocTO()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
-    setCreateDocTO(false)
+    setCreateDocTO(false);
   };
 
   const handleCreateTOClick = () => {

@@ -9,20 +9,20 @@ import CardHeader from '@/components/cardHeader';
 
 const SALES_PROGRESS_DATA = [
   {
-    sale: 535,
+    sale: 318,
     progress: 80,
     color: 'info',
     name: 'Иван Михалыч',
   },
   {
-    sale: 155,
-    progress: 30,
+    sale: 220,
+    progress: 55,
     color: 'error',
     name: 'Лидия Павловна',
   },
   {
-    sale: 119,
-    progress: 20,
+    sale: 219,
+    progress: 54,
     color: 'success',
     name: 'Михаил Петрович',
   },
