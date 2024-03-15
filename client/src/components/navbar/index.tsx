@@ -6,17 +6,19 @@ import Container from '@mui/material/Container';
 import NavLinks from './navLinks';
 
 function Navbar({ navItems, position = 'sticky' }) {
-	return (
-		<AppBar position={position} elevation={26} sx={{ borderLeft: 0, borderRight: 0 }}>
-			<div className="debugel">Навбар</div>
-			<Box bgcolor="background.paper" py={2}>
-				<Container maxWidth="lg">
-				<div className="debugel">Линки контейнер</div>
-					<NavLinks navItems={navItems} />
-				</Container>
-			</Box>
-		</AppBar>
-	);
+  return (
+    <AppBar
+      position={position}
+      elevation={26}
+      sx={{ borderLeft: 0, borderRight: 0, borderTop: 0, paddingBottom: 0, marginBottom: 1 }}
+    >
+      <div className="debugel">Навбар</div>
+      <Box bgcolor="background.paper" sx={{ paddingTop: 3 }}>
+        <div className="debugel">Линки контейнер</div>
+        <NavLinks navItems={navItems} />
+      </Box>
+    </AppBar>
+  );
 }
 
 export default Navbar;

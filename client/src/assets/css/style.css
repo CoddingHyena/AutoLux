@@ -77,3 +77,8 @@
 .confWrapper {
   margin: 80px 0 90px 0 !important;
 }
+
+html,
+body {
+  overflow-x: hidden;
+}

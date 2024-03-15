@@ -3,9 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-     "Cars",
-    [
+    await queryInterface.bulkInsert('Cars', [
       {
         mark: 'FolksFagen',
         model: 'Feramont',
@@ -166,20 +164,10 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
- 
-    
-    ],
-  );
+    ]);
+  },
 
-
-},
-
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Cars', null, {});
+  },
 };

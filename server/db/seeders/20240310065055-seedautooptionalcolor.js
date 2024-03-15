@@ -3,9 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-    "AutoOptionsColors",
-    [
+    await queryInterface.bulkInsert('AutoOptionsColors', [
       {
         model_id: 1,
         colorName: 'Pure White',
@@ -78,18 +76,10 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-    ],
-  );
+    ]);
+  },
 
-
-},
-
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('AutoOptionsColors', null, {});
+  },
 };
