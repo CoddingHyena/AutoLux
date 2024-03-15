@@ -1,0 +1,30 @@
+/* Accordion.module.css */
+.accordion {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .accordionHeader {
+    padding: 10px;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5em; /* Увеличенный размер шрифта */
+    font-weight: bold; /* Жирное начертание */
+    font-style: italic; /* Курсивное начертание */
+  }
+  
+  .accordionBody {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    font-size: 1.2em; /* Увеличенный размер шрифта */
+  }
+  
+  .listItem {
+    margin-bottom: 5px;
+    list-style-type: disc; /* Добавляет точку перед пунктами списка */
+    margin-left: 20px; /* Отступ для точки */
+  }
