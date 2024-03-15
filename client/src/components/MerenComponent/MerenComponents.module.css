@@ -1,16 +1,18 @@
 /* CarDetail.module.css */
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 40px; /* Это свойство установит расстояние между flex элементами */
+  max-width: 1200px;
+  margin: auto;
   }
   
   .imageContainer {
-    flex: 1;
+    flex: 13;
     margin-right: 20px; /* Добавьте отступ между изображением и информацией */
+    min-width: 600px;
   }
   
   .image {
@@ -20,15 +22,17 @@
   }
   
   .infoContainer {
-    flex: 2;
-    padding: 20px;
+    flex: 9;
+    padding: 30px;
     background-color: #f5f5f5; /* Цвет фона для контейнера с информацией */
     border-radius: 10px; /* Скругление углов */
+    min-width: 400px;
   }
   
   .title {
-    font-size: 24px;
+    font-size: 2.0em;
     margin-bottom: 10px;
+    line-height: 1.6em;
   }
   
   .list {
@@ -38,12 +42,15 @@
   
   .listItem {
     margin-bottom: 5px;
+    font-size: 1.5em;
+    line-height: 1.7em;
   }
   
   .price {
-    font-size: 20px;
+    font-size: 2.2em;
     font-weight: bold;
     margin-top: 20px;
+    line-height: 1.6em;
   }
   
   .button {

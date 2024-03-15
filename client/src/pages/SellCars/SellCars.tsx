@@ -145,7 +145,7 @@ export default function SellCars() {
         </div>
       </Card>
 
-      {/* <Card>
+      <Card>
 
       <CarDetail car={{
   imageUrl: "/Meren.jpg",
@@ -162,7 +162,7 @@ export default function SellCars() {
   price: "16 190 000 Р"
 }} />
 
-      </Card> */}
+      </Card>
 
 
     </>
