@@ -45,11 +45,11 @@ export default function contactsPage() {
           </Grid>
           <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', padding: 2 }}>
             {/* Пример текстовых строк с различной стилизацией */}
-            <Typography variant="body1" sx={{ marginBottom: 2, fontSize: '1.2rem', fontWeight: 'bold' }}>Добро пожаловать!</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 2, fontSize: '1.8rem', fontWeight: 'bold' }}>Добро пожаловать!</Typography>
 <Typography variant="body2" sx={{ marginBottom: 2, fontSize: '1.1rem', fontWeight: 'bold' }}>Пнд-Птн: 8:30 - 20:00</Typography>
 <Typography sx={{ marginBottom: 2, fontSize: '1.1rem', fontWeight: 'bold' }}>Суббота: 9:00 - 20:00</Typography>
 <Typography sx={{ marginBottom: 2, fontSize: '1.1rem', fontWeight: 'bold' }}>Воскресенье: 9:00 - 18:00</Typography>
-<Typography sx={{ marginBottom: 2, fontSize: '1.1rem', fontWeight: 'bold' }}>Без обеда!</Typography>
+<Typography sx={{ marginBottom: 2, fontSize: '1.1rem', fontWeight: 'bold' }}>Без перерыва!</Typography>
             {/* Добавьте больше элементов Typography с разной стилизацией для каждой строки */}
             <ContactLink Icon={LocalPhoneOutlinedIcon} text="+79998887766" />
 							<ContactLink Icon={EmailOutlinedIcon} text="support@autolux.black" />
