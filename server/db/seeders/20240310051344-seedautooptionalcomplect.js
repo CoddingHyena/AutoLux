@@ -3,9 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-    "AutoOptionsComplects",
-    [
+    await queryInterface.bulkInsert('AutoOptionsComplects', [
       {
         model_id: 1,
         complectationName: 'Complect1',
@@ -46,18 +44,10 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-    ],
-  );
+    ]);
+  },
 
-
-},
-
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('AutoOptionsComplects', null, {});
+  },
 };

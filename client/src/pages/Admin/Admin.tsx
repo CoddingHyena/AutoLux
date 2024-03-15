@@ -519,7 +519,14 @@ function DataTableUsers({ name, props }) {
               <TableCell align="left">{row.name}</TableCell>
               <TableCell align="left">{row?.email}</TableCell>
               <TableCell align="left">{row?.phone}</TableCell>
-              <TableCell align="left">{row.role_id}</TableCell>
+              <TableCell align="left">
+                {{
+                  1: 'Клиент',
+                  2: 'Администратор',
+                  3: 'Менеджер',
+                  4: 'Руководитель',
+                }[row.role_id] || 'Неизвестная роль'}
+              </TableCell>
               <TableCell align="left">
                 {row.propType ? (
                   <Tooltip title="Юридическое лицо" arrow>

@@ -1,7 +1,6 @@
 .slider-container {
   max-width: 100%; /* или другое значение, подходящее для вашего дизайна */
   margin: auto;
-  overflow: hidden; /* Может помочь предотвратить горизонтальную прокрутку */
 }
 
 .slick-prev:before,

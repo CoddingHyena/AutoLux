@@ -14,24 +14,6 @@ const SliderComponent = () => {
     slidesToScroll: 1,
     centerMode: true, // Добавляем центрирование
     centerPadding: '555', // Удаление дополнительного отступа
-    customPaging: function (i) {
-      return (
-        <div>
-          <p
-            style={{
-              fontSize: '10px',
-              fontWeight: 'bold',
-              marginRight: '150px',
-              marginLeft: '120px',
-              padding: '20px',
-              margin: '115px',
-            }}
-          >
-            {slides[i].upperDescription}
-          </p>
-        </div>
-      );
-    },
   };
 
   const slides = [
@@ -59,9 +41,9 @@ const SliderComponent = () => {
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <div key={index}>
-            <p style={{ fontWeight: 'bold' }}>{slide.upperDescription}</p>
+            <p style={{ fontWeight: 'bold', fontSize: '22px' }}>{slide.upperDescription}</p>
             <img src={`/${slide.image}`} alt={`Slide ${index + 1}`} />
-            <p>{slide.lowerDescription}</p>
+            <p style={{ fontSize: '16px' }}>{slide.lowerDescription}</p>
           </div>
         ))}
       </Slider>

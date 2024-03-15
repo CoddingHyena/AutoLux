@@ -102,7 +102,15 @@ export default function SellCars() {
           minHeight: '60vh',
         }}
       >
-        <div style={{ flex: 1, textAlign: 'left', padding: '20px', backgroundColor: '#f2f2f2' }}>
+        <div
+          style={{
+            flex: 1,
+            textAlign: 'left',
+            padding: '20px',
+            backgroundColor: '#f2f2f2',
+            marginRight: '30px',
+          }}
+        >
           <h2 style={{ fontSize: '4em', fontWeight: 'bold', lineHeight: 1.2 }}>
             Абсолютный контроль над мощностью
           </h2>
