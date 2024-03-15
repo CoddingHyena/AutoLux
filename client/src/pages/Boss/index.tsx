@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import PageHeader from '@/components/pageHeader';
 
 import PageImpressionsCard from './pageImpressionsCard';
-import CustomerCard from './customerCard';
+import CustomerCard from './ChartCustomerCard';
 import SaleProgressCard from './saleProgressCard';
 import MostVisitedCard from './mostVisitedCard';
 import SalesOverviewCard from './salesOverviewCard';

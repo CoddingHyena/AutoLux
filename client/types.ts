@@ -10,7 +10,8 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    role: string
+    role: string;
+    phone: string;
 }
 
 export type AuthType {
@@ -23,6 +24,7 @@ export type UserDocTDType = {
     user_id?: number;
     car_id: number;
     dateNow: string;
+    dateSelected?: string;
     manager?: string;
     status?: boolean;
     probegKm?: number;
@@ -120,4 +122,41 @@ export type InputsFBType = {
     userName: string;
     phoneNumber: string;
     userComment: string;
+    dateSelected?: string;
 }
+
+export type AutoOptionModelType = {
+    id: number;
+    modelName: string;
+    price: string;
+    photo: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export type AutoOptionModelSType = AutoOptionModelType[];
+
+
+export type AutoOptionComplectType = {
+    id: number;
+    model_id: number;
+    complectationName: string;
+    price: string;
+    photo: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export type AutoOptionComplectSType = AutoOptionComplectType[];
+
+export type AutoOptionColorType = {
+    id: number;
+    model_id: number;
+    colorName: string;
+    price: string;
+    photo: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export type AutoOptionColorSType[];

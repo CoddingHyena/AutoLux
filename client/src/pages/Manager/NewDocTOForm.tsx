@@ -12,6 +12,7 @@ export default function NewDocTOForm({ currentUserId, onSuccess }) {
   const [carId, setCarId] = useState('');
   const [managerId, setManagerId] = useState(currentUserId);
   const [ourComment, setOurComment] = useState('');
+  const [dateSelected, setDatSelected] = useState('');
 
 
   // Получение данных менеджера из Redux store
@@ -32,6 +33,7 @@ export default function NewDocTOForm({ currentUserId, onSuccess }) {
       carId,
       managerId,
       ourComment,
+      dateSelected,
       };
     console.log('======NEWformData TO', formData);
 
@@ -57,6 +59,18 @@ export default function NewDocTOForm({ currentUserId, onSuccess }) {
         variant="outlined"
         margin="normal"
         fullWidth
+      />
+        <TextField
+        label="Дата оказания услуги"
+        type="date"
+        value={dateSelected}
+        onChange={(e) => setDatSelected(e.target.value)}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
         <TextField
         label="Наш комментарий"

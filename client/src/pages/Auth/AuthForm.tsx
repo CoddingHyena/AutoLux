@@ -60,6 +60,7 @@ export default function AuthForm(): JSX.Element {
   useEffect(() => {
     if (user.id > 0) {
       setTimeout(() => {
+        dispatch(clearMsg());
         navigate('/');
       }, 1500);
     }
@@ -76,7 +77,7 @@ export default function AuthForm(): JSX.Element {
       className="authContainer"
     >
       {msg && (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity={msg.includes("Привет") ? "success" : "error"}>
           {msg}
         </Alert>
       )}

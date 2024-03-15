@@ -1,12 +1,31 @@
 import { useState } from 'react';
+import BasicModal from '../../components/BasicModal/BasicModal';
+import TDForm from './TDForm';
+import TOForm from './TOForm';
+import Configurator from '../../components/Configurator/Configurator';
+
 import { Link } from 'react-router-dom';
-import { Box, Card, Button, useTheme, Breadcrumbs, Typography, Grid, MenuList, MenuItem, ListItemIcon } from '@mui/material';
+import {
+  Box,
+  Card,
+  Button,
+  useTheme,
+  Breadcrumbs,
+  Typography,
+  Grid,
+  MenuList,
+  MenuItem,
+  ListItemIcon,
+  Stack,
+  Container,
+  Paper,
+} from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import useIntervalCounter from '../../utils/hooks/useIntervalCounter'; // Убедитесь, что путь правильный
 import Slider from '../../components/slider'; // Убедитесь, что путь правильный
 import { data1 as data } from './data'; // Убедитесь, что данные загружаются правильно
-import TestDrive from '../../components/testDrive';
+import TestDrive from '../../components/testDriveForm';
 import CardHeader from '../../components/cardHeader';
 import calcHeaderHeight from '../../utils/helpers/layoutHeight';
 
@@ -14,140 +33,92 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
+import PageHeader from '../../components/pageHeader';
+import CarSlider from '../../components/BUSlider/BUSlider';
 
-const menuOptions = [
-	{
-		id: 1,
-		Icon: Person2OutlinedIcon,
-		text: 'Модели',
-	},
-	{
-		id: 2,
-		Icon: AccountBoxOutlinedIcon,
-		text: 'Конфигуратор',
-	},
-	{
-		id: 3,
-		Icon: VpnKeyOutlinedIcon,
-		text: 'Запись на тест-драйв',
-	},
-	{
-		id: 4,
-		Icon: HandshakeOutlinedIcon,
-		text: 'Спецпредложения',
-	},
-	{
-		id: 5,
-		Icon: HandshakeOutlinedIcon,
-		text: 'Сервис',
-	},
-	{
-		id: 6,
-		Icon: HandshakeOutlinedIcon,
-		text: 'Контакты',
-	},
-];
-
+// type="section"
+// sx={{
+//   mt: 5, // Add bottom margin
+// }}
 
 export default function mainPage() {
-	const [activeIndex, setActiveIndex] = useState(1);
-	return (
-		<>
-		<LargeAutoSlider />
-		
-			<Card
-				type="section"
-				sx={{
-					minHeight: '60vh',
-				}}
-			>
-				<CardHeader title="Заголовок секции на главной">
-					Доп заголовок
-				</CardHeader>
-                <img src="banners/bannerMain.jpg" />
-			</Card>
+  const [activeIndex, setActiveIndex] = useState(1);
+  return (
+    <Stack
+      spacing={5}
+      sx={{
+        mt: 5, // отступ сверху для всего стека
+      }}
+    >
+      <Grid container>
+        <Grid item xs={12} md={4}>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            sx={{ fontSize: '2.7vw', marginTop: '4vw', paddingRight: '2.3vw' }}
+          >
+            Официальный диллер FolksFagen
+          </Typography>
+          <Typography
+            variant="h6" // Makes the subtitle larger but still clearly a subtitle
+            component="p" // Use paragraph for the subtitle for semantic HTML
+            sx={{ fontSize: '1.9vw', lineHeight: 1.25, paddingRight: '2.3vw' }} // Adds margin-top for spacing, adjust as needed
+          >
+            Полный ассортиментный ряд, сертифицированное ТО, поддержка 24/7
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Paper
+            sx={{
+              borderRadius: 2, // Adjust as needed, 2 in MUI system corresponds to 16px
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              src="/banners/banner01.jpg"
+              alt="FolksFagen Banner"
+              style={{
+                width: '100%',
+                height: '100%', // Изменено на 100%
+                display: 'block',
+                objectFit: 'cover', // Добавлено это свойство
+              }}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
 
+      {/* <PageHeader title="Добро пожаловать!"></PageHeader> */}
 
-			<Grid container spacing={4}>
-				<Grid item xs={12} sm={4} md={3}>
-					<Card
-						sx={{
-							position: 'sticky',
-							top: `${calcHeaderHeight('nav', false) + 30}px`,
-						}}
-						component="aside"
-					>
-						<MenuList
-							sx={{
-								'& .MuiMenuItem-root': {
-									borderRadius: 2,
-								},
-							}}
-						>
-							{menuOptions.map(({ id, Icon, text }) => (
-								<MenuListItem
-									key={id}
-									text={text}
-									Icon={Icon}
-									onClick={() => setActiveIndex(id)}
-									selected={activeIndex === id}
-								/>
-							))}
-							<MenuItem component={Link} href="#!">
-								<ListItemIcon>
-									<Person2OutlinedIcon fontSize="medium" />
-								</ListItemIcon>
-								Link
-							</MenuItem>
-						</MenuList>
-					</Card>
-				</Grid>
-				<Grid item xs={12} sm={8} md={9}>
-					{activeIndex === 1 && <Section text={activeIndex} />}
-					{activeIndex === 2 && <Section text={activeIndex} />}
-					{activeIndex === 3 && <Section text={activeIndex} />}
-					{activeIndex === 4 && <Section text={activeIndex} />}
-				</Grid>
-			</Grid>
+      <LargeAutoSlider />
+      <div className="confWrapper">
+        <Configurator configModelId />
+      </div>
 
+      <Card>
+        <TestDrive />
+      </Card>
+      <Stack>
+        <Box sx={{ paddingTop: '70px', paddingBottom: '70px' }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            gutterBottom
+            textAlign="center"
+            sx={{ fontSize: '2.5rem', marginBottom: '2rem' }}
+          >
+            Автомобили с пробегом
+          </Typography>
 
-			<TestDrive />
-
-
-		</>
-	);
+          <div className="slider-container">
+            <CarSlider />
+          </div>
+        </Box>
+      </Stack>
+    </Stack>
+  );
 }
-
-
-function MenuListItem({ Icon, text, ...props }) {
-	return (
-		<MenuItem {...props}>
-			<ListItemIcon>
-				<Icon fontSize="medium" />
-			</ListItemIcon>
-			{text}
-		</MenuItem>
-	);
-}
-
-function Section({ text }) {
-	return (
-		<Card
-			sx={{
-				minHeight: '100vh',
-			}}
-			type="section"
-		>
-			<CardHeader title={`Заголовок секции ${text}`} subtitle="Доп текст">
-				Optional Action
-			</CardHeader>
-			{text}
-		</Card>
-	);
-}
-
-
-
 
 function LargeAutoSlider() {
   const { count: activeSlideIndex, setCounter } = useIntervalCounter({
@@ -172,16 +143,21 @@ function LargeAutoSlider() {
   return (
     <Box sx={{ position: 'relative', width: '100%' }}>
       <Card sx={{ position: 'relative', width: '100%', p: 0, boxShadow: 'none' }}>
-	  <Slider activeSlideIndex={activeSlideIndex} dataLength={data.length}>
-  {data.map((item, i) => (
-    <Slider.Slide index={i} key={i}>
-      {/* Используем компонент Link из react-router-dom для навигации */}
-      <Link to={item.url} style={{ display: 'block' }}>
-        <Box component="img" sx={{ width: '100%', objectFit: 'cover', display: 'block' }} src={item.imgPath} alt={item.label} />
-      </Link>
-    </Slider.Slide>
-  ))}
-</Slider>
+        <Slider activeSlideIndex={activeSlideIndex} dataLength={data.length}>
+          {data.map((item, i) => (
+            <Slider.Slide index={i} key={i}>
+              {/* Используем компонент Link из react-router-dom для навигации */}
+              <Link to={item.url} style={{ display: 'block' }}>
+                <Box
+                  component="img"
+                  sx={{ width: '100%', objectFit: 'cover', display: 'block' }}
+                  src={item.imgPath}
+                  alt={item.label}
+                />
+              </Link>
+            </Slider.Slide>
+          ))}
+        </Slider>
       </Card>
       <Button
         onClick={handlePrev}

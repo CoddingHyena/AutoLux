@@ -9,35 +9,28 @@ import CardHeader from '@/components/cardHeader';
 
 const SALES_PROGRESS_DATA = [
   {
-    sale: 43765,
-    progress: 70,
-    color: 'info',
-  },
-  {
-    sale: 14220,
-    progress: 30,
-    color: 'error',
-  },
-  {
-    sale: 20220,
+    sale: 318,
     progress: 80,
+    color: 'info',
+    name: 'Иван Михалыч',
+  },
+  {
+    sale: 220,
+    progress: 55,
+    color: 'error',
+    name: 'Лидия Павловна',
+  },
+  {
+    sale: 219,
+    progress: 54,
     color: 'success',
-  },
-  {
-    sale: 24224,
-    progress: 50,
-    color: 'warning',
-  },
-  {
-    sale: 35224,
-    progress: 75,
-    color: 'tertiary',
+    name: 'Михаил Петрович',
   },
 ];
 function SaleProgressCard() {
   return (
     <Card>
-      <CardHeader title="Документов за месяц" size="small" />
+      <CardHeader title="Производительность менеджеров" size="small" />
       <Stack spacing={2} mt={2}>
         {SALES_PROGRESS_DATA.map((sale, index) => (
           <SaleProgress key={index} saleData={sale} />
@@ -57,7 +50,7 @@ function SaleProgress({ saleData }) {
   return (
     <div>
       <Typography variant="body2" color="text.secondary" gutterBottom>
-        {counter.toLocaleString()} sales
+        {counter.toLocaleString()} заявок | {saleData.name}
       </Typography>
       <LinearProgress
         variant="determinate"

@@ -16,6 +16,11 @@ import TableRow from '@mui/material/TableRow';
 import AddIcon from '@mui/icons-material/Add';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import PersonIcon from '@mui/icons-material/Person';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import DataTable from '../../components/dataTable';
 import {
@@ -35,11 +40,13 @@ import { useState, useEffect } from 'react';
 // import Modal from '../../components/modal';
 // import ModalOptions from './modalOptions';
 import BasicModal from '../../components/BasicModal/BasicModal';
+import NotRegistered from '../../components/NotRegistered';
 import EditFeedbackForm from './EditFeedbackForm';
 import EditTDForm from './EditTDForm';
 import EditTOForm from './EditTOForm';
 import NewDocTDForm from './NewDocTDForm';
 import NewDocTOForm from './NewDocTOForm';
+import { Stack } from '@mui/material';
 
 const getDocsFB = [
   {
@@ -94,7 +101,7 @@ const getDocsFB = [
     id: 'status',
     numeric: false,
     disablePadding: false,
-    label: 'status',
+    label: 'Статус',
   },
   {
     id: 'actions',
@@ -115,39 +122,50 @@ const getDocsTD = [
     id: 'user_id',
     numeric: false,
     disablePadding: false,
-    label: 'User_id',
+    label: 'ID Пользователя',
   },
   {
     id: 'car_id',
     numeric: false,
     disablePadding: false,
-    label: 'car_id',
+    label: 'ID Авто',
   },
   {
     id: 'manager',
     numeric: false,
     disablePadding: false,
-    label: 'manager',
+    label: 'Менеджер',
   },
   {
     id: 'status',
     numeric: false,
     disablePadding: false,
-    label: 'status',
+    label: 'Статус',
   },
   {
     id: 'ourComment',
     numeric: false,
     disablePadding: false,
-    label: 'ourComment',
+    label: 'Наш комментарий',
   },
   {
     id: 'dateNow',
     numeric: false,
     disablePadding: false,
-    label: 'dateNow',
+    label: 'Дата создания документа',
   },
-
+  {
+    id: 'dateSelected',
+    numeric: false,
+    disablePadding: false,
+    label: 'Дата оказания услуги',
+  },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: '',
+  },
 ];
 
 const getDocsCars = [
@@ -223,48 +241,44 @@ const getDocsCars = [
     disablePadding: false,
     label: 'Машина с пробегом',
   },
-  {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: 'Управление',
-  },
+  // {
+  //   id: 'actions',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'Управление',
+  // },
 ];
 
 export default function managerPage() {
+  const user = useAppSelector((store) => store.userSlice.user);
+
   return (
     <>
-      <PageHeader title="Рабочее место менеджера">
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{
-            textTransform: 'uppercase',
-          }}
-        >
-          <Link underline="hover" href="/">
-            Главная
-          </Link>
-          <Typography color="text.tertiary">Рабочее место менеджера</Typography>
-        </Breadcrumbs>
-      </PageHeader>
-      <Card
-        type="section"
-        sx={{
-          minHeight: '60vh',
-        }}
-      >
-        <CardHeader title="Заголовок секции рабочее место менеджера" subtitle="Подзаголовок секции">
-          Доп заголовок
-        </CardHeader>
-        <BasicModal />
-        <BasicModal />
-        контент
-      </Card>
-
-      <DataTableDocFB name="Dense" props={{ dense: true }} />
-      <DataTableDocTD name="Dense" props={{ dense: true }} />
-      <DataTableDocTO name="Dense" props={{ dense: true }} />
-      <DataTableCars name="Dense" props={{ dense: true }} />
+      {user.role === 'accessManager' || user.role === 'accessBoss' ? (
+        <>
+          <PageHeader title="Рабочее место менеджера">
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              sx={{
+                textTransform: 'uppercase',
+              }}
+            >
+              <Link underline="hover" href="/">
+                Главная
+              </Link>
+              <Typography color="text.tertiary">Рабочее место менеджера</Typography>
+            </Breadcrumbs>
+          </PageHeader>
+          <Stack spacing={7.5}>
+            <DataTableDocFB name="Dense" props={{ dense: true }} />
+            <DataTableDocTD name="Dense" props={{ dense: true }} />
+            <DataTableDocTO name="Dense" props={{ dense: true }} />
+            <DataTableCars name="Dense" props={{ dense: true }} />
+          </Stack>
+        </>
+      ) : (
+        <NotRegistered />
+      )}
     </>
   );
 }
@@ -294,11 +308,15 @@ function DataTableDocFB({ props }) {
     setIsModalOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+
   return (
     <>
       <Card component="section" type="section">
-        <CardHeader title="Открытые заявки" subtitle="">
-        </CardHeader>
+        <CardHeader title="Открытые заявки" subtitle=""></CardHeader>
         <DataTable
           {...props}
           headCells={getDocsFB}
@@ -307,14 +325,24 @@ function DataTableDocFB({ props }) {
           render={(row) => (
             <TableRow hover tabIndex={-1} key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell align="left">{row?.dateNow}</TableCell>
+              <TableCell align="left">{formatDate(row?.dateNow)}</TableCell>
               <TableCell align="left">{row?.userName}</TableCell>
               <TableCell align="left">{row.user_id}</TableCell>
               <TableCell align="left">{row?.phoneNumber}</TableCell>
               <TableCell align="left">{row?.userComment}</TableCell>
               <TableCell align="left">{row?.manager}</TableCell>
-              <TableCell align="right">{row?.ourComment}</TableCell>
-              <TableCell align="right">{`${row.status}`}</TableCell>
+              <TableCell align="left">{row?.ourComment}</TableCell>
+              <TableCell align="left">
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
               <TableCell align="right">
                 <Tooltip title="Редактировать" arrow>
                   <IconButton
@@ -355,95 +383,111 @@ function DataTableDocTD({ name, props }) {
   const [currentData, setCurrentData] = useState(null);
   const [createDocTD, setCreateDocTD] = useState(false);
 
-
-
   const docsTD = useAppSelector((store) => store.adminSlice.docsTD);
   // console.log('store usersAll admin', docsTD);
 
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchManagerDocTD());
   }, []);
 
-    // Функция для открытия модального окна
-    const handleEditClick = (row) => {
-      setCurrentData(row); // Установить текущие данные заявки
-      setIsModalOpen(true); // Открывает модальное окно
-    };
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCreateDocTD(false); // Сбрасываем флаг создания нового документа
+    setCurrentData(row); // Установить текущие данные заявки
+    setIsModalOpen(true); // Открывает модальное окно
+  };
 
-    
-    // Функция для закрытия модального окна
-    const updateAndClose = () => {
-      dispatch(fetchManagerDocTD()); // Перезапрашиваем данные, обновляя список
-      setIsModalOpen(false);
-    };
-    
-    const handleCreateTDClick = () => {
-      setCreateDocTD(true);    
-      setIsModalOpen(true);
-      setCurrentData(null); 
-    };
+  // Функция для закрытия модального окна
+  const updateAndClose = () => {
+    dispatch(fetchManagerDocTD()); // Перезапрашиваем данные, обновляя список
+    setIsModalOpen(false);
+    setCreateDocTD(false); // Сбрасываем флаг создания нового документа
+  };
 
-    const handlerCloseModal = () => {
-      setIsModalOpen(false);
-      setCreateDocTD(false);
-    };
+  const handleCreateTDClick = () => {
+    setCreateDocTD(true);
+    setCurrentData(null);
+    setIsModalOpen(true);
+  };
 
- 
-  
+  const handlerCloseModal = () => {
+    setIsModalOpen(false);
+    setCreateDocTD(false);
+  };
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
 
   return (
-  <>
-    <Card component="section" type="section">
-      <CardHeader title="Документы Тестдрайв" subtitle="">
-        <Button onClick={handleCreateTDClick} variant="contained" disableElevation endIcon={<AddIcon />}>
-          Новый документ
-        </Button>
-      </CardHeader>
-      <DataTable
-        {...props}
-        headCells={getDocsTD}
-        rows={docsTD}
-        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
-        render={(row) => (
-          <TableRow hover tabIndex={-1} key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row.user_id}</TableCell>
-            <TableCell align="left">{row?.car_id}</TableCell>
-            <TableCell align="left">{row?.manager}</TableCell>
-            <TableCell align="right">{`${row.status}`}</TableCell>
-            <TableCell align="right">{row?.ourComment}</TableCell>
-            <TableCell align="right">
-              <Tooltip title="Редактировать" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="warning"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(row); // Передаем данные записи в функцию
-                  }}
-                >
-                  <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
+    <>
+      <Card component="section" type="section">
+        <CardHeader title="Документы Тестдрайв" subtitle="">
+          <Button
+            onClick={handleCreateTDClick}
+            variant="contained"
+            disableElevation
+            endIcon={<AddIcon />}
+          >
+            Новый документ
+          </Button>
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsTD}
+          rows={docsTD}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.user_id}</TableCell>
+              <TableCell align="left">{row?.car_id}</TableCell>
+              <TableCell align="left">{row?.manager}</TableCell>
+              <TableCell align="left">
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
+              <TableCell align="left">{row?.ourComment}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); // Передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
 
-
-            </TableCell>
-          </TableRow>
-        )}
-      />
-    </Card>
-
-    {isModalOpen && (
+      {isModalOpen && (
         <BasicModal
           isOpen={isModalOpen}
           onClose={handlerCloseModal}
           data={currentData}
           updateAndClose={updateAndClose}
-          FormComponent={ createDocTD ? NewDocTDForm : EditTDForm}
+          FormComponent={createDocTD ? NewDocTDForm : EditTDForm}
         />
       )}
     </>
@@ -463,8 +507,9 @@ function DataTableDocTO({ name, props }) {
     void dispatch(fetchManagerDocTO());
   }, []);
 
-   // Функция для открытия модального окна
-   const handleEditClick = (row) => {
+  // Функция для открытия модального окна
+  const handleEditClick = (row) => {
+    setCreateDocTO(false);
     setCurrentData(row); // Установить текущие данные заявки
     setIsModalOpen(true); // Открывает модальное окно
   };
@@ -473,12 +518,13 @@ function DataTableDocTO({ name, props }) {
   const updateAndClose = () => {
     dispatch(fetchManagerDocTO()); // Перезапрашиваем данные, обновляя список
     setIsModalOpen(false);
+    setCreateDocTO(false);
   };
 
   const handleCreateTOClick = () => {
-    setCreateDocTO(true);    
+    setCreateDocTO(true);
+    setCurrentData(null);
     setIsModalOpen(true);
-    setCurrentData(null); 
   };
 
   const handlerCloseModalTO = () => {
@@ -486,57 +532,77 @@ function DataTableDocTO({ name, props }) {
     setCreateDocTO(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('ru-RU', options).replace(/\./g, '\\');
+  };
+
   return (
     <>
-    <Card component="section" type="section">
-      <CardHeader title="Документы ТО" subtitle="">
-        <Button onClick={handleCreateTOClick} variant="contained" disableElevation endIcon={<AddIcon />}>
-          Новый документ
-        </Button>
-      </CardHeader>
-      <DataTable
-        {...props}
-        headCells={getDocsTD}
-        rows={docsTO}
-        emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
-        render={(row) => (
-          <TableRow hover tabIndex={-1} key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell align="left">{row.user_id}</TableCell>
-            <TableCell align="left">{row?.car_id}</TableCell>
-            <TableCell align="left">{row?.manager}</TableCell>
-            <TableCell align="right">{`${row.status}`}</TableCell>
-            <TableCell align="right">{row?.ourComment}</TableCell>
-            <TableCell align="right">
-              <Tooltip title="Редактировать" arrow>
-                <IconButton
-                  aria-label="edit"
-                  color="warning"
-                  size="small"
-                  sx={{ fontSize: 2 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(row); // Передаем данные записи в функцию
-                  }}
-                >
-                  <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </Tooltip>
+      <Card component="section" type="section">
+        <CardHeader title="Документы ТО" subtitle="">
+          <Button
+            onClick={handleCreateTOClick}
+            variant="contained"
+            disableElevation
+            endIcon={<AddIcon />}
+          >
+            Новый документ
+          </Button>
+        </CardHeader>
+        <DataTable
+          {...props}
+          headCells={getDocsTD}
+          rows={docsTO}
+          emptyRowsHeight={{ default: 66.8, dense: 46.8 }}
+          render={(row) => (
+            <TableRow hover tabIndex={-1} key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="left">{row.user_id}</TableCell>
+              <TableCell align="left">{row?.car_id}</TableCell>
+              <TableCell align="left">{row?.manager}</TableCell>
+              <TableCell align="left">
+                {row.status ? (
+                  <Tooltip title="Подтверждено" arrow>
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Не подтверждено" arrow>
+                    <HighlightOffIcon sx={{ color: 'grey' }} />
+                  </Tooltip>
+                )}
+              </TableCell>
+              <TableCell align="left">{row?.ourComment}</TableCell>
+              <TableCell align="left">{formatDate(row.dateNow)}</TableCell>
+              <TableCell align="left">{formatDate(row.dateSelected)}</TableCell>
+              <TableCell align="right">
+                <Tooltip title="Редактировать" arrow>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    sx={{ fontSize: 2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(row); // Передаем данные записи в функцию
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          )}
+        />
+      </Card>
 
-            </TableCell>
-          </TableRow>
-        )}
-      />
-    </Card>
-
-
-    {isModalOpen && (
+      {isModalOpen && (
         <BasicModal
           isOpen={isModalOpen}
           onClose={handlerCloseModalTO}
           data={currentData}
           updateAndClose={updateAndClose}
-          FormComponent={ createDocTO ? NewDocTOForm : EditTOForm }
+          FormComponent={createDocTO ? NewDocTOForm : EditTOForm}
         />
       )}
     </>
@@ -555,8 +621,7 @@ function DataTableCars({ name, props }) {
 
   return (
     <Card component="section" type="section">
-      <CardHeader title="Cars" subtitle="">
-      </CardHeader>
+      <CardHeader title="Cars" subtitle=""></CardHeader>
       <DataTable
         {...props}
         headCells={getDocsCars}
@@ -571,14 +636,34 @@ function DataTableCars({ name, props }) {
             <TableCell align="left">{row?.prodYear}</TableCell>
             <TableCell align="left">{row?.gosNum}</TableCell>
             <TableCell align="left">{row?.gear}</TableCell>
-            <TableCell align="right">{row?.engine}</TableCell>
-            <TableCell align="right">{row?.vin}</TableCell>
-            <TableCell align="right">{row?.user_id}</TableCell>
-            <TableCell align="right">{`${row.ours}`}</TableCell>
-            <TableCell align="right">{`${row.bu}`}</TableCell>
+            <TableCell align="left">{row?.engine}</TableCell>
+            <TableCell align="left">{row?.vin}</TableCell>
+            <TableCell align="left">{row?.user_id}</TableCell>
+            <TableCell align="left">
+              {row.ours ? (
+                <Tooltip title="Наша" arrow>
+                  <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Не наша" arrow>
+                  <HighlightOffIcon sx={{ color: 'grey' }} />
+                </Tooltip>
+              )}
+            </TableCell>
+            <TableCell align="left">
+              {row.bu ? (
+                <Tooltip title="С пробегом" arrow>
+                  <CheckCircleOutlineIcon sx={{ color: 'green' }} />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Новая" arrow>
+                  <HighlightOffIcon sx={{ color: 'grey' }} />
+                </Tooltip>
+              )}
+            </TableCell>
             <TableCell align="right">
               <Tooltip title="Редактировать" arrow>
-                <IconButton
+                {/* <IconButton
                   aria-label="edit"
                   color="warning"
                   size="small"
@@ -588,10 +673,8 @@ function DataTableCars({ name, props }) {
                   }}
                 >
                   <ModeEditOutlineOutlinedIcon fontSize="medium" />
-                </IconButton>
+                </IconButton> */}
               </Tooltip>
-
-
             </TableCell>
           </TableRow>
         )}

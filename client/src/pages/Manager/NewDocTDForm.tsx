@@ -12,6 +12,7 @@ export default function NewDocTDForm({ currentUserId, onSuccess }) {
   const [carId, setCarId] = useState('');
   const [managerId, setManagerId] = useState(currentUserId);
   const [ourComment, setOurComment] = useState('');
+  const [dateSelected, setDatSelected] = useState('');
 
 
   // Получение данных менеджера из Redux store
@@ -32,11 +33,11 @@ export default function NewDocTDForm({ currentUserId, onSuccess }) {
       carId,
       managerId,
       ourComment,
+      dateSelected,
       };
     console.log('======NEWformData TD', formData);
 
     await dispatch(fetchManagerCreateDocTD({formData}));
-
     onSuccess(); // Закрываем модальное окно и обновляем список документов
   };
 
@@ -58,6 +59,18 @@ export default function NewDocTDForm({ currentUserId, onSuccess }) {
         margin="normal"
         fullWidth
       />
+       <TextField
+        label="Дата оказания услуги"
+        type="date"
+        value={dateSelected}
+        onChange={(e) => setDatSelected(e.target.value)}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
         <TextField
         label="Наш комментарий"
         value={ourComment}
@@ -66,7 +79,6 @@ export default function NewDocTDForm({ currentUserId, onSuccess }) {
         margin="normal"
         fullWidth
       />
-      
       {managerId && (
         <Box component={Paper} p={2} my={2}>
           <Typography variant="h6" gutterBottom>

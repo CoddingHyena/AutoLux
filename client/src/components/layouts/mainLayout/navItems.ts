@@ -31,6 +31,15 @@ const NAV_LINKS_CONFIG = [
     href: '',
     role: 'none',
   },
+
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Ferramont 2024',
+    Icon: WebOutlinedIcon,
+    href: '/sellCars',
+    role: 'none',
+  },
   {
     id: uuid(),
     type: 'item',
@@ -55,7 +64,14 @@ const NAV_LINKS_CONFIG = [
     href: '',
     role: 'accessUser',
   },
-
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Ferramont 2024',
+    Icon: WebOutlinedIcon,
+    href: '/sellCars',
+    role: 'accessUser',
+  },
   {
     id: uuid(),
     type: 'item',
@@ -63,30 +79,6 @@ const NAV_LINKS_CONFIG = [
     Icon: WebOutlinedIcon,
     href: '/contacts',
     role: 'accessUser',
-  },
-  {
-    id: uuid(),
-    type: 'item',
-    title: 'Главная',
-    Icon: WebOutlinedIcon,
-    href: '',
-    role: 'accessAdmin',
-  },
-  {
-    id: uuid(),
-    type: 'item',
-    title: 'Автомобили в наличии',
-    Icon: WebOutlinedIcon,
-    href: '/sellCars',
-    role: 'accessUser',
-  },
-  {
-    id: uuid(),
-    type: 'item',
-    title: 'Автомобили в наличии',
-    Icon: WebOutlinedIcon,
-    href: '/sellCars',
-    role: 'none',
   },
 
   //  {
@@ -110,12 +102,18 @@ const NAV_LINKS_CONFIG = [
 
   // 	],
   // },
-
-
   {
     id: uuid(),
     type: 'item',
-    title: 'Админ',
+    title: 'Главная',
+    Icon: WebOutlinedIcon,
+    href: '',
+    role: 'accessAdmin',
+  },
+  {
+    id: uuid(),
+    type: 'item',
+    title: 'Администрирование',
     Icon: WebOutlinedIcon,
     href: '/admin',
     role: 'accessAdmin',
@@ -165,7 +163,7 @@ const NAV_LINKS_CONFIG = [
   {
     id: uuid(),
     type: 'item',
-    title: 'Босс',
+    title: 'Статистика',
     Icon: WebOutlinedIcon,
     href: '/boss',
     role: 'accessBoss',
@@ -173,7 +171,7 @@ const NAV_LINKS_CONFIG = [
   {
     id: uuid(),
     type: 'item',
-    title: 'Админ',
+    title: 'Администрирование',
     Icon: WebOutlinedIcon,
     href: '/admin',
     role: 'accessBoss',

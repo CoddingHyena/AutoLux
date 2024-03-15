@@ -1,9 +1,11 @@
 import useAutoCounter from '@hooks/useAutoCounter';
 
-import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
-import DonutSmallOutlinedIcon from '@mui/icons-material/DonutSmallOutlined';
-import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
+import FormatListNumberedOutlinedIcon from '@mui/icons-material/FormatListNumberedOutlined';
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
+
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 // MUI
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -13,30 +15,30 @@ const STATS_DATA = [
   {
     id: 1,
     color: 'secondary.main',
-    name: 'Тест-драйвов',
-    total: 4,
-    Icon: DonutSmallOutlinedIcon,
+    name: 'Конверсия',
+    total: 87,
+    Icon: TrendingUpOutlinedIcon, // Изменено
   },
   {
     id: 2,
     color: 'cuaternary.main',
-    name: 'Обращений',
-    total: 23,
-    Icon: QueryStatsOutlinedIcon,
+    name: 'Конверсия в обр. связь',
+    total: 92,
+    Icon: ContactSupportOutlinedIcon, // Изменено
   },
   {
     id: 3,
     color: 'tertiary.400',
-    name: 'Техобслуживание',
-    total: 781524,
-    Icon: AssessmentOutlinedIcon,
+    name: 'Всего заявок',
+    total: 757,
+    Icon: AssessmentOutlinedIcon, // Изменено
   },
   {
     id: 4,
     color: 'success.main',
     name: 'Средняя оценка',
-    total: 369657,
-    Icon: MonetizationOnOutlinedIcon,
+    total: 4.1,
+    Icon: StarBorderOutlinedIcon, // Изменено
   },
 ];
 
@@ -77,6 +79,14 @@ function StatSection({ statData }) {
     interval: 10,
   });
 
+  // Функция для добавления символа процента к значениям конверсии
+  const formatValue = (name, value) => {
+    if (name === 'Конверсия' || name === 'Конверсия в обр. связь') {
+      return `${value.toLocaleString()}%`; // Добавляем символ процента
+    }
+    return value.toLocaleString(); // Возвращаем значение без изменений
+  };
+
   return (
     <Stack p={3} direction="row" spacing={3} alignItems="center">
       <Icon
@@ -90,7 +100,8 @@ function StatSection({ statData }) {
         <Typography color={color} variant="h5" textTransform="uppercase">
           {name}
         </Typography>
-        <Typography fontSize={30}>{counter.toLocaleString()}</Typography>
+        <Typography fontSize={30}>{formatValue(name, counter)}</Typography>{' '}
+        {/* Используем функцию formatValue */}
       </span>
     </Stack>
   );

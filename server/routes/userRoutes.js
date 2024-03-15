@@ -1,16 +1,20 @@
 const userRoute = require('express').Router();
 const bcrypt = require('bcrypt');
+const MailService = require('../mailService');
 
 const { User, Role } = require('../db/models');
 
 function getRoleName2(roleId) {
   if (roleId === 1) {
     return 'accessUser';
-  } if (roleId === 2) {
+  }
+  if (roleId === 2) {
     return 'accessAdmin';
-  } if (roleId === 3) {
+  }
+  if (roleId === 3) {
     return 'accessManager';
-  } if (roleId === 4) {
+  }
+  if (roleId === 4) {
     return 'accessBoss';
   }
   return 'none';
@@ -18,21 +22,26 @@ function getRoleName2(roleId) {
 
 userRoute.get('/checkSession', async (req, res) => {
   const {
-    userId, name, email, roleId,
+    userId, name, email, roleId, phone,
   } = req.session;
   const role = getRoleName2(roleId);
 
-  res.json({ id: userId, name, email, role });
+  res.json({
+    id: userId, name, email, role, phone,
+  });
 });
 
 function getRoleName(role) {
   if (role.accessUser) {
     return 'accessUser';
-  } if (role.accessAdmin) {
+  }
+  if (role.accessAdmin) {
     return 'accessAdmin';
-  } if (role.accessManager) {
+  }
+  if (role.accessManager) {
     return 'accessManager';
-  } if (role.accessBoss) {
+  }
+  if (role.accessBoss) {
     return 'accessBoss';
   }
   return 'Unknown Role';
@@ -43,45 +52,57 @@ userRoute.post('/reg', async (req, res) => {
     const {
       name, email, password, persDataAgrBool,
     } = req.body;
-
-    console.log(req.body);
-
+    // console.log(req.body);
     const user = await User.findOne({ where: { email } });
     if (user) {
       res.sendStatus(403);
     }
-    if (!email.includes('@')) {
-      res.sendStatus(405);
-    } else {
+    // if (!email.includes('@')) {
+    //   res.sendStatus(405);
+    // }
+     else {
       const hash = await bcrypt.hash(password, 10);
       const newUser = await User.create({
-        name, email, password: hash, role_id: 1, propType: true, persDataAgr: persDataAgrBool,
-      });
-      req.session.name = newUser.name;
-      req.session.email = newUser.email;
-      req.session.userId = newUser.id;
-      req.session.roleId = newUser.role_id;
-      console.log('req.sessions====>', req.session);
-
-      req.session.save(() => {
-        console.log('Зарегистрировался!');
-      });
-      const userWithRole = await User.findOne({
-        where: { email },
-        include: [{
-          model: Role,
-          where: { id: newUser.role_id },
-        }],
+        name,
+        email,
+        password: hash,
+        role_id: 1,
+        propType: true,
+        persDataAgr: persDataAgrBool,
       });
 
-      const roleName = getRoleName(userWithRole.Role);
+      try {
+        await MailService.sendWelcomeMail(newUser.email);
 
-      res.status(201).json({
-        id: userWithRole.id,
-        name: userWithRole.name,
-        email: userWithRole.email,
-        role: roleName,
-      });
+        req.session.name = newUser.name;
+        req.session.email = newUser.email;
+        req.session.userId = newUser.id;
+        req.session.roleId = newUser.role_id;
+        req.session.save(() => {
+          console.log('Зарегистрировался!');
+        });
+
+        const userWithRole = await User.findOne({
+          where: { email },
+          include: [
+            {
+              model: Role,
+              where: { id: newUser.role_id },
+            },
+          ],
+        });
+        const roleName = getRoleName(userWithRole.Role);
+
+        res.status(201).json({
+          id: userWithRole.id,
+          name: userWithRole.name,
+          email: userWithRole.email,
+          role: roleName,
+        });
+      } catch (error) {
+        res.sendStatus(406);
+        console.log(error, 'Не удалось отправить приветствие на почту при регистрации!');
+      }
     }
   } catch (error) {
     console.log('Ошибка registr!', error);
@@ -102,15 +123,18 @@ userRoute.post('/log', async (req, res) => {
         req.session.email = reqUser.email;
         req.session.userId = reqUser.id;
         req.session.roleId = reqUser.role_id;
+        req.session.phone = reqUser.phone;
         req.session.save(() => {
           console.log(reqUser.id, reqUser.name, reqUser.email, 'Зашел!');
         });
         const userWithRole = await User.findOne({
           where: { email },
-          include: [{
-            model: Role,
-            where: { id: reqUser.role_id },
-          }],
+          include: [
+            {
+              model: Role,
+              where: { id: reqUser.role_id },
+            },
+          ],
         });
 
         const roleName = getRoleName(userWithRole.Role);
@@ -120,6 +144,7 @@ userRoute.post('/log', async (req, res) => {
           name: userWithRole.name,
           email: userWithRole.email,
           role: roleName,
+          phone: userWithRole.phone,
         });
       } else {
         res.sendStatus(402);

@@ -3,9 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-    "Users",
-    [
+    await queryInterface.bulkInsert('Users', [
       {
         name: 'Иванов Иван Иванович',
         email: '123@321.ru',
@@ -19,7 +17,7 @@ module.exports = {
       },
       {
         name: 'Администратор',
-        email: '1@4.ru',
+        email: 'adm',
         phone: '+7 961 1112',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 2,
@@ -30,7 +28,7 @@ module.exports = {
       },
       {
         name: 'Менеджер Анна',
-        email: '1@5.ru',
+        email: 'manag',
         phone: '+7 961 1113',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 3,
@@ -85,7 +83,7 @@ module.exports = {
       },
       {
         name: 'Чернова Инна',
-        email: '1@2.ru',
+        email: 'client',
         phone: '+7 965 6871',
         password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
         role_id: 1,
@@ -127,21 +125,39 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-    ],
-  );
+      {
+        name: 'Иван Филипович',
+        email: 'b@b.ru',
+        phone: '2-15-79',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
+        role_id: 4,
+        propType: true,
+        persDataAgr: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Boss Филипович',
+        email: 'boss',
+        phone: '2-15-79',
+        password: '$2b$10$bMip0vyjpPMksZ9et7p/W.M7SpzNHLq9AlkyND1354KD/97Vfp.5K',
+        role_id: 4,
+        propType: true,
+        persDataAgr: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+  },
 
-
-},
-
-
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };
 
 // 'use strict';

@@ -12,7 +12,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('DocFeedbacks', [
       {
-        userName: 'Игнат Павлович Чепушной',
+        userName: 'Петр Васильев',
         dateNow: new Date(randomDay),
         status: false,
         phoneNumber: '+7 961 1315',
@@ -22,7 +22,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userName: 'Игнат Павлович Чепушной',
+        userName: 'Игнат Павлович',
         dateNow: new Date(tomorrow),
         manager: 2,
         status: false,
@@ -33,7 +33,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userName: 'Игнат Павлович Чепушной',
+        userName: 'Ирина Федорова',
         dateNow: new Date(tomorrow),
         status: false,
         phoneNumber: '+7 961 1315',
@@ -43,7 +43,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userName: 'Игнат Павлович Чепушной',
+        userName: 'Игнат Викторович',
         dateNow: new Date(currentDate),
         status: false,
         phoneNumber: '+7 961 1315',
@@ -53,7 +53,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userName: 'Игнат Павлович Чепушной',
+        userName: 'Сергей',
         dateNow: new Date(yesterday),
         status: true,
         phoneNumber: '+7 961 1315',
@@ -63,7 +63,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userName: 'Игнат Павлович Чепушной',
+        userName: 'Валерий',
         dateNow: new Date(yesterday),
         manager: 3,
         status: false,
@@ -94,7 +94,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userName: 'Валя суетной',
+        userName: 'Иван',
         dateNow: new Date(monthAgo),
         status: true,
         phoneNumber: '+7 961 5478 ',

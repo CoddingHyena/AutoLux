@@ -15,7 +15,6 @@ module.exports = {
           key: 'id',
         },
         onDelete: 'cascade',
-        allowNull: false,
       },
       car_id: {
         type: Sequelize.INTEGER,
@@ -29,7 +28,18 @@ module.exports = {
       dateNow: {
         type: Sequelize.DATE,
       },
+      dateSelected: {
+        type: Sequelize.DATE,
+      },
       manager: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'cascade',
+      },
+      phoneNumber: {
         type: Sequelize.STRING,
       },
       status: {
