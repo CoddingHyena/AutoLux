@@ -93,7 +93,7 @@ const TestDriveForm = () => {
         component="h2"
         gutterBottom
         textAlign="center"
-        sx={{ fontSize: '2.5rem', marginBottom: '2rem' }}
+        sx={{ fontSize: '2.5rem', margin: '20px 0 60px 0' }}
       >
         Запишитесь на тест-драйв
       </Typography>

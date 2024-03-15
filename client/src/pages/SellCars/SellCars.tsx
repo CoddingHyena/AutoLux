@@ -48,7 +48,7 @@ export default function SellCars() {
         <br />
         <div style={{ flex: 1, textAlign: 'left', backgroundColor: '#f2f2f2', padding: '20px' }}>
           <h2 style={{ fontSize: '4em', fontWeight: 'bold', lineHeight: 1.2 }}>
-            FolksFagen Ferramont
+            FolksFagen Ferramont — феромон в мире авто
           </h2>
           <p style={{ fontSize: '2em', lineHeight: '1.5' }}>
             Может похвастаться неплохим функционалом. У него стильный и сдержанный дизайн, отлично

@@ -81,7 +81,7 @@ function StatSection({ statData }) {
 
   // Функция для добавления символа процента к значениям конверсии
   const formatValue = (name, value) => {
-    if (name === 'Конверсия' || name === 'Конверсия обр. связь') {
+    if (name === 'Конверсия' || name === 'Конверсия в обр. связь') {
       return `${value.toLocaleString()}%`; // Добавляем символ процента
     }
     return value.toLocaleString(); // Возвращаем значение без изменений

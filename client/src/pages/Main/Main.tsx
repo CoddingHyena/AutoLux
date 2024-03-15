@@ -50,18 +50,22 @@ export default function mainPage() {
         mt: 5, // отступ сверху для всего стека
       }}
     >
-      <Grid container spacing={3}>
+      <Grid container>
         <Grid item xs={12} md={4}>
-          <Typography variant="h2" component="h1" gutterBottom sx={{ fontSize: 42, marginTop: 20 }}>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            sx={{ fontSize: '2.7vw', marginTop: '4vw', paddingRight: '2.3vw' }}
+          >
             Официальный диллер FolksFagen
           </Typography>
           <Typography
             variant="h6" // Makes the subtitle larger but still clearly a subtitle
             component="p" // Use paragraph for the subtitle for semantic HTML
-            sx={{ fontSize: 32 }} // Adds margin-top for spacing, adjust as needed
+            sx={{ fontSize: '1.9vw', lineHeight: 1.25, paddingRight: '2.3vw' }} // Adds margin-top for spacing, adjust as needed
           >
-            <br />
-            Полный ассортиментный ряд FolksFagen, качественное ТО и поддержка 24/7
+            Полный ассортиментный ряд, сертифицированное ТО, поддержка 24/7
           </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
@@ -76,8 +80,9 @@ export default function mainPage() {
               alt="FolksFagen Banner"
               style={{
                 width: '100%',
-                height: 'auto',
+                height: '100%', // Изменено на 100%
                 display: 'block',
+                objectFit: 'cover', // Добавлено это свойство
               }}
             />
           </Paper>
@@ -94,22 +99,23 @@ export default function mainPage() {
       <Card>
         <TestDrive />
       </Card>
+      <Stack>
+        <Box sx={{ paddingTop: '70px', paddingBottom: '70px' }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            gutterBottom
+            textAlign="center"
+            sx={{ fontSize: '2.5rem', marginBottom: '2rem' }}
+          >
+            Автомобили с пробегом
+          </Typography>
 
-      <Box sx={{ paddingTop: '70px', paddingBottom: '70px' }}>
-        <Typography
-          variant="h2"
-          component="h2"
-          gutterBottom
-          textAlign="center"
-          sx={{ fontSize: '2.5rem', marginBottom: '2rem' }}
-        >
-          Автомобили с пробегом
-        </Typography>
-
-        <div className="slider-container">
-          <CarSlider />
-        </div>
-      </Box>
+          <div className="slider-container">
+            <CarSlider />
+          </div>
+        </Box>
+      </Stack>
     </Stack>
   );
 }

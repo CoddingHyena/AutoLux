@@ -9,7 +9,7 @@ const ModelSelection = ({ onSelect }) => {
         variant="h1"
         gutterBottom
         component="div"
-        style={{ textAlign: 'center', margin: '20px 0' }}
+        style={{ textAlign: 'center', margin: '50px 0 60px 0' }}
       >
         Конфигуратор Автомобиля
       </Typography>
