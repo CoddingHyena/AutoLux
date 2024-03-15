@@ -6,6 +6,8 @@ import withLazyLoadably from '../hocs/withLazyLoadably';
 
 import MinimalLayout from '../../components/layouts/minimalLayout';
 import MainLayout from '../../components/layouts/mainLayout';
+import ResetPWDEmail from '../../pages/Auth/ResetPWDEmail';
+import ResetPWD from '../../pages/Auth/ResetPWD';
 
 
 const SamplePage = withLazyLoadably(lazy(() => import('../../pages/sample')));
@@ -34,6 +36,9 @@ function Router() {
 						<Route path="profile" element={<ProfilePage />} />
 						<Route path="contacts" element={<ContactsPage />} />
 						<Route path="auth" element={<Auth />} />
+						<Route path='reset-password-email' element={<ResetPWDEmail/>}/>
+						<Route path='resetPassword/:token' element={<ResetPWD/>}/>
+						
 					</Route>
 				</Routes>
 			</ScrollToTopOnRouteChange>

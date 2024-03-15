@@ -1,5 +1,6 @@
 const userRoute = require('express').Router();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const MailService = require('../mailService');
 
 const { User, Role } = require('../db/models');
@@ -165,43 +166,45 @@ userRoute.get('/logout', (req, res) => {
 
 userRoute.post('/requestResetPassword', async (req, res) => {
   const { email } = req.body;
+  console.log('========PWDemail', email);
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
       res.sendStatus(407);
     }
 
-    const resetToken = jwt.sign({id: user.id}, process.env.JWT_secret, {expiresIn: '15m'});
+    const resetToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
     const resetLink = `http://localhost:5173/resetPassword/${resetToken}`;
 
     await MailService.sendMail({
       to: email,
       subject: 'Сброс пароля',
-      html: `Для сброса пароля перейдите по <a href="${resetLink}">ссылке</a>. Ссылка активна 15 минут.`
+      html: `Для сброса пароля перейдите по <a href="${resetLink}">ссылке</a>. Ссылка активна 15 минут.`,
     });
     res.sendStatus(202);
   } catch (error) {
-    console.log(error, 'Ошибка в ручке отправки ссылки сброса пароля');
+    console.log(error, 'Ошибка в ручке отправки ссылки сброса пароля!!!!!!');
   }
 });
 
 userRoute.post('/resetPassword', async (req, res) => {
-  const {tocen, newPassword} = req.body;
+  const { token, newPassword } = req.body;
+  console.log('========PWD',token, newPassword);
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({where: {id: decoded.id}});
-    if(!user){
+    const user = await User.findOne({ where: { id: decoded.id } });
+    if (!user) {
       res.sendStatus(408);
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await user.update({password: hashedPassword});
+    await user.update({ password: hashedPassword });
 
     res.sendStatus(203);
   } catch (error) {
     console.log(error, 'Ошибка в ручке обновления пароля!');
-    res.sendStatus(409)
+    res.sendStatus(409);
   }
-})
+});
 
 module.exports = userRoute;
