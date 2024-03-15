@@ -33,6 +33,15 @@ class MailService {
         `,
     });
   }
+
+  async sendMail({ to, subject, html }) {
+    await this.transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to,
+      subject,
+      html,
+    });
+  }
 }
 
 module.exports = new MailService();

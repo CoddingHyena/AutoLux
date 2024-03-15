@@ -1,6 +1,7 @@
-// PORT=nubmer
-// DB=[dialect]://[username]:[password]@[host]/[db name]
-// MAIL_HOST=smtp.gmail.com
-// MAIL_PORT=587
-// MAIL_USER=
-// MAIL_PASSWORD=
+// PORT=3001
+// DB=postgres://postgres:123@localhost:5432/avtomobile
+// MAIL_HOST=smtp.mail.ru
+// MAIL_PORT=465
+// MAIL_USER=avtoluxa@mail.ru
+// MAIL_PASSWORD=nAvvDfHhVMMkDH82hKQx
+// JWT_SECRET=secret

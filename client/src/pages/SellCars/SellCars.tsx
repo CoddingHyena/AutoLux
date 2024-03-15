@@ -14,6 +14,7 @@ import CarCard5 from '../../components/SellCars/SellCars5';
 import CarSlider from '../../components/BUSlider/BUSlider';
 import FeaturesContainer from './TriplComp';
 import Configurator from '../../components/Configurator/Configurator';
+import CarDetail from '../../components/MerenComponent/MerenComponent';
 
 export default function SellCars() {
   return (
@@ -102,7 +103,15 @@ export default function SellCars() {
           minHeight: '60vh',
         }}
       >
-        <div style={{ flex: 1, textAlign: 'left', padding: '20px', backgroundColor: '#f2f2f2' }}>
+        <div
+          style={{
+            flex: 1,
+            textAlign: 'left',
+            padding: '20px',
+            backgroundColor: '#f2f2f2',
+            marginRight: '30px',
+          }}
+        >
           <h2 style={{ fontSize: '4em', fontWeight: 'bold', lineHeight: 1.2 }}>
             Абсолютный контроль над мощностью
           </h2>
@@ -143,6 +152,27 @@ export default function SellCars() {
           <Configurator configModelId={2} />
         </div>
       </Card>
+
+      <Card>
+
+      <CarDetail car={{
+  imageUrl: "/Meren.jpg",
+  title: "Mercedes-Benz S-Класс",
+  year: "2021",
+  specs: [
+    "2.9 л, 249 л.с., Дизель",
+    "АКПП",
+    "Полный привод",
+    "9 950 км",
+    "1 владелец",
+    "Экстерьер: Серый"
+  ],
+  price: "16 190 000 Р"
+}} />
+
+      </Card>
+
+
     </>
   );
 }
